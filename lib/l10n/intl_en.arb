@@ -1,0 +1,14 @@
+{
+  "@@last_modified": "2018-10-16T18:55:20.984620",
+  "title": "Praying App",
+  "@title": {
+    "description": "The application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "Hello",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
