@@ -5,7 +5,10 @@
 .pub/
 
 build/
-android/
+android/.gradle
+android/app/src/main/java/*
+android/app/src/main/res/*
+android/app/google-services.json
 ios/
 test/
 .flutter-plugins
