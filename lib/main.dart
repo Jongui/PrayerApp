@@ -3,12 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/utils/church_http.dart';
+import 'package:prayer_app/utils/user_http.dart';
 import 'localizations.dart';
 
-import 'model/User.dart';
+import 'package:prayer_app/model/user.dart';
+import 'components/home_card_view.dart';
 
 void main() => runApp(new PrayerApp());
 
@@ -49,56 +51,22 @@ class PrayerAppHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<PrayerAppHomePage> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User _user;
-  String _message = "";
+  Church _church = Church();
 
   Future<FirebaseUser> _handleSignIn() async {
-    FirebaseUser firebaseUser = await _performFirebaseSignIn();
-    _user = await fetchUser(firebaseUser);
+    FirebaseUser firebaseUser = await UserHttp().performFirebaseSignIn();
+    _user = await UserHttp().fetchUser(firebaseUser);
     if(_user == null){
-      _user = await _createUser(firebaseUser);
+      String token = await firebaseUser.getIdToken(refresh: false);
+      _user = await UserHttp().createUser(firebaseUser);
+      _church = await ChurchHttp().fetchChurch(_user.church, token);
     }
     setState(() {
-      _message = AppLocalizations.of(context).hello + " " + firebaseUser.displayName
-       + "Country: " + _user.country;
     });
     return firebaseUser;
   }
-
-  Future<FirebaseUser> _performFirebaseSignIn() async{
-    // Attempt to get the currently authenticated user
-    GoogleSignInAccount currentUser = _googleSignIn.currentUser;
-    if (currentUser == null) {
-      // Attempt to sign in without user interaction
-      currentUser = await _googleSignIn.signInSilently();
-    }
-    if (currentUser == null) {
-      // Force the user to interactively sign in
-      currentUser = await _googleSignIn.signIn();
-    }
-    GoogleSignInAuthentication googleAuth = await currentUser.authentication;
-    FirebaseUser firebaseUser = await _auth.signInWithGoogle(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    print("signed in " + firebaseUser.displayName);
-    return firebaseUser;
-  }
-  Future<User> fetchUser(FirebaseUser firebaseUser) async {
-    final response =
-    await http.get('http://192.168.15.7:8080/api/v1/user/email/' + firebaseUser.email
-     + '/');
-
-    if (response.statusCode == 200) {
-     return User.fromJson(json.decode(response.body));
-    } else {
-      return null;
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,31 +76,16 @@ class _MyHomePageState extends State<PrayerAppHomePage> {
           .then((FirebaseUser user) => print(user))
           .catchError((e) => print(e));
     }
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(AppLocalizations.of(context).title),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).title),
       ),
-      body: Text('$_message',
-        style: Theme.of(context).textTheme.display1,
+      body: HomeCardView(
+        user: _user,
+        church: _church,
       ),
     );
   }
 
-  Future<User> _createUser(FirebaseUser firebaseUser) async {
-    User user = User( email: firebaseUser.email,
-                      userName: firebaseUser.displayName,
-                      city: "Curitiba",
-                      country: "Brazil",
-                      church: 1);
-    final response = await http.post('http://192.168.15.7:8080/api/v1/user',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: json.encode(user),
-      encoding: Encoding.getByName("utf-8")
-    );
-    if(response.statusCode== 200){
 
-    }
-  }
 }
