@@ -22,8 +22,13 @@ class AppLocalizations {
   }
 
   String get title {
-    return Intl.message('Hello world App',
+    return Intl.message('Praying App',
         name: 'title', desc: 'The application title');
+  }
+
+  String get edit {
+    return Intl.message('Edit',
+        name: 'edit', desc: 'Edit');
   }
 
   String get hello {

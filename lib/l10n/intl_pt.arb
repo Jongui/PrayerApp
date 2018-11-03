@@ -11,4 +11,9 @@
     "type": "text",
     "placeholders": {}
   }
+  "edit": "Editar",
+  "@edit": {
+    "type": "text",
+    "placeholders": {}
+  }
 }
