@@ -4,9 +4,10 @@ class User{
   String userName;
   String city;
   String country;
+  String token;
   int church;
 
-  User({this.idUser, this.email, this.userName, this.city, this.country, this.church});
+  User({this.idUser, this.email, this.userName, this.city, this.country, this.church, this.token});
 
   factory User.fromJson(Map<String, dynamic> userJson){
     return User(

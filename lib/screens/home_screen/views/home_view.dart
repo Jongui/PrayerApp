@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/model/church.dart';
 
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/home_screen/components/home_view_header.dart';
+import 'package:prayer_app/screens/home_screen/views/home_view_actions.dart';
+import 'package:prayer_app/screens/home_screen/views/home_view_header.dart';
 
 class HomeView extends StatelessWidget{
 
@@ -23,6 +24,7 @@ class HomeView extends StatelessWidget{
     return new ListView(
       children: <Widget>[
         HomeViewHeader(user.userName, user.country, avatarUrl, church.name, user),
+        HomeViewActions(),
       ]
     );
   }

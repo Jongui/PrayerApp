@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/home_screen/components/home_view.dart';
 
 class HomeScreen extends StatelessWidget {
 
@@ -33,11 +33,11 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
   _handleSignIn() async {
     _firebaseUser = await UserHttp().performFirebaseSignIn();
     _user = await UserHttp().fetchUser(_firebaseUser);
-    String token = await _firebaseUser.getIdToken(refresh: false);
+    _user.token = await _firebaseUser.getIdToken(refresh: false);
     if(_user == null){
       _user = await UserHttp().createUser(_firebaseUser);
     }
-    _church = await ChurchHttp().fetchChurch(_user.church, token);
+    _church = await ChurchHttp().fetchChurch(_user.church, _user.token);
     setState(() {
     });
   }

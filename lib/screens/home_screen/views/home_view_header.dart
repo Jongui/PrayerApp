@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/edit_button.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 
@@ -93,33 +94,17 @@ class HomeViewHeader extends StatelessWidget {
   }
 
   Widget _buildBarButton(BuildContext context){
-    Container btnEdit = Container(
-      height: _screenSize.height / 20,
-      width: _screenSize.width / 4,
-      margin: EdgeInsets.only(left: 18.0),
-      padding: const EdgeInsets.all(0.0),
-      decoration: new BoxDecoration(
-          border: new Border.all(color: Colors.blueAccent),
-          borderRadius: BorderRadius.circular(6.25),
-          shape: BoxShape.rectangle
-      ),
-      child: RaisedButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              new MaterialPageRoute(
-                  builder: (context) => new EditUserScreen(user)
-              )
-            );
-            },
-          elevation: 0.0,
-          color: Colors.white30,
-          disabledColor: Colors.blueGrey,
-          splashColor: Colors.blue,
-          child: Text('Edit'))
-    );
     return Row(
       children: <Widget>[
-        btnEdit,
+        EditButton(
+          onPressed: () {
+            Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (context) => new EditUserScreen(user)
+                ));
+          },
+          screenSize: _screenSize,
+        )
       ],
     );
   }

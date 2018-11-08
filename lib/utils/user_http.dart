@@ -45,7 +45,6 @@ class UserHttp{
       var value = jsonVar['value'];
       var userJson = value[0];
       if (response.statusCode == 200 && userJson != null) {
-        print(response.body);
         return User.fromJson(userJson);
       }
     } catch (e){
@@ -71,6 +70,18 @@ class UserHttp{
     );
     print("signed in " + firebaseUser.displayName);
     return firebaseUser;
+  }
+
+  Future<int> putUser(User user) async{
+    final response =
+        await http.put('http://192.168.1.9:8080/api/v1/user/' + user.idUser.toString(),
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": "Basic " + user.token
+          },
+          body: json.encode(user),
+        );
+    return response.statusCode;
   }
 
 }
