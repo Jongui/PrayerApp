@@ -21,8 +21,8 @@ class UserHttp{
   Future<User> createUser(FirebaseUser firebaseUser) async {
     User user = User( email: firebaseUser.email,
         userName: firebaseUser.displayName,
-        city: "Curitiba",
-        country: "Brazil",
+        city: "Not defined",
+        country: "ND",
         church: 1);
     final response = await http.post('http://192.168.1.9:8080/api/v1/user',
         headers: {
@@ -31,8 +31,13 @@ class UserHttp{
         body: json.encode(user),
         encoding: Encoding.getByName("utf-8")
     );
-    if(response.statusCode== 201){
-
+    try {
+      var jsonVar = json.decode(response.body);
+      if (response.statusCode == 201 && jsonVar != null) {
+        return User.fromJson(jsonVar);
+      }
+    } catch (e){
+      return null;
     }
   }
 

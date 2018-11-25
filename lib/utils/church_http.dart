@@ -28,4 +28,47 @@ class ChurchHttp {
       return Church();
     }
   }
+
+  Future<int> postChurch(Church church, String token) async {
+    final response =
+    await http.post('http://192.168.1.9:8080/api/v1/church',
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      },
+      body: json.encode(church),
+    );
+    return response.statusCode;
+  }
+
+  Future<int> putChurch(Church church, String token) async{
+    final response =
+    await http.put('http://192.168.1.9:8080/api/v1/church/' + church.idChurch.toString(),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      },
+      body: json.encode(church),
+    );
+    return response.statusCode;
+  }
+
+  Future<List<Church>> getChurches() async{
+    List<Church> churches = [];
+    final response =
+    await http.get('http://192.168.1.9:8080/api/v1/church/',
+      headers: {
+        "Content-Type": "application/json"
+      },
+    );
+    try {
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar['value'];
+      churches = value.map((churchJson) => Church.fromJson(churchJson)).toList();
+    } catch (e){
+      return churches;
+    }
+    return churches;
+  }
+
 }

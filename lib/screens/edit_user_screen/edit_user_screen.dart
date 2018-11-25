@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/church_dropdown_button.dart';
+import 'package:prayer_app/components/country_dropdown_button.dart';
 import 'package:prayer_app/components/input_field_area.dart';
 import 'package:prayer_app/components/save_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class EditUserScreen extends StatelessWidget {
 
-  User user;
+  final User user;
 
   EditUserScreen(this.user);
 
@@ -32,36 +35,43 @@ class EditUserScreenState extends StatefulWidget {
 
 class _EditUserScreenState extends State<EditUserScreenState>{
 
-  final String _loading = 'Loading';
   TextEditingController _userNameController = new TextEditingController();
   TextEditingController _countryController = new TextEditingController();
 
-  String _churchName = '';
+  Church _church;
   Size _screenSize;
   String _newName = '';
   String _newCountry = '';
+  int _newIdChurch = 0;
+  String _currentCountry;
   User _user;
+  List<Church> _churchList = List();
 
   @override
   initState(){
     super.initState();
     _userNameController.addListener(_onUserNameChanged);
     _countryController.addListener(_onCountryChanged);
-    _churchName = _loading;
   }
 
   @override
   Widget build(BuildContext context) {
     _user = this.widget.user;
-    if(_churchName == _loading)
-      _loadChurch(_user.church, _user.token);
+    if(_newCountry == '')
+      _currentCountry = _user.country;
+    else
+      _currentCountry = _newCountry;
     _screenSize = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Prays App'),
-      ),
-      body: Builder(builder: (context) => _buildInputForm(context)),
-    );
+    if(_churchList.length > 0)
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Edit User'),
+        ),
+        body: Builder(builder: (context) => _buildInputForm(context)),
+      );
+    else
+      _loadChurch(_user.church, _user.token);
+      return LoadingView();
   }
 
   void _onUserNameChanged(){
@@ -73,11 +83,10 @@ class _EditUserScreenState extends State<EditUserScreenState>{
   }
 
   Widget _buildInputForm(BuildContext context){
-    Size screenSize = MediaQuery.of(context).size;
     EditUserScreenState state = this.widget;
     return Container(
-      width: screenSize.width,
-      height: screenSize.height,
+      width: _screenSize.width,
+      height: _screenSize.height,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,8 +96,8 @@ class _EditUserScreenState extends State<EditUserScreenState>{
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   _buildUserNameInputField(state.user.userName),
-                  _buildCountryInputField(state.user.country),
-                  //_buildChurchInputField(_churchName),
+                  _buildChurchInputField(_churchList),
+                  _buildCountryDropDownButton(),
                   _buildBarButton(context),
                 ],
               ),
@@ -110,42 +119,18 @@ class _EditUserScreenState extends State<EditUserScreenState>{
     );
   }
 
-  Widget _buildCountryInputField(String country){
-    return Container(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
-        child: InputFieldArea(
-          hint: country,
-          obscure: false,
-          controller: _countryController,
-          labelText: 'Country:',
-        )
-    );
-  }
-
-//  Widget _buildChurchInputField(String church){
-//    _dropDownMenuItems = new List();
-//    _dropDownMenuItems.add(DropdownMenuItem(
-//        value: _loading,
-//        child: Text(_loading)
-//      )
-//    );
-//    return Container(
-//      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
-//        child:  DropdownButton(
-//          value: _loading,
-//          items: _dropDownMenuItems,
-//          onChanged: (church) {
-//            print(church);
-//        }
-//        ),
-//    );
-//  }
-
   _loadChurch(int idChurch, String token) async {
-    Church church = await ChurchHttp().fetchChurch(idChurch, token);
+    _churchList = await ChurchHttp().getChurches();
     setState(() {
-      _churchName = church.name;
+      for(int i = 0; i < _churchList.length; i++){
+        Church church = _churchList.elementAt(i);
+        if(church.idChurch == _user.church){
+          _church = church;
+          break;
+        }
+      }
     });
+
   }
 
   Widget _buildBarButton(BuildContext context){
@@ -164,12 +149,14 @@ class _EditUserScreenState extends State<EditUserScreenState>{
   }
 
   _savedButtonPressed(BuildContext context) async{
-    if(_newName == '' && _newCountry == '')
+    if(_newName == '' && _newCountry == '' && _newIdChurch == 0)
       return;
     if(_newName != '')
       _user.userName = _newName;
     if(_newCountry != '')
       _user.country = _newCountry;
+    if(_newIdChurch != 0)
+      _user.church = _newIdChurch;
     int response = await UserHttp().putUser(_user);
     if(response == 200){
       final snackBar = SnackBar(
@@ -190,6 +177,36 @@ class _EditUserScreenState extends State<EditUserScreenState>{
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+  }
+
+  Widget _buildCountryDropDownButton(){
+    return Container(
+      height: 120.0,
+      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+      child: CountryDropdownButton(_currentCountry,
+        onChanged: (newCountry){
+          setState(() {
+            _newCountry = newCountry;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildChurchInputField(List<Church> churchList){
+    return Container(
+        height: 120.0,
+        padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+        child: ChurchDropdownButton(_church,
+          churches: _churchList,
+          onChanged: (newChurch) {
+            setState(() {
+              _church = newChurch;
+              _newIdChurch = newChurch.idChurch;
+            });
+          }
+        )
+    );
   }
 
 }

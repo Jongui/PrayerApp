@@ -23,8 +23,8 @@ class HomeView extends StatelessWidget{
 
     return new ListView(
       children: <Widget>[
-        HomeViewHeader(user.userName, user.country, avatarUrl, church.name, user),
-        HomeViewActions(),
+        HomeViewHeader(avatarUrl, user),
+        HomeViewActions(user, church),
       ]
     );
   }

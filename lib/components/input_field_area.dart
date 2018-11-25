@@ -9,7 +9,7 @@ class InputFieldArea extends StatelessWidget {
   InputFieldArea({this.hint, this.obscure, this.icon, this.controller, this.labelText});
   @override
   Widget build(BuildContext context) {
-    return (new Container(
+    return Container(
       decoration: new BoxDecoration(
         border: new Border(
           bottom: new BorderSide(
@@ -32,14 +32,14 @@ class InputFieldArea extends StatelessWidget {
           borderRadius: BorderRadius.circular(6.25),
           shape: BoxShape.rectangle
       ),
-      child: new TextFormField(
+      child: TextFormField(
         obscureText: obscure,
         style: const TextStyle(
           color: Colors.blueGrey,
         ),
         controller: controller,
-        decoration: new InputDecoration(
-          icon: new Icon(
+        decoration: InputDecoration(
+          icon: Icon(
             icon,
             color: Colors.blue,
           ),
@@ -52,6 +52,6 @@ class InputFieldArea extends StatelessWidget {
               top: 30.0, right: 30.0, bottom: 30.0, left: 5.0),
         ),
       ),
-    ));
+    );
   }
 }

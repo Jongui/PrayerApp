@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prayer_app/components/grid_button.dart';
+import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/screens/churches_screen/churches_screen.dart';
 
 class HomeViewActions extends StatelessWidget{
 
+  Church church;
+  User user;
+
   Size _screenSize;
+
+  HomeViewActions(this.user, this.church);
 
   @override
   Widget build(BuildContext context) {
@@ -12,32 +21,50 @@ class HomeViewActions extends StatelessWidget{
       width: _screenSize.width,
       height: _screenSize.height / 3,
       color: Colors.white30,
-      child: new GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 1.0,
-          padding: const EdgeInsets.all(4.0),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-          children: <Widget>[
-            Container(
-              width: 50.0,
-              height: 50.0,
-              padding: const EdgeInsets.all(0.0),//I used some padding without fixed width and height
-              decoration: new BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                // Use the FontAwesomeIcons class for the IconData
-                icon: Icon(FontAwesomeIcons.church,
-                color: Colors.lightBlueAccent,),
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(0.0),
-                onPressed: () { print("Pressed"); },
+      child: _buildGridButtons(context),
+    );
+  }
 
-              ),
+  Widget _buildGridButtons(BuildContext context){
+    double buttonHeight = _screenSize.height / 3 / 4;
+    double buttonWidth = _screenSize.width / 2 / 4;
+    return new GridView.count(
+        crossAxisCount: 2,
+        childAspectRatio: 1.0,
+        padding: const EdgeInsets.only(left: 36.0, right: 36.0, bottom: 48.0, top: 36.0),
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 36.0,
+        children: <Widget>[
+          GridButton(
+            buttonHeight: buttonHeight,
+            buttonWidth: buttonWidth,
+            buttonPadding: EdgeInsets.only(right: 28.0),
+            padding: EdgeInsets.all(0.0),
+            border: Border.all(color: Colors.blueGrey),
+            icon: Icon(FontAwesomeIcons.church,
+                color: Colors.blueGrey,
+                size: 96.0
             ),
-          ]
-      ),
+            onPressed: () {
+              Navigator.of(context).push(
+                  new MaterialPageRoute(
+                      builder: (context) => new ChurchesScreen(church, user.token)
+                  ));
+            },
+          ),
+          GridButton(
+            buttonHeight: buttonHeight,
+            buttonWidth: buttonWidth,
+            buttonPadding: EdgeInsets.all(0.0),
+            padding: EdgeInsets.all(0.0),
+            border: Border.all(color: Colors.blueGrey),
+            icon: Icon(FontAwesomeIcons.pray,
+                color: Colors.blueGrey,
+                size: 96.0
+            ),
+            onPressed: () { print("Pressed!"); },
+          ),
+        ]
     );
   }
 
