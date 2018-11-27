@@ -38,7 +38,7 @@ class _ChurchesScreenState extends State<ChurchesScreenState>{
     _token = this.widget.token;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prays App'),
+        title: Text('Churches'),
       ),
       body: ChurchView(_church, _token),
     );

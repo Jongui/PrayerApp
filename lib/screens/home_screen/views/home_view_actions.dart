@@ -4,6 +4,7 @@ import 'package:prayer_app/components/grid_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/churches_screen/churches_screen.dart';
+import 'package:prayer_app/screens/prays_screen/prays_screen.dart';
 
 class HomeViewActions extends StatelessWidget{
 
@@ -62,7 +63,12 @@ class HomeViewActions extends StatelessWidget{
                 color: Colors.blueGrey,
                 size: 96.0
             ),
-            onPressed: () { print("Pressed!"); },
+            onPressed: () {
+              Navigator.of(context).push(
+                  new MaterialPageRoute(
+                      builder: (context) => PraysScreen(user)
+                  ));
+              },
           ),
         ]
     );
