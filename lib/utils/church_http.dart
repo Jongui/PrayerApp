@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:prayer_app/model/church.dart';
 import 'package:http/http.dart' as http;
+import 'package:prayer_app/resources/config.dart';
 
 class ChurchHttp {
   static final ChurchHttp _churchHttp = new ChurchHttp._internal();
@@ -14,7 +15,7 @@ class ChurchHttp {
   ChurchHttp._internal();
 
   Future<Church> fetchChurch(int idChurch, String token) async {
-    String url = 'http://192.168.1.9:8080/api/v1/church/' + idChurch.toString();
+    String url = serverIp + 'church/' + idChurch.toString();
     final response =
     await http.get(url,
         headers: {"authorization": "Basic " + token}
@@ -31,7 +32,7 @@ class ChurchHttp {
 
   Future<int> postChurch(Church church, String token) async {
     final response =
-    await http.post('http://192.168.1.9:8080/api/v1/church',
+    await http.post(serverIp + 'church',
       headers: {
         "Content-Type": "application/json",
         "authorization": "Basic " + token
@@ -43,7 +44,7 @@ class ChurchHttp {
 
   Future<int> putChurch(Church church, String token) async{
     final response =
-    await http.put('http://192.168.1.9:8080/api/v1/church/' + church.idChurch.toString(),
+    await http.put(serverIp + 'church/' + church.idChurch.toString(),
       headers: {
         "Content-Type": "application/json",
         "authorization": "Basic " + token
@@ -56,7 +57,7 @@ class ChurchHttp {
   Future<List<Church>> getChurches() async{
     List<Church> churches = [];
     final response =
-    await http.get('http://192.168.1.9:8080/api/v1/church/',
+    await http.get(serverIp + 'church/',
       headers: {
         "Content-Type": "application/json"
       },

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:prayer_app/resources/config.dart';
 
 class UserHttp{
   static final UserHttp _userHttp = new UserHttp._internal();
@@ -24,7 +25,7 @@ class UserHttp{
         city: "Not defined",
         country: "ND",
         church: 1);
-    final response = await http.post('http://192.168.1.9:8080/api/v1/user',
+    final response = await http.post(serverIp + 'user',
         headers: {
           "Content-Type": "application/json"
         },
@@ -43,7 +44,7 @@ class UserHttp{
 
   Future<User> fetchUser(FirebaseUser firebaseUser) async {
     final response =
-    await http.get('http://192.168.1.9:8080/api/v1/user/email/' + firebaseUser.email
+    await http.get(serverIp + 'user/email/' + firebaseUser.email
         + '/');
     try {
       var jsonVar = json.decode(response.body);
@@ -79,7 +80,7 @@ class UserHttp{
 
   Future<int> putUser(User user) async{
     final response =
-        await http.put('http://192.168.1.9:8080/api/v1/user/' + user.idUser.toString(),
+        await http.put(serverIp + 'user/' + user.idUser.toString(),
           headers: {
             "Content-Type": "application/json",
             "authorization": "Basic " + user.token

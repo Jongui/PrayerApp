@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:prayer_app/model/pray.dart';
+import 'package:prayer_app/resources/config.dart';
 
 class PrayHttp {
   static final PrayHttp _prayHttp = new PrayHttp._internal();
@@ -15,7 +16,7 @@ class PrayHttp {
 
   Future<int> postPray(Pray pray, String token) async {
     final response =
-    await http.post('http://192.168.1.9:8080/api/v1/pray',
+    await http.post(serverIp + 'pray',
       headers: {
         "Content-Type": "application/json",
         "authorization": "Basic " + token
