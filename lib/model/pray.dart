@@ -7,13 +7,13 @@ class Pray{
 
   Pray({this.idPray, this.description, this.beginDate, this.endDate, this.idUser});
 
-  factory Pray.fromJson(Map<String, dynamic> churchJson){
+  factory Pray.fromJson(Map<String, dynamic> prayJson){
     return Pray(
-      idPray: churchJson['idPray'],
-      description: churchJson['description'],
-      beginDate: churchJson['beginDate'],
-      endDate: churchJson['endDate'],
-      idUser: churchJson['creator'],
+      idPray: prayJson['idPray'],
+      description: prayJson['description'],
+      beginDate: DateTime.fromMicrosecondsSinceEpoch(prayJson['beginDate']),
+      endDate: DateTime.fromMicrosecondsSinceEpoch(prayJson['endDate']),
+      idUser: prayJson['creator'],
     );
   }
 

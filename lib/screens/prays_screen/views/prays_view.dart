@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/prays_screen/views/prays_view_header.dart';
+import 'package:prayer_app/screens/prays_screen/views/prays_list_view.dart';
 
 class PrayView extends StatelessWidget{
 
@@ -21,8 +21,7 @@ class PrayView extends StatelessWidget{
           ),
           child: new Column(
             children: <Widget>[
-              PrayViewHeader(user),
-              Divider(),
+              PrayListView(user: user),
             ],
           ),
         )
