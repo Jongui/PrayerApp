@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/pray_card_view.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_http.dart';
@@ -56,7 +57,7 @@ class _PrayListViewState extends State<PrayListViewState>{
       _views = [];
       for(int i = 0; i < prays.length; i++){
         Pray pray = prays.elementAt(i);
-        _views.add(Text(pray.description));
+        _views.add(PrayCardView(pray: pray,));
       }
     });
   }
