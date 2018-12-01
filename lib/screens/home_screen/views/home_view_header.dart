@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/country_flag_view.dart';
-import 'package:prayer_app/components/edit_button.dart';
+import 'package:prayer_app/components/views/country_flag_view.dart';
+import 'package:prayer_app/components/buttons/edit_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
@@ -9,28 +9,25 @@ import 'package:prayer_app/utils/church_http.dart';
 
 class HomeViewHeader extends StatelessWidget {
 
-  String userName;
-  String avatarUrl;
   User user;
 
 
-  HomeViewHeader(this.avatarUrl, this.user);
+  HomeViewHeader(this.user);
 
   @override
   Widget build(BuildContext context) {
-    return HomeViewHeaderState(avatarUrl, user);
+    return HomeViewHeaderState(user);
   }
 }
 
 class HomeViewHeaderState extends StatefulWidget {
 
-  String avatarUrl;
   User user;
 
-  HomeViewHeaderState(this.avatarUrl, this.user);
+  HomeViewHeaderState(this.user);
 
   @override
-  _HomeViewHeaderState createState() => _HomeViewHeaderState(avatarUrl, user);
+  _HomeViewHeaderState createState() => _HomeViewHeaderState(user);
 
 
 }
@@ -40,10 +37,9 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
   Size _screenSize;
   Church _church;
 
-  String avatarUrl;
   User user;
 
-  _HomeViewHeaderState(this.avatarUrl, this.user);
+  _HomeViewHeaderState(this.user);
 
 
   @override
@@ -79,8 +75,8 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
           new CircleAvatar(
             radius: 40.0,
             backgroundColor: Colors.grey,
-            backgroundImage: avatarUrl != null ? new NetworkImage(
-                avatarUrl) : null,
+            backgroundImage: user.avatarUrl != null ? new NetworkImage(
+                user.avatarUrl) : null,
           ),
         ],
       ),

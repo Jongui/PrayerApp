@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/add_button.dart';
+import 'package:prayer_app/components/buttons/add_button.dart';
 import 'package:prayer_app/screens/add_church_screen/add_church_screen.dart';
 
 class ChurchViewDetails extends StatelessWidget{

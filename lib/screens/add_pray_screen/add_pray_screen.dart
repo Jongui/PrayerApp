@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
-import 'package:prayer_app/components/date_picker.dart';
-import 'package:prayer_app/components/input_field_area.dart';
-import 'package:prayer_app/components/save_button.dart';
+import 'package:prayer_app/components/inputs/date_picker.dart';
+import 'package:prayer_app/components/inputs/input_field_area.dart';
+import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_http.dart';
+import 'package:prayer_app/utils/user_pray_http.dart';
 
 class AddPrayScreen extends StatelessWidget {
 
@@ -161,8 +165,14 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
 
     _pray.idUser = _user.idUser;
 
-    int response = await PrayHttp().postPray(_pray, _user.token);
-    if(response == 201){
+    Response response = await PrayHttp().postPray(_pray, _user.token);
+    if(response.statusCode == 201) {
+      var jsonVar = json.decode(response.body);
+      _pray = Pray.fromJson(jsonVar);
+      response =
+      await UserPrayHttp().postUserPray(_user, _pray, _pray.beginDate, _pray.endDate);
+    }
+    if(response.statusCode == 200 || response.statusCode == 201){
       final snackBar = SnackBar(
         content: Text('Pray created!',
           style: TextStyle(

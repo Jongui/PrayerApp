@@ -9,9 +9,8 @@ class HomeView extends StatelessWidget{
 
   User user;
   Church church;
-  String avatarUrl;
 
-  HomeView({this.user, this.church, this.avatarUrl});
+  HomeView({this.user, this.church});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class HomeView extends StatelessWidget{
 
     return new ListView(
       children: <Widget>[
-        HomeViewHeader(avatarUrl, user),
+        HomeViewHeader(user),
         HomeViewActions(user, church),
       ]
     );

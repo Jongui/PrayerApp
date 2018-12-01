@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/float_add_button.dart';
+import 'package:prayer_app/components/buttons/float_add_button.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_pray_screen/add_pray_screen.dart';
 import 'package:prayer_app/screens/prays_screen/views/prays_view.dart';
@@ -23,7 +23,7 @@ class PraysScreenState extends StatefulWidget {
   User user;
 
   @override
-  _PraysScreenState createState() => new _PraysScreenState();
+  _PraysScreenState createState() => _PraysScreenState();
 
 }
 

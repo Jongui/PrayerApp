@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/church_dropdown_button.dart';
-import 'package:prayer_app/components/country_dropdown_button.dart';
-import 'package:prayer_app/components/input_field_area.dart';
-import 'package:prayer_app/components/save_button.dart';
+import 'package:prayer_app/components/dropdown/church_dropdown_button.dart';
+import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
+import 'package:prayer_app/components/inputs/input_field_area.dart';
+import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';

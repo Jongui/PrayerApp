@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:prayer_app/components/grid_button.dart';
+import 'package:prayer_app/components/buttons/grid_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/churches_screen/churches_screen.dart';

@@ -15,15 +15,17 @@ class PrayView extends StatelessWidget{
       user = User();
 
     return SingleChildScrollView(
-        child: Container(
-          decoration: new BoxDecoration(
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: new BoxDecoration(
               color: Colors.white30
-          ),
-          child: new Column(
-            children: <Widget>[
-              PrayListView(user: user),
-            ],
-          ),
+            ),
+            child: new Column(
+              children: <Widget>[
+                PrayListView(user: user),
+              ],
+            ),
+          )
         )
     );
   }

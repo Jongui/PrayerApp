@@ -39,12 +39,12 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
       _user = await UserHttp().createUser(_firebaseUser);
     }
     _user.token = await _firebaseUser.getIdToken(refresh: false);
+    _user.avatarUrl = _firebaseUser.photoUrl;
     _church = await ChurchHttp().fetchChurch(_user.church, _user.token);
     setState(() {
       _view = HomeView(
         user: _user,
         church: _church,
-        avatarUrl: _firebaseUser != null ? _firebaseUser.photoUrl : null,
       );
     });
   }
@@ -57,7 +57,6 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
       _view = HomeView(
         user: _user,
         church: _church,
-        avatarUrl: _firebaseUser != null ? _firebaseUser.photoUrl : null,
       );
     });
   }

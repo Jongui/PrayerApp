@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/country_flag_view.dart';
-import 'package:prayer_app/components/edit_button.dart';
+import 'package:prayer_app/components/views/country_flag_view.dart';
+import 'package:prayer_app/components/buttons/edit_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/screens/edit_church_screen/edit_church_screen.dart';
 

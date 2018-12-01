@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/country_flag_view.dart';
+import 'package:prayer_app/components/views/country_flag_view.dart';
 import 'package:prayer_app/resources/country_codes.dart';
 
 class CountryDropdownButton<String> extends StatelessWidget {

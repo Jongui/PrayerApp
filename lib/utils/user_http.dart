@@ -58,6 +58,18 @@ class UserHttp{
     }
   }
 
+  Future<User> getUser(int idUser) async {
+    final response = await http.get(serverIp + 'user/' + idUser.toString());
+    try{
+      var userJson = json.decode(response.body);
+      if(response.statusCode == 200 && userJson != null){
+        return User.fromJson(userJson);
+      }
+    } catch(e){
+      return User();
+    }
+  }
+
   Future<FirebaseUser> performFirebaseSignIn() async{
     // Attempt to get the currently authenticated user
     GoogleSignInAccount currentUser = _googleSignIn.currentUser;

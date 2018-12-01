@@ -12,8 +12,8 @@ class Pray{
     return Pray(
       idPray: prayJson['idPray'],
       description: prayJson['description'],
-      beginDate: DateTime.fromMicrosecondsSinceEpoch(beginDateJson, isUtc: false),
-      endDate: DateTime.fromMicrosecondsSinceEpoch(prayJson['endDate']),
+      beginDate: DateTime.fromMillisecondsSinceEpoch(beginDateJson, isUtc: false),
+      endDate: DateTime.fromMillisecondsSinceEpoch(prayJson['endDate']),
       idUser: prayJson['creator'],
     );
   }
