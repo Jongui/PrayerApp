@@ -39,7 +39,10 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
       _user = await UserHttp().createUser(_firebaseUser);
     }
     _user.token = await _firebaseUser.getIdToken(refresh: false);
-    _user.avatarUrl = _firebaseUser.photoUrl;
+    if(_user.avatarUrl != _firebaseUser.photoUrl){
+      _user.avatarUrl = _firebaseUser.photoUrl;
+      await UserHttp().putUser(_user);
+    }
     _church = await ChurchHttp().fetchChurch(_user.church, _user.token);
     setState(() {
       _view = HomeView(

@@ -17,6 +17,7 @@ class User{
       userName: userJson['userName'],
       city: userJson['city'],
       country: userJson['country'],
+      avatarUrl: userJson['avatarUrl'],
       church: userJson['church'],
     );
   }
@@ -28,6 +29,7 @@ class User{
         'userName': userName,
         'city': city,
         'country': country,
+        'avatarUrl': avatarUrl,
         'church': church
       };
 
