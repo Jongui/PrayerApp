@@ -27,8 +27,16 @@ class PrayHttp {
     return response;
   }
 
-  Future<http.Response> putPray(Pray pray, String token){
-
+  Future<http.Response> putPray(Pray pray, String token) async{
+    final response =
+        await http.put(serverIp + 'pray/' + pray.idPray.toString(),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      },
+      body: json.encode(pray),
+    );
+    return response;
   }
 
   Future<List<Pray>> getPraysByUser(User user) async {

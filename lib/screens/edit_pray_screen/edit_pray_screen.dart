@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +7,6 @@ import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_http.dart';
-import 'package:prayer_app/utils/user_pray_http.dart';
 
 class EditPrayScreen extends StatelessWidget {
 
@@ -162,7 +159,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
   }
 
   _savedButtonPressed(BuildContext context) async{
-    if(_newDescription == '' || _newStartDate == '')
+    if(_newDescription == '' && _newStartDate == '' && _newEndDate == '')
       return;
     var formatterFrom = new DateFormat('dd/MM/yyyy');
     if(_newDescription != '')
@@ -175,15 +172,15 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
     pray.idUser = user.idUser;
 
     Response response = await PrayHttp().putPray(pray, user.token);
-    if(response.statusCode == 200 || response.statusCode == 201) {
-      var jsonVar = json.decode(response.body);
-      pray = Pray.fromJson(jsonVar);
-      response =
-      await UserPrayHttp().postUserPray(user, pray, pray.beginDate, pray.endDate);
-    }
+//    if(response.statusCode == 200 || response.statusCode == 201) {
+//      var jsonVar = json.decode(response.body);
+//      pray = Pray.fromJson(jsonVar);
+//      response =
+//      await UserPrayHttp().postUserPray(user, pray, pray.beginDate, pray.endDate);
+//    }
     if(response.statusCode == 200 || response.statusCode == 201){
       final snackBar = SnackBar(
-        content: Text('Pray created!',
+        content: Text('Pray edited!',
           style: TextStyle(
               color: Colors.green
           ),
