@@ -27,6 +27,10 @@ class PrayHttp {
     return response;
   }
 
+  Future<http.Response> putPray(Pray pray, String token){
+
+  }
+
   Future<List<Pray>> getPraysByUser(User user) async {
     List<Pray> prays = [];
     final response =

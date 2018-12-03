@@ -6,19 +6,21 @@ import 'package:intl/intl.dart';
 import 'package:prayer_app/components/views/pray_creator_view.dart';
 import 'package:prayer_app/components/views/pray_rate_view.dart';
 import 'package:prayer_app/model/pray.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
-import 'package:prayer_app/screens/one_pray_screen/one_pray_screen.dart';
+import 'package:prayer_app/screens/edit_pray_screen/edit_pray_screen.dart';
 
 class PrayCardView extends StatelessWidget{
 
   Pray pray;
+  User user;
   UserPray userPray;
 
-  PrayCardView({@required this.pray, @required this.userPray});
+  PrayCardView({@required this.pray, @required this.userPray, @required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return PrayCardViewState(pray, userPray);
+    return PrayCardViewState(pray, userPray, user);
   }
 
 }
@@ -26,10 +28,11 @@ class PrayCardView extends StatelessWidget{
 class PrayCardViewState extends StatefulWidget {
 
   Pray pray;
+  User user;
   UserPray userPray;
-  PrayCardViewState(this.pray, this.userPray);
+  PrayCardViewState(this.pray, this.userPray, this.user);
 
-  _PrayCardViewState createState() => _PrayCardViewState(pray,userPray);
+  _PrayCardViewState createState() => _PrayCardViewState(pray,userPray,user);
 
 }
 
@@ -38,10 +41,11 @@ class _PrayCardViewState extends State<PrayCardViewState>{
   static final colors = [Colors.green, Colors.blue, Colors.red, Colors.yellow, Colors.deepPurple];
 
   Pray pray;
+  User user;
   UserPray userPray;
   String _subtitle;
 
-  _PrayCardViewState(this.pray, this.userPray);
+  _PrayCardViewState(this.pray, this.userPray, this.user);
 
   @override
   void initState() {
@@ -60,7 +64,8 @@ class _PrayCardViewState extends State<PrayCardViewState>{
       onTap: () {
       Navigator.of(context).push(
           new MaterialPageRoute(
-              builder: (context) => OnePrayScreen(pray: pray,)
+              builder: (context) => EditPrayScreen(pray: pray,
+              user: user,)
           ));
       },
       child: Card(

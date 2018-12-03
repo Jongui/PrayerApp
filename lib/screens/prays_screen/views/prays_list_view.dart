@@ -69,7 +69,8 @@ class _PrayListViewState extends State<PrayListViewState>{
           }
         }
         _views.add(PrayCardView(pray: pray,
-          userPray: userPray,));
+          userPray: userPray,
+          user: user,));
       }
     });
   }
