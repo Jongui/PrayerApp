@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/buttons/float_add_button.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/screens/add_church_screen/add_church_screen.dart';
 import 'package:prayer_app/screens/churches_screen/views/church_view.dart';
 
 class ChurchesScreen extends StatelessWidget {
@@ -23,24 +25,33 @@ class ChurchesScreenState extends StatefulWidget {
   String token;
 
   @override
-  _ChurchesScreenState createState() => new _ChurchesScreenState();
+  _ChurchesScreenState createState() => new _ChurchesScreenState(church, token);
 
 }
 
 class _ChurchesScreenState extends State<ChurchesScreenState>{
 
-  Church _church;
-  String _token;
+  Church church;
+  String token;
+
+  _ChurchesScreenState(this.church, this.token);
+
 
   @override
   Widget build(BuildContext context) {
-    _church = this.widget.church;
-    _token = this.widget.token;
     return Scaffold(
       appBar: AppBar(
         title: Text('Churches'),
       ),
-      body: ChurchView(_church, _token),
+      body: ChurchView(church, token),
+      floatingActionButton: FloatAddButton(
+        onPressed:  () {
+          Navigator.of(context).push(
+              new MaterialPageRoute(
+                  builder: (context) => AddChurchScreen(token: token,)
+              ));
+        },
+      ),
     );
   }
 }

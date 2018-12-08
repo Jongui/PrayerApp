@@ -10,7 +10,7 @@ class EditChurchScreen extends StatelessWidget {
   Church church;
   String token;
 
-  EditChurchScreen(this.church, this.token);
+  EditChurchScreen({@required this.church, @required this.token});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/model/church.dart';
-import 'package:prayer_app/screens/churches_screen/views/church_view_details.dart';
-
-import 'package:prayer_app/screens/churches_screen/views/church_view_header.dart';
+import 'package:prayer_app/screens/churches_screen/views/churches_list_views.dart';
 
 class ChurchView extends StatelessWidget{
 
@@ -13,11 +11,6 @@ class ChurchView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return new ListView(
-        children: <Widget>[
-          ChurchViewHeader(church, token),
-          ChurchViewDetails(token),
-        ]
-    );
+    return ChurchesListView(token: token,);
   }
 }

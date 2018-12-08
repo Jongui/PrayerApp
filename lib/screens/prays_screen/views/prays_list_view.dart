@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/cardviews/pray_card_view.dart';
 import 'package:prayer_app/model/pray.dart';

@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget{
     if(church == null)
       church = Church();
 
-    return new ListView(
+    return ListView(
       children: <Widget>[
         HomeViewHeader(user),
         HomeViewActions(user, church),

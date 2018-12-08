@@ -48,7 +48,8 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
     }
     return Container(
       decoration: new BoxDecoration(
-          image: DecorationImage(image: AssetImage("church_background.jpg"))
+          image: DecorationImage(image: AssetImage("assets/church_background.jpg"),
+            fit: BoxFit.cover)
       ),
       child: new Column(
         children: <Widget>[
@@ -65,10 +66,11 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
       margin: EdgeInsets.only(top: 10.0),
       width: _screenSize.width,
       height: _screenSize.height / 4 / 2,
+      padding: EdgeInsets.only(left: 20.0),
       child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new CircleAvatar(
             radius: 40.0,
@@ -96,15 +98,18 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
                     Text(
                       user.userName != null ? user.userName : '',
                       style: new TextStyle( fontWeight: FontWeight.bold,
-                          fontSize: 24.0),
+                          fontSize: 24.0,
+                          color: Colors.white),
                     ),
-                    CountyFlagView(user.country,
+                    CountyFlagView(country: user.country,
                       width: 36.0,
-                      height: 36.0,),
+                      height: 36.0,
+                      color: Colors.white,),
                     Container(
                       padding: const EdgeInsets.only(left: 12.0),
                       child: Text( _church.name != null ? _church.name : '',
-                          style: new TextStyle( fontSize: 20.0)
+                          style: new TextStyle( fontSize: 20.0,
+                            color: Colors.white)
                       ),
                     )
                   ],

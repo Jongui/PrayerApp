@@ -46,7 +46,7 @@ class CountryDropdownButton<String> extends StatelessWidget {
               value: value["code"],
               child: Container(
                 width: size.width - 75,
-                child: CountyFlagView(value["code"],
+                child: CountyFlagView(country: value["code"],
                   width: 36.0,
                   height: 36.0,
                   color: Colors.blue,),

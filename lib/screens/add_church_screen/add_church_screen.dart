@@ -9,7 +9,7 @@ class AddChurchScreen extends StatelessWidget {
 
   String token;
 
-  AddChurchScreen(this.token);
+  AddChurchScreen({@required this.token});
 
   @override
   Widget build(BuildContext context) {
