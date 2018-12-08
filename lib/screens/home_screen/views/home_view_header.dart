@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
-import 'package:prayer_app/components/buttons/edit_button.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
@@ -50,13 +48,12 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
     }
     return Container(
       decoration: new BoxDecoration(
-          color: Colors.white30
+          image: DecorationImage(image: AssetImage("church_background.jpg"))
       ),
       child: new Column(
         children: <Widget>[
           _buildAvatar(),
           _buildInfos(),
-          _buildBarButton(context),
           new Divider()
         ],
       ),
@@ -65,6 +62,7 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
 
   Widget _buildAvatar(){
     return new Container(
+      margin: EdgeInsets.only(top: 10.0),
       width: _screenSize.width,
       height: _screenSize.height / 4 / 2,
       child: new Row(
@@ -118,22 +116,6 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
       return LoadingView();
     }
 
-  }
-
-  Widget _buildBarButton(BuildContext context){
-    return Row(
-      children: <Widget>[
-        EditButton(
-          onPressed: () {
-            Navigator.of(context).push(
-                new MaterialPageRoute(
-                    builder: (context) => new EditUserScreen(user)
-                ));
-          },
-          screenSize: _screenSize,
-        )
-      ],
-    );
   }
 
   void _handleChurchLoad(int idChurch, String token) async{

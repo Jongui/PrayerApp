@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
@@ -77,6 +79,17 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Prays app'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(FontAwesomeIcons.userEdit),
+            onPressed: () {
+              Navigator.of(context).push(
+                  new MaterialPageRoute(
+                      builder: (context) => new EditUserScreen(_user)
+                  ));
+            },
+          ),
+        ],
       ),
       body: _view,
     );
