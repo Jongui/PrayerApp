@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/church_http.dart';
@@ -89,7 +90,7 @@ class _UserPrayViewState extends State<UserPrayViewState>{
                           fontSize: 16.0,
                         ),
                       ),
-                      Text("Rated by user: " + rate.toString(),
+                      Text(AppLocalizations.of(context).ratedByUser(rate.toString()),
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,

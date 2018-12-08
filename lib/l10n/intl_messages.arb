@@ -1,3 +1,144 @@
 {
-  "@@last_modified": "2018-11-01T20:59:23.102072"
+  "@@last_modified": "2018-12-08T21:42:36.272458",
+  "title": "Praying App",
+  "@title": {
+    "description": "The application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Add",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addNew": "Add new",
+  "@addNew": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Save",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "Hello",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "name": "Name",
+  "@name": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchName": "Church name",
+  "@churchName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "city": "City",
+  "@city": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "notInformed": "Not informed",
+  "@notInformed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchCreated": "Church created!",
+  "@churchCreated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorWhileSaving": "Error while saving!",
+  "@errorWhileSaving": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "startDate": "Start Date",
+  "@startDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "endDate": "End Date",
+  "@endDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addYourPray": "Add your pray",
+  "@addYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description": "Description",
+  "@description": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayCreated": "Pray created!",
+  "@prayCreated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churches": "Churches",
+  "@churches": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchUpdated": "Church updated!",
+  "@churchUpdated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editYourPray": "Edit your pray",
+  "@editYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editUser": "Edit User",
+  "@editUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "userUpdated": "User updated!",
+  "@userUpdated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayFromTo": "Pray from {startDate} to {endDate}",
+  "@prayFromTo": {
+    "type": "text",
+    "placeholders": {
+      "startDate": {},
+      "endDate": {}
+    }
+  },
+  "yourRate": "Your rate: {rate}",
+  "@yourRate": {
+    "type": "text",
+    "placeholders": {
+      "rate": {}
+    }
+  },
+  "createdBy": "Created by {userName}",
+  "@createdBy": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
+    }
+  },
+  "ratedByUser": "Rated by user: {rate}",
+  "@ratedByUser": {
+    "type": "text",
+    "placeholders": {
+      "rate": {}
+    }
+  }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/views/pray_creator_view.dart';
 import 'package:prayer_app/components/views/pray_rate_view.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
@@ -43,20 +44,20 @@ class _PrayCardViewState extends State<PrayCardViewState>{
   Pray pray;
   User user;
   UserPray userPray;
-  String _subtitle;
-
+  
   _PrayCardViewState(this.pray, this.userPray, this.user);
 
   @override
   void initState() {
-    var formatterTo = new DateFormat('dd-MM-yyyy');
-    _subtitle = 'Pray from ' + formatterTo.format(pray.beginDate)
-      + ' to ' + formatterTo.format(pray.endDate);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var formatterTo = new DateFormat('dd-MM-yyyy');
+    String _subtitle = AppLocalizations.of(context).prayFromTo(formatterTo.format(pray.beginDate),
+        formatterTo.format(pray.endDate));
+
     var rng = new Random();
     int index = rng.nextInt(colors.length);
     var textColor = colors[index];

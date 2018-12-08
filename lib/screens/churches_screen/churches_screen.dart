@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/float_add_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/screens/add_church_screen/add_church_screen.dart';
 import 'package:prayer_app/screens/churches_screen/views/church_view.dart';
@@ -41,7 +42,7 @@ class _ChurchesScreenState extends State<ChurchesScreenState>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Churches'),
+        title: Text(AppLocalizations.of(context).title),
       ),
       body: ChurchView(church, token),
       floatingActionButton: FloatAddButton(

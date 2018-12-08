@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 
 class EditButton extends StatelessWidget {
 
@@ -25,7 +26,7 @@ class EditButton extends StatelessWidget {
             color: Colors.white30,
             disabledColor: Colors.blueGrey,
             splashColor: Colors.blue,
-            child: Text('Edit'))
+            child: Text(AppLocalizations.of(context).edit))
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/user_pray.dart';
 
 class PrayRateView extends StatelessWidget{
@@ -35,7 +36,7 @@ class _PrayRateViewState extends State<PrayRateViewState>{
     return Container(
       padding: EdgeInsets.only(right: 12.0),
       width: 96.0,
-      child: Text('Your rate: ' + userPray.rate.toString(),
+      child: Text(AppLocalizations.of(context).ratedByUser(userPray.rate),
           style: TextStyle(fontSize: 16.0,
             color: _color),
       )

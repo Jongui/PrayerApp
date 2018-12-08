@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
@@ -43,6 +44,9 @@ class _PrayCreatorViewState extends State<PrayCreatorViewState>{
 
   @override
   Widget build(BuildContext context) {
+    if(_creator.userName != null) {
+      _subtext = AppLocalizations.of(context).createdBy(_creator.userName);
+    }
     return Container(
       width: 200.0,
       margin: EdgeInsets.only(left: 16.0),
@@ -69,7 +73,6 @@ class _PrayCreatorViewState extends State<PrayCreatorViewState>{
     User user = await UserHttp().getUser(idCreator);
     setState(() {
       _creator = user;
-      _subtext = "Created by " + _creator.userName;
     });
   }
 

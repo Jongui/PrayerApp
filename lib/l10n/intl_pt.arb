@@ -1,19 +1,139 @@
 {
-  "@@last_modified": "2018-10-16T18:55:20.984620",
-  "title": "Praying App",
+  "@@last_modified": "2018-12-08T20:21:41.305510",
+  "title": "Aplicativo de Orações",
   "@title": {
-    "description": "Título do app",
+    "description": "Aplicativo para compartilhar motivos de oração",
     "type": "text",
     "placeholders": {}
+  },
+  "edit": "Editar",
+  "@edit": {
+    "description": "Editar",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Adicionar",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addNew": "Novo",
+  "@addNew": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Salvar",
+  "@save": {
+     "type": "text",
+     "placeholders": {}
   },
   "hello": "Olá",
   "@hello": {
     "type": "text",
     "placeholders": {}
-  }
-  "edit": "Editar",
-  "@edit": {
+  },
+  "name": "Nome",
+  "@name": {
     "type": "text",
     "placeholders": {}
+  },
+  "churchName": "Nome da igreja",
+  "@churchName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "city": "Cidade",
+  "@city": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "notInformed": "Não informado",
+  "@notInformed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchCreated": "Igreja criada!",
+  "@churchCreated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorWhileSaving": "Erro ao salvar!",
+  "@errorWhileSaving": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "startDate": "Data Início",
+  "@startDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "endDate": "Data Final",
+  "@endDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addYourPray": "Crie sua oração",
+  "@addYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description": "Descrição",
+  "@description": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayCreated": "Oração criada!",
+    "@prayCreated": {
+     "type": "text",
+     "placeholders": {}
+  },
+  "churches": "Igrejas",
+  "@churches": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchUpdated": "Igreja atualizada!",
+  "@churchUpdated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editYourPray": "Edite sua oração",
+  "@editYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editUser": "Editar Usuário",
+  "@editUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayFromTo": "Orar de {startDate} até {endDate}",
+  "@prayFromTo": {
+    "type": "text",
+    "placeholders": {
+      "startDate": {},
+      "endDate": {}
+    }
+  },
+  "yourRate": "Sua avaliação: {rate}",
+  "@yourRate": {
+    "type": "text",
+      "placeholders": {
+      "rate": {}
+    }
+  },
+  "createdBy": "Criado por {userName}",
+  "@createdBy": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
+   }
+  },
+  "ratedByUser": "Avaliação: {rate}",
+  "@ratedByUser": {
+    "type": "text",
+    "placeholders": {
+      "rate": {}
+    }
   }
 }

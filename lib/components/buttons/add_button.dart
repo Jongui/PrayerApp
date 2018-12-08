@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 
 class AddButton extends StatelessWidget {
 
@@ -25,7 +26,7 @@ class AddButton extends StatelessWidget {
             color: Colors.white30,
             disabledColor: Colors.blueGrey,
             splashColor: Colors.deepPurple[200],
-            child: Text('Add'))
+            child: Text(AppLocalizations.of(context).add))
     );
   }
 

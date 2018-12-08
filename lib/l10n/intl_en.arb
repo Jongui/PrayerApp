@@ -1,8 +1,29 @@
 {
-  "@@last_modified": "2018-10-16T18:55:20.984620",
+  "@@last_modified": "2018-12-08T20:21:41.305510",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Add",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addNew": "Add new",
+  "@addNew": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Save",
+  "@save": {
     "type": "text",
     "placeholders": {}
   },
@@ -10,10 +31,89 @@
   "@hello": {
     "type": "text",
     "placeholders": {}
-  }
-  "edit": "Edit",
-  "@edit": {
+  },
+  "name": "Name",
+  "@name": {
     "type": "text",
     "placeholders": {}
+  },
+  "churchName": "Church name",
+  "@churchName": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "city": "City",
+  "@city": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "notInformed": "Not informed",
+  "@notInformed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchCreated": "Church created!",
+  "@churchCreated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "errorWhileSaving": "Error while saving!",
+  "@errorWhileSaving": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churches": "Churches",
+  "@churches": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchUpdated": "Church updated!",
+  "@churchUpdated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editYourPray": "Edit your pray",
+  "@editYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "editUser": "Edit User",
+  "@editUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "userUpdated": "Usuário atualizado!",
+  "@userUpdated": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayFromTo": "Pray from {startDate} to {endDate}",
+  "@prayFromTo": {
+    "type": "text",
+    "placeholders": {
+      "startDate": {},
+      "endDate": {}
+    }
+  },
+  "yourRate": "Your rate: {rate}",
+  "@yourRate": {
+    "type": "text",
+      "placeholders": {
+      "rate": {}
+    }
+  },
+  "createdBy": "Created by {userName}",
+  "@createdBy": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
+    }
+  },
+  "ratedByUser": "Rated by user: {rate}",
+  "@ratedByUser": {
+    "type": "text",
+    "placeholders": {
+      "rate": {}
+    }
   }
 }

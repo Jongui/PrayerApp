@@ -3,6 +3,7 @@ import 'package:prayer_app/components/dropdown/church_dropdown_button.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
@@ -65,7 +66,7 @@ class _EditUserScreenState extends State<EditUserScreenState>{
     if(_churchList.length > 0)
       return Scaffold(
         appBar: AppBar(
-          title: Text('Edit User'),
+          title: Text(AppLocalizations.of(context).editUser),
         ),
         body: Builder(builder: (context) => _buildInputForm(context)),
       );
@@ -160,7 +161,7 @@ class _EditUserScreenState extends State<EditUserScreenState>{
     int response = await UserHttp().putUser(_user);
     if(response == 200){
       final snackBar = SnackBar(
-        content: Text('User updated!',
+        content: Text(AppLocalizations.of(context).userUpdated,
         style: TextStyle(
             color: Colors.green
           ),
@@ -169,7 +170,7 @@ class _EditUserScreenState extends State<EditUserScreenState>{
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text('Error while updating',
+        content: Text(AppLocalizations.of(context).errorWhileSaving,
           style: TextStyle(
               color: Colors.red
           ),

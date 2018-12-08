@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:prayer_app/components/inputs/date_picker.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_http.dart';
@@ -45,8 +46,9 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
   Size _screenSize;
   Pray _pray = Pray();
   User _user;
-  String _valueStartDate = 'Start Date';
-  String _valueEndDate = 'End Date';
+  String _valueStartDate;
+  String _valueEndDate;
+  AppLocalizations _appLocalizations;
 
   DatePicker _startDatePicker;
   DatePicker _endDatePicker;
@@ -61,6 +63,13 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
 
   @override
   Widget build(BuildContext context) {
+    _appLocalizations = AppLocalizations.of(context);
+    if(_valueStartDate == null){
+      _valueStartDate = _appLocalizations.startDate;
+    }
+    if(_valueEndDate == null){
+      _valueEndDate = _appLocalizations.endDate;
+    }
     _screenSize = MediaQuery.of(context).size;
     _startDatePicker = DatePicker(value: _valueStartDate,
         onPressed: _startDatePicked);
@@ -68,7 +77,7 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
         onPressed: _endDatePicked);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add your pray'),
+        title: Text(AppLocalizations.of(context).addYourPray),
       ),
       body: Builder(builder: (context) => _buildInputForm(context)),
     );
@@ -109,10 +118,10 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
     return Container(
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
-        hint: 'Description',
+        hint: _appLocalizations.description,
         obscure: false,
         controller: _descriptionController,
-        labelText: 'Description:',
+        labelText: _appLocalizations.description + ':',
       ),
     );
   }
@@ -174,7 +183,7 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
     }
     if(response.statusCode == 200 || response.statusCode == 201){
       final snackBar = SnackBar(
-        content: Text('Pray created!',
+        content: Text(_appLocalizations.prayCreated,
           style: TextStyle(
               color: Colors.green
           ),
@@ -183,7 +192,7 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text('Error while saving',
+        content: Text(_appLocalizations.errorWhileSaving,
           style: TextStyle(
               color: Colors.red
           ),

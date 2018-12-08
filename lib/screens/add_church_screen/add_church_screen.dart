@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
@@ -53,7 +54,7 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
     _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prays App'),
+        title: Text(AppLocalizations.of(context).title),
       ),
       body: Builder(builder: (context) => _buildInputForm(context)),
     );
@@ -102,10 +103,10 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
     return Container(
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
-        hint: 'Name',
+        hint: AppLocalizations.of(context).name,
         obscure: false,
         controller: _churchNameController,
-        labelText: 'Church Name:',
+        labelText: AppLocalizations.of(context).churchName + ':',
       ),
     );
   }
@@ -114,10 +115,10 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
     return Container(
         padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
         child: InputFieldArea(
-          hint: 'City',
+          hint: AppLocalizations.of(context).city,
           obscure: false,
           controller: _cityController,
-          labelText: 'City:',
+          labelText: AppLocalizations.of(context).city + ':',
         )
     );
   }
@@ -146,11 +147,11 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
       _church.country = _newCountry;
     if(_newCity != '')
       _church.city = _newCity;
-    _church.region = 'Not informed';
+    _church.region = AppLocalizations.of(context).notInformed;
     int response = await ChurchHttp().postChurch(_church, _token);
     if(response == 201){
       final snackBar = SnackBar(
-        content: Text('Church created!',
+        content: Text(AppLocalizations.of(context).churchCreated,
           style: TextStyle(
               color: Colors.green
           ),
@@ -159,7 +160,7 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text('Error while saving',
+        content: Text(AppLocalizations.of(context).errorWhileSaving,
           style: TextStyle(
               color: Colors.red
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
@@ -44,6 +45,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   String _newCity = '';
   Church _church;
   String _token;
+  AppLocalizations _appLocalizations;
 
   @override
   initState(){
@@ -54,10 +56,11 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
 
   @override
   Widget build(BuildContext context) {
+    _appLocalizations = AppLocalizations.of(context);
     _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prays App'),
+        title: Text(_appLocalizations.title),
       ),
       body: Builder(builder: (context) => _buildInputForm(context)),
     );
@@ -112,7 +115,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
         hint: name,
         obscure: false,
         controller: _churchNameController,
-        labelText: 'Church Name:',
+        labelText: _appLocalizations.churchName,
       ),
     );
   }
@@ -124,7 +127,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
           hint: city,
           obscure: false,
           controller: _cityController,
-          labelText: 'City:',
+          labelText: _appLocalizations.city,
         )
     );
   }
@@ -156,7 +159,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
     int response = await ChurchHttp().postChurch(_church, _token);
     if(response == 200){
       final snackBar = SnackBar(
-        content: Text('User updated!',
+        content: Text(_appLocalizations.churchUpdated,
           style: TextStyle(
               color: Colors.green
           ),
@@ -165,7 +168,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text('Error while updating',
+        content: Text(_appLocalizations.errorWhileSaving,
           style: TextStyle(
               color: Colors.red
           ),

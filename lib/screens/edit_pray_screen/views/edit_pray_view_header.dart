@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 
@@ -20,17 +21,17 @@ class EditPrayViewHeader extends StatelessWidget{
       ),
       child: new Column(
         children: <Widget>[
-          _buildDetails(),
+          _buildDetails(context),
           new Divider()
         ],
       ),
     );
   }
 
-  Widget _buildDetails(){
+  Widget _buildDetails(BuildContext context){
     var formatterTo = new DateFormat('dd-MM-yyyy');
-    String _subtitle = 'Pray from ' + formatterTo.format(pray.beginDate)
-        + ' to ' + formatterTo.format(pray.endDate);
+    String _subtitle = AppLocalizations.of(context).prayFromTo(formatterTo.format(pray.beginDate),
+          formatterTo.format(pray.endDate));
     return Container(
       padding: EdgeInsets.only(top: 76.0),
       child: ListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/edit_pray_screen/views/edit_pray_view.dart';
@@ -39,7 +40,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit your pray'),
+        title: Text(AppLocalizations.of(context).editYourPray),
       ),
       body: EditPrayView(pray: pray,
         user: user,),

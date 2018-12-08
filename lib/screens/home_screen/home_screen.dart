@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
@@ -15,19 +16,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PrayerAppHomeScreen();
+    return HomeScreenState();
   }
 }
 
-class PrayerAppHomeScreen extends StatefulWidget {
+class HomeScreenState extends StatefulWidget {
 
-  PrayerAppHomeScreen({Key key}) : super(key: key);
+  HomeScreenState({Key key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => new _HomeScreenState();
 }
 
-class _HomeScreenState extends State<PrayerAppHomeScreen> {
+class _HomeScreenState extends State<HomeScreenState> {
 
   User _user;
   Church _church = Church();
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<PrayerAppHomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prays app'),
+        title: Text(AppLocalizations.of(context).title),
         actions: <Widget>[
           IconButton(
             icon: Icon(FontAwesomeIcons.userEdit),

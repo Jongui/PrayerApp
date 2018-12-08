@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 
 class SaveButton extends StatelessWidget {
 
@@ -27,7 +28,7 @@ class SaveButton extends StatelessWidget {
             textColor: Colors.white,
             disabledColor: Colors.greenAccent,
             splashColor: Colors.green,
-            child: Text('Save'))
+            child: Text(AppLocalizations.of(context).save))
     );
   }
 
