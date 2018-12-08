@@ -53,4 +53,21 @@ class UserPrayHttp {
     return prays;
   }
 
+  Future<List<UserPray>> getUserPrayByPray(int idPray, String token) async {
+    List<UserPray> prays = [];
+    final response = await http.get(serverIp + 'userPray/pray/' + idPray.toString(),
+      headers: {
+        "Content-type": "application/json",
+        "authorization": "Basic " + token
+      });
+    try{
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar["value"];
+      prays = value.map((userPrayJson) => UserPray.fromJson(userPrayJson)).toList();
+    } catch(e){
+      return prays;
+    }
+    return prays;
+  }
+
 }

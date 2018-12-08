@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,8 @@ import 'package:prayer_app/resources/config.dart';
 
 class UserHttp{
   static final UserHttp _userHttp = new UserHttp._internal();
+
+  HashMap<int, User> _userHash = HashMap();
 
   factory UserHttp(){
     return _userHttp;
@@ -63,7 +66,9 @@ class UserHttp{
     try{
       var userJson = json.decode(response.body);
       if(response.statusCode == 200 && userJson != null){
-        return User.fromJson(userJson);
+        User user = User.fromJson(userJson);
+        _userHash[user.idUser] = user;
+        return user;
       }
     } catch(e){
       return User();
@@ -100,6 +105,10 @@ class UserHttp{
           body: json.encode(user),
         );
     return response.statusCode;
+  }
+
+  User getOfflineUser(int idUser){
+    return _userHash[idUser];
   }
 
 }

@@ -46,6 +46,7 @@ flutter:
   assets:
     - assets/countries_flags/
     - assets/church_background.jpg
+    - assets/pray.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
