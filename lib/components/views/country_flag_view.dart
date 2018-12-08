@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/model/country.dart';
 import 'package:prayer_app/utils/country_http.dart';
 
 class CountyFlagView extends StatelessWidget {
@@ -37,6 +38,7 @@ class _CountryFlagViewState extends State<CountryFlagViewState>{
   Color color;
 
   String _countryName;
+  String _language;
 
   _CountryFlagViewState(this.country, this.width, this.height, this.color);
 
@@ -45,12 +47,15 @@ class _CountryFlagViewState extends State<CountryFlagViewState>{
     if(country == null)
       country = 'de';
     _countryName = country;
+    _language = "en";
     _handleCountryInfoRequest();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Locale locale = Localizations.localeOf(context);
+    _language = locale.languageCode;
     String assetString = "assets/countries_flags/" + country.toLowerCase() + ".png";
     if(_countryName == null)
       _countryName = "Not defined";
@@ -70,9 +75,11 @@ class _CountryFlagViewState extends State<CountryFlagViewState>{
   }
 
   void _handleCountryInfoRequest() async {
-    String response = await CountryHttp().countryDescription(country);
+    Country countryObject = CountryHttp().countryOffline(country);
+    if(countryObject == null)
+      countryObject = await CountryHttp().countryDescription(country, _language);
     setState(() {
-      _countryName = response;
+      _countryName = countryObject.name;
     });
   }
 

@@ -11,3 +11,4 @@ ios/
 test/
 .flutter-plugins
 pubspec.lock
+.idea/
