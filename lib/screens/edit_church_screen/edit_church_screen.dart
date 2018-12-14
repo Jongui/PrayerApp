@@ -4,36 +4,42 @@ import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
 class EditChurchScreen extends StatelessWidget {
 
   Church church;
-  String token;
+  User user;
 
-  EditChurchScreen({@required this.church, @required this.token});
+  EditChurchScreen({@required this.church, @required this.user});
 
   @override
   Widget build(BuildContext context) {
     return EditChurchScreenState(church: church,
-                                  token: token,);
+                                  user: user,);
   }
 
 }
 
 class EditChurchScreenState extends StatefulWidget {
 
-  EditChurchScreenState({Key key, this.church, this.token}) : super(key: key);
+  EditChurchScreenState({Key key, this.church, this.user}) : super(key: key);
 
   final Church church;
-  final String token;
+  final User user;
 
   @override
-  _EditChurchScreenState createState() => new _EditChurchScreenState();
+  _EditChurchScreenState createState() => new _EditChurchScreenState(church, user);
 
 }
 
 class _EditChurchScreenState extends State<EditChurchScreenState>{
+
+  _EditChurchScreenState(this.church, this.user);
+
+  Church church;
+  User user;
 
   TextEditingController _churchNameController = new TextEditingController();
   TextEditingController _cityController = new TextEditingController();
@@ -43,8 +49,6 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   String _newCountry = '';
   String _currentCountry;
   String _newCity = '';
-  Church _church;
-  String _token;
   AppLocalizations _appLocalizations;
 
   @override
@@ -69,10 +73,8 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
 
   Widget _buildInputForm(BuildContext context){
     EditChurchScreenState state = this.widget;
-    _token = state.token;
-    _church = state.church;
     if(_newCountry == '')
-      _currentCountry = _church.country;
+      _currentCountry = church.country;
     else
       _currentCountry = _newCountry;
     return SingleChildScrollView(
@@ -151,12 +153,14 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
     if(_newChurchName == '' && _newCountry == '' && _newCity == '')
       return;
     if(_newChurchName != '')
-      _church.name = _newChurchName;
+      church.name = _newChurchName;
     if(_newCountry != '')
-      _church.country = _newCountry;
+      church.country = _newCountry;
     if(_newCity != '')
-      _church.city = _newCity;
-    int response = await ChurchHttp().postChurch(_church, _token);
+      church.city = _newCity;
+    church.changedAt = DateTime.now();
+    church.changedBy = user.idUser;
+    int response = await ChurchHttp().putChurch(church, user.token);
     if(response == 200){
       final snackBar = SnackBar(
         content: Text(_appLocalizations.churchUpdated,
