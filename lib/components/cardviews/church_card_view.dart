@@ -2,14 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/edit_church_screen/edit_church_screen.dart';
 
 class ChurchCardView extends StatelessWidget {
 
   Church church;
-  String token;
+  User user;
 
-  ChurchCardView({@required this.church, @required this.token});
+  ChurchCardView({@required this.church, @required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ChurchCardView extends StatelessWidget {
         Navigator.of(context).push(
             new MaterialPageRoute(
                 builder: (context) => EditChurchScreen(church: church,
-                  token: token,)
+                  token: user.token,)
             ));
       },
       child: Card(

@@ -4,34 +4,40 @@ import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
 class AddChurchScreen extends StatelessWidget {
 
-  String token;
+  User user;
 
-  AddChurchScreen({@required this.token});
+  AddChurchScreen({@required this.user});
 
   @override
   Widget build(BuildContext context) {
     return AddChurchScreenState(
-      token: token,);
+      user: user,);
   }
 
 }
 
 class AddChurchScreenState extends StatefulWidget {
 
-  AddChurchScreenState({Key key, this.token}) : super(key: key);
+  AddChurchScreenState({Key key, this.user}) : super(key: key);
 
-  final String token;
+  final User user;
 
   @override
-  _AddChurchScreenState createState() => new _AddChurchScreenState();
+  _AddChurchScreenState createState() => new _AddChurchScreenState(user);
 
 }
 
 class _AddChurchScreenState extends State<AddChurchScreenState>{
+
+  User user;
+
+  _AddChurchScreenState(this.user);
+
   TextEditingController _churchNameController = new TextEditingController();
   TextEditingController _cityController = new TextEditingController();
 
@@ -40,7 +46,6 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
   String _newCountry = '';
   String _newCity = '';
   Church _church = Church();
-  String _token;
 
   @override
   initState(){
@@ -70,8 +75,6 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
   }
 
   Widget _buildInputForm(BuildContext context){
-    AddChurchScreenState state = this.widget;
-    _token = state.token;
     if(_newCountry == '')
       _newCountry = 'BR';
     return SingleChildScrollView(
@@ -148,7 +151,9 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
     if(_newCity != '')
       _church.city = _newCity;
     _church.region = AppLocalizations.of(context).notInformed;
-    int response = await ChurchHttp().postChurch(_church, _token);
+    _church.createdBy = user.idUser;
+    _church.createdAt = DateTime.now();
+    int response = await ChurchHttp().postChurch(_church, user.token);
     if(response == 201){
       final snackBar = SnackBar(
         content: Text(AppLocalizations.of(context).churchCreated,

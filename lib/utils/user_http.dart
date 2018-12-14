@@ -26,8 +26,7 @@ class UserHttp{
     User user = User( email: firebaseUser.email,
         userName: firebaseUser.displayName,
         city: "Not defined",
-        country: "ND",
-        church: 1);
+        country: "ND");
     final response = await http.post(serverIp + 'user',
         headers: {
           "Content-Type": "application/json"

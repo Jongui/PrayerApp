@@ -4,8 +4,11 @@ class Church{
   String city;
   String region;
   String country;
+  int createdBy;
+  DateTime createdAt;
 
-  Church({this.idChurch, this.name, this.city, this.region, this.country});
+  Church({this.idChurch, this.name, this.city, this.region, this.country, this.createdBy,
+    this.createdAt});
 
   factory Church.fromJson(Map<String, dynamic> churchJson){
     return Church(
@@ -14,6 +17,8 @@ class Church{
       city: churchJson['city'],
       region: churchJson['region'],
       country: churchJson['country'],
+      createdBy: churchJson['createdBy'],
+      createdAt: DateTime.fromMillisecondsSinceEpoch(churchJson['createdAt']),
     );
   }
 
@@ -23,7 +28,9 @@ class Church{
         'name': name,
         'city': city,
         'region': region,
-        'country': country
+        'country': country,
+        'createdBy': createdBy,
+        'createdAt': createdAt.millisecondsSinceEpoch
       };
 
 

@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/cardviews/church_card_view.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
 class ChurchesListView extends StatelessWidget{
 
-  String token;
+  User user;
 
-  ChurchesListView({@required this.token});
+  ChurchesListView({@required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return ChurchesListViewState(token);
+    return ChurchesListViewState(user);
   }
 
 }
 
 class ChurchesListViewState extends StatefulWidget {
 
-  String token;
+  User user;
 
-  ChurchesListViewState(this.token);
+  ChurchesListViewState(this.user);
 
   @override
-  _ChurchesListViewState createState() => _ChurchesListViewState(token);
+  _ChurchesListViewState createState() => _ChurchesListViewState(user);
 }
 
 class _ChurchesListViewState extends State<ChurchesListViewState>{
 
-  String token;
+  User user;
 
-  _ChurchesListViewState(this.token);
+  _ChurchesListViewState(this.user);
 
   List<Widget> _churchList = [];
 
@@ -57,7 +58,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState>{
       for(int i = 0; i < churches.length; i++) {
         Church church = churches.elementAt(i);
         _churchList.add(ChurchCardView(church: church,
-          token: token,)
+          user: user,)
         );
       }
     });

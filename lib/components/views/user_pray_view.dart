@@ -36,6 +36,7 @@ class _UserPrayViewState extends State<UserPrayViewState>{
   String token;
   int rate;
 
+  AppLocalizations _appLocalizations;
   String _churchName;
   _UserPrayViewState(this.user, this.token, this.rate);
 
@@ -48,6 +49,7 @@ class _UserPrayViewState extends State<UserPrayViewState>{
 
   @override
   Widget build(BuildContext context) {
+    _appLocalizations = AppLocalizations.of(context);
     return Container(
         width: 200.0,
         margin: EdgeInsets.only(left: 16.0),
@@ -111,7 +113,10 @@ class _UserPrayViewState extends State<UserPrayViewState>{
     if(church == null)
       church = await ChurchHttp().getChurch(user.church, token);
     setState(() {
-      _churchName = church.name;
+      if(church.name != null)
+        _churchName = church.name;
+      else
+        _churchName = _appLocalizations.notInformed;
     });
   }
 
