@@ -34,9 +34,15 @@ class _PrayListViewState extends State<PrayListViewState>{
 
   User user;
   List<Widget> _views = [];
+  bool _reload = false;
 
   _PrayListViewState(this.user);
 
+  @override
+  void deactivate() {
+    _reload = true;
+    super.deactivate();
+  }
 
   @override
   void initState() {
@@ -45,6 +51,8 @@ class _PrayListViewState extends State<PrayListViewState>{
 
   @override
   Widget build(BuildContext context) {
+    if(_reload)
+      _handleLoadPray(user);
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20.0),
@@ -52,10 +60,16 @@ class _PrayListViewState extends State<PrayListViewState>{
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   _handleLoadPray(User user) async {
     List<Pray> prays = await PrayHttp().getPraysByUser(user);
     List<UserPray> userPrays = await UserPrayHttp().getUserPrayByUser(user.idUser, user.token);
     setState(() {
+      _reload = false;
       _views = [];
       for(int i = 0; i < prays.length; i++){
         Pray pray = prays.elementAt(i);

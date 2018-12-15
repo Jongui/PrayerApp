@@ -46,6 +46,7 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
   String _newCountry = '';
   String _newCity = '';
   Church _church = Church();
+  String _language;
 
   @override
   initState(){
@@ -77,6 +78,8 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
   Widget _buildInputForm(BuildContext context){
     if(_newCountry == '')
       _newCountry = 'BR';
+    Locale locale = Localizations.localeOf(context);
+    _language = locale.languageCode;
     return SingleChildScrollView(
       child: Container(
         width: _screenSize.width,
@@ -180,9 +183,10 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
       height: 120.0,
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: CountryDropdownButton(_newCountry,
+        languageLowerCase: _language.toLowerCase(),
         onChanged: (newCountry){
           setState(() {
-            _newCountry = newCountry;
+            _newCountry = newCountry.code;
           });
         },
       ),

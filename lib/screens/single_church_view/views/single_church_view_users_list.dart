@@ -32,9 +32,16 @@ class _SingleChurchViewUsersListState extends State<SingleChurchViewUsersListSta
 
   Church church;
   User user;
+  bool _reload = false;
   List<Widget> _views = [];
 
   _SingleChurchViewUsersListState(this.church, this.user);
+
+
+  @override
+  void deactivate() {
+    _reload = true;
+  }
 
   @override
   void initState() {
@@ -43,7 +50,18 @@ class _SingleChurchViewUsersListState extends State<SingleChurchViewUsersListSta
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+    if(_reload){
+      _handleChurchesLoad();
+      _reload = false;
+    }
+
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20.0),
@@ -54,6 +72,7 @@ class _SingleChurchViewUsersListState extends State<SingleChurchViewUsersListSta
   void _handleChurchesLoad() async{
     List<User> users = await UserHttp().getUsersByChurch(church.idChurch, user.token);
     setState(() {
+      _reload = false;
       _views = [];
       for(int i = 0; i < users.length; i++){
         User _user = users.elementAt(i);

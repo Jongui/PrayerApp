@@ -17,7 +17,7 @@ void main() {
       ],
       supportedLocales: [
         const Locale('en', ''),
-        const Locale('pt', 'BR'),
+        const Locale('pt', ''),
 
       ],
       onGenerateTitle: (BuildContext context) =>

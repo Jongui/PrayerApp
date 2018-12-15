@@ -47,6 +47,7 @@ class _EditUserScreenState extends State<EditUserScreenState>{
   String _currentCountry;
   User _user;
   List<Church> _churchList = List();
+  String _language;
 
   @override
   initState(){
@@ -63,6 +64,8 @@ class _EditUserScreenState extends State<EditUserScreenState>{
     else
       _currentCountry = _newCountry;
     _screenSize = MediaQuery.of(context).size;
+    Locale locale = Localizations.localeOf(context);
+    _language = locale.languageCode;
     if(_churchList.length > 0)
       return Scaffold(
         appBar: AppBar(
@@ -185,9 +188,10 @@ class _EditUserScreenState extends State<EditUserScreenState>{
       height: 120.0,
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: CountryDropdownButton(_currentCountry,
+        languageLowerCase: _language.toLowerCase(),
         onChanged: (newCountry){
           setState(() {
-            _newCountry = newCountry;
+            _newCountry = newCountry.code;
           });
         },
       ),

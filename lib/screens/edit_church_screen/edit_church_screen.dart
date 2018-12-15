@@ -50,6 +50,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   String _currentCountry;
   String _newCity = '';
   AppLocalizations _appLocalizations;
+  String _language;
 
   @override
   initState(){
@@ -62,6 +63,8 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   Widget build(BuildContext context) {
     _appLocalizations = AppLocalizations.of(context);
     _screenSize = MediaQuery.of(context).size;
+    Locale locale = Localizations.localeOf(context);
+    _language = locale.languageCode;
     return Scaffold(
       appBar: AppBar(
         title: Text(_appLocalizations.title),
@@ -187,9 +190,10 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       height: 120.0,
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: CountryDropdownButton(_currentCountry,
+          languageLowerCase: _language.toLowerCase(),
         onChanged: (newCountry){
           setState(() {
-            _newCountry = newCountry;
+            _newCountry = newCountry.code;
           });
         },
       ),
