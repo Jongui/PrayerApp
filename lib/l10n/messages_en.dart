@@ -18,13 +18,15 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'en';
 
-  static m0(userName) => "Created by ${userName}";
+  static m0(createdAt) => "Created at ${createdAt}";
 
-  static m1(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
+  static m1(userName) => "Created by ${userName}";
 
-  static m2(rate) => "Rated by user: ${rate}";
+  static m2(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
 
-  static m3(rate) => "Your rate: ${rate}";
+  static m3(rate) => "Rated by user: ${rate}";
+
+  static m4(rate) => "Your rate: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -35,7 +37,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Church updated!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Churches"),
     "city" : MessageLookupByLibrary.simpleMessage("City"),
-    "createdBy" : m0,
+    "createdAt" : m0,
+    "createdBy" : m1,
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Edit User"),
     "editYourPray" : MessageLookupByLibrary.simpleMessage("Edit your pray"),
@@ -43,11 +46,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "hello" : MessageLookupByLibrary.simpleMessage("Hello"),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Not informed"),
-    "prayFromTo" : m1,
-    "ratedByUser" : m2,
+    "prayFromTo" : m2,
+    "ratedByUser" : m3,
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "title" : MessageLookupByLibrary.simpleMessage("Praying App"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Usuário atualizado!"),
-    "yourRate" : m3
+    "viewChurch" : MessageLookupByLibrary.simpleMessage("View church"),
+    "yourRate" : m4
   };
 }

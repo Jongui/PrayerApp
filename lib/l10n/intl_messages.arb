@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-08T21:42:36.272458",
+  "@@last_modified": "2018-12-15T11:08:54.458876",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -140,5 +140,17 @@
     "placeholders": {
       "rate": {}
     }
+  },
+  "createdAt": "Created at {createdAt}",
+  "@createdAt": {
+    "type": "text",
+    "placeholders": {
+      "createdAt": {}
+    }
+  },
+  "viewChurch": "View church",
+  "@viewChurch": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
-import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/edit_church_screen/edit_church_screen.dart';
+import 'package:prayer_app/screens/single_church_view/single_church_screen.dart';
 
 class ChurchCardView extends StatelessWidget {
 
@@ -18,14 +16,12 @@ class ChurchCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(user.idUser == church.createdBy){
           Navigator.of(context).push(
             new MaterialPageRoute(
-              builder: (context) => EditChurchScreen(church: church,
+              builder: (context) => SingleChurchScreen(church: church,
               user: user,)
             )
           );
-        }
       },
       child: Card(
         child: Column(
@@ -61,29 +57,6 @@ class ChurchCardView extends StatelessWidget {
         ),
       )
     );
-    if(user.idUser == church.createdBy){
-      ret.add(
-          Container(
-            padding: EdgeInsets.only(right: 14.0, bottom: 8.0),
-            color: Colors.grey[100],
-            child: ButtonTheme.bar( // make buttons use the appropriate styles for cards
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  ButtonBar(
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.edit),
-                      Text(AppLocalizations.of(context).edit,
-                        style: TextStyle(fontSize: 18.0),)
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
-      );
-    }
     return ret;
   }
 

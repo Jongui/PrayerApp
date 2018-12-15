@@ -135,5 +135,17 @@
     "placeholders": {
       "rate": {}
     }
+  },
+  "createdAt": "Criado em {createdAt}",
+  "@createdAt": {
+    "type": "text",
+    "placeholders": {
+      "createdAt": {}
+    }
+  },
+  "viewChurch": "Visualizar Igreja",
+  "@viewChurch": {
+    "type": "text",
+    "placeholders": {}
   }
 }

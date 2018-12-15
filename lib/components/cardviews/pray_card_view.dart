@@ -53,6 +53,11 @@ class _PrayCardViewState extends State<PrayCardViewState>{
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var formatterTo = new DateFormat('dd-MM-yyyy');
     String _subtitle = AppLocalizations.of(context).prayFromTo(formatterTo.format(pray.beginDate),

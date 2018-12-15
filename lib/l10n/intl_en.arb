@@ -115,5 +115,17 @@
     "placeholders": {
       "rate": {}
     }
+  },
+  "createdAt": "Created at {createdAt}",
+  "@createdAt": {
+    "type": "text",
+    "placeholders": {
+      "createdAt": {}
+    }
+  },
+  "viewChurch": "View church",
+  "@viewChurch": {
+    "type": "text",
+    "placeholders": {}
   }
 }

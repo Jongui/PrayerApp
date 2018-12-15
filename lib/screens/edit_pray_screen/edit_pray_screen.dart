@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/buttons/float_edit_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
@@ -43,7 +44,12 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
         title: Text(AppLocalizations.of(context).editYourPray),
       ),
       body: EditPrayView(pray: pray,
-        user: user,),
+        user: user,
+      ),
+      floatingActionButton: user.idUser == pray.idUser ? FloatEditButton(onAddPressed: ()  {
+
+      }, onEditPressed: () {
+      }) : null,
     );
 
   }

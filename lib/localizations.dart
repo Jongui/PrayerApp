@@ -120,6 +120,13 @@ class AppLocalizations {
 
   ratedByUser(rate) => Intl.message('Rated by user: $rate', name: 'ratedByUser', args: [rate]);
 
+  createdAt(createdAt) => Intl.message('Created at $createdAt',
+    name: 'createdAt', args: [createdAt]);
+
+  String get viewChurch{
+    return Intl.message('View church', name: 'viewChurch');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

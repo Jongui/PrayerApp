@@ -18,13 +18,15 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'pt';
 
-  static m0(userName) => "Criado por ${userName}";
+  static m0(createdAt) => "Criado em ${createdAt}";
 
-  static m1(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
+  static m1(userName) => "Criado por ${userName}";
 
-  static m2(rate) => "Avaliação: ${rate}";
+  static m2(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
 
-  static m3(rate) => "Sua avaliação: ${rate}";
+  static m3(rate) => "Avaliação: ${rate}";
+
+  static m4(rate) => "Sua avaliação: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -36,7 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Igreja atualizada!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Igrejas"),
     "city" : MessageLookupByLibrary.simpleMessage("Cidade"),
-    "createdBy" : m0,
+    "createdAt" : m0,
+    "createdBy" : m1,
     "description" : MessageLookupByLibrary.simpleMessage("Descrição"),
     "edit" : MessageLookupByLibrary.simpleMessage("Editar"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Editar Usuário"),
@@ -47,11 +50,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "name" : MessageLookupByLibrary.simpleMessage("Nome"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Não informado"),
     "prayCreated" : MessageLookupByLibrary.simpleMessage("Oração criada!"),
-    "prayFromTo" : m1,
-    "ratedByUser" : m2,
+    "prayFromTo" : m2,
+    "ratedByUser" : m3,
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "startDate" : MessageLookupByLibrary.simpleMessage("Data Início"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
-    "yourRate" : m3
+    "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
+    "yourRate" : m4
   };
 }

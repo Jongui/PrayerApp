@@ -55,6 +55,7 @@ class PrayHttp {
     } catch (e){
       return prays;
     }
+    prays.sort((pray1, pray2) => pray1.description.compareTo(pray2.description));
     return prays;
   }
 

@@ -94,6 +94,7 @@ class ChurchHttp {
     } catch (e){
       return churches;
     }
+    churches.sort((church1, church2) => church1.name.compareTo(church2.name));
     return churches;
   }
 

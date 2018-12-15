@@ -53,6 +53,11 @@ class _CountryFlagViewState extends State<CountryFlagViewState>{
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
     _language = locale.languageCode;

@@ -110,4 +110,27 @@ class UserHttp{
     return _userHash[idUser];
   }
 
+  Future<List<User>> getUsersByChurch(int idChurch, String token) async{
+    List<User> users = [];
+    final response = await http.get(serverIp + 'user/church/' + idChurch.toString(),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      }
+    );
+    try {
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar['value'];
+      users = value.map((userJson) => User.fromJson(userJson)).toList();
+      for(int i = 0; i < users.length; i++){
+        User user = users.elementAt(i);
+        _userHash[user.idUser] = user;
+      }
+    } catch (e){
+      return users;
+    }
+    users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
+    return users;
+  }
+
 }
