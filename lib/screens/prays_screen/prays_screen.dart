@@ -32,6 +32,11 @@ class _PraysScreenState extends State<PraysScreenState>{
   User _user;
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _user = this.widget.user;
     return Scaffold(
@@ -44,10 +49,16 @@ class _PraysScreenState extends State<PraysScreenState>{
           Navigator.of(context).push(
               new MaterialPageRoute(
                   builder: (context) => AddPrayScreen(user: _user,)
-              ));
+              )).whenComplete(onReload);
         },
       ),
     );
+  }
+
+  onReload(){
+    setState(() {
+
+    });
   }
 
 }

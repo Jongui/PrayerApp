@@ -18,15 +18,17 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'messages';
 
-  static m0(createdAt) => "Created at ${createdAt}";
+  static m0(userName, churchName) => "Confirm adding user ${userName} to church ${churchName}?";
 
-  static m1(userName) => "Created by ${userName}";
+  static m1(createdAt) => "Created at ${createdAt}";
 
-  static m2(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
+  static m2(userName) => "Created by ${userName}";
 
-  static m3(rate) => "Rated by user: ${rate}";
+  static m3(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
 
-  static m4(rate) => "Your rate: ${rate}";
+  static m4(rate) => "Rated by user: ${rate}";
+
+  static m5(rate) => "Your rate: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -38,8 +40,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Church updated!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Churches"),
     "city" : MessageLookupByLibrary.simpleMessage("City"),
-    "createdAt" : m0,
-    "createdBy" : m1,
+    "confirmAddingUserToChurch" : m0,
+    "createdAt" : m1,
+    "createdBy" : m2,
     "description" : MessageLookupByLibrary.simpleMessage("Description"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Edit User"),
@@ -50,13 +53,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Not informed"),
     "prayCreated" : MessageLookupByLibrary.simpleMessage("Pray created!"),
-    "prayFromTo" : m2,
-    "ratedByUser" : m3,
+    "prayFromTo" : m3,
+    "ratedByUser" : m4,
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "startDate" : MessageLookupByLibrary.simpleMessage("Start Date"),
     "title" : MessageLookupByLibrary.simpleMessage("Praying App"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("User updated!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("View church"),
-    "yourRate" : m4
+    "yourRate" : m5
   };
 }

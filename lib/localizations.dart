@@ -127,6 +127,9 @@ class AppLocalizations {
     return Intl.message('View church', name: 'viewChurch');
   }
 
+  confirmAddingUserToChurch(userName, churchName) => Intl.message('Confirm adding user $userName to church $churchName?',
+    name: 'confirmAddingUserToChurch', args: [userName, churchName]);
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

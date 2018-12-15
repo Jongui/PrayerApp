@@ -94,12 +94,15 @@ class UserHttp{
     return firebaseUser;
   }
 
-  Future<int> putUser(User user) async{
+  Future<int> putUser(User user, {String token}) async{
+    if(user.token != null){
+      token = user.token;
+    }
     final response =
         await http.put(serverIp + 'user/' + user.idUser.toString(),
           headers: {
             "Content-Type": "application/json",
-            "authorization": "Basic " + user.token
+            "authorization": "Basic " + token
           },
           body: json.encode(user),
         );
@@ -119,6 +122,29 @@ class UserHttp{
       }
     );
     try {
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar['value'];
+      users = value.map((userJson) => User.fromJson(userJson)).toList();
+      for(int i = 0; i < users.length; i++){
+        User user = users.elementAt(i);
+        _userHash[user.idUser] = user;
+      }
+    } catch (e){
+      return users;
+    }
+    users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
+    return users;
+  }
+
+  Future<List<User>> getAllUsers(String token) async{
+    List<User> users = [];
+    final response = await http.get(serverIp + 'user/',
+        headers: {
+          "Content-Type": "appliation/json",
+          "Authorization": "Basic " + token
+        }
+    );
+    try{
       var jsonVar = json.decode(response.body);
       List value = jsonVar['value'];
       users = value.map((userJson) => User.fromJson(userJson)).toList();

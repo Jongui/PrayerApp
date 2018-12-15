@@ -127,5 +127,13 @@
   "@viewChurch": {
     "type": "text",
     "placeholders": {}
+  },
+  "confirmAddingUserToChurch": "Confirm adding user {userName} to church {churchName}?",
+  "@confirmAddingUserToChurch": {
+    "type": "text",
+    "placeholders": {
+      "userName": {},
+      "churchName": {}
+    }
   }
 }

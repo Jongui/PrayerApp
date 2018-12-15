@@ -18,15 +18,17 @@ typedef MessageIfAbsent(String message_str, List args);
 class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'pt';
 
-  static m0(createdAt) => "Criado em ${createdAt}";
+  static m0(userName, churchName) => "Confirmar usuario ${userName} para igreja ${churchName}?";
 
-  static m1(userName) => "Criado por ${userName}";
+  static m1(createdAt) => "Criado em ${createdAt}";
 
-  static m2(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
+  static m2(userName) => "Criado por ${userName}";
 
-  static m3(rate) => "Avaliação: ${rate}";
+  static m3(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
 
-  static m4(rate) => "Sua avaliação: ${rate}";
+  static m4(rate) => "Avaliação: ${rate}";
+
+  static m5(rate) => "Sua avaliação: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -38,8 +40,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Igreja atualizada!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Igrejas"),
     "city" : MessageLookupByLibrary.simpleMessage("Cidade"),
-    "createdAt" : m0,
-    "createdBy" : m1,
+    "confirmAddingUserToChurch" : m0,
+    "createdAt" : m1,
+    "createdBy" : m2,
     "description" : MessageLookupByLibrary.simpleMessage("Descrição"),
     "edit" : MessageLookupByLibrary.simpleMessage("Editar"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Editar Usuário"),
@@ -50,12 +53,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "name" : MessageLookupByLibrary.simpleMessage("Nome"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Não informado"),
     "prayCreated" : MessageLookupByLibrary.simpleMessage("Oração criada!"),
-    "prayFromTo" : m2,
-    "ratedByUser" : m3,
+    "prayFromTo" : m3,
+    "ratedByUser" : m4,
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "startDate" : MessageLookupByLibrary.simpleMessage("Data Início"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
-    "yourRate" : m4
+    "yourRate" : m5
   };
 }

@@ -94,7 +94,10 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     return new Container(
       child: FloatingActionButton(
         heroTag: 'addUser',
-        onPressed: onAddPressed,
+        onPressed: () {
+          animate();
+          onAddPressed();
+        },
         tooltip: 'Add user',
         child: Icon(Icons.person_add),
       ),
@@ -105,7 +108,10 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     return new Container(
       child: FloatingActionButton(
         heroTag: 'editChurch',
-        onPressed: onEditPressed,
+        onPressed: () {
+          animate();
+          onEditPressed();
+        },
         tooltip: 'Edit Church',
         child: Icon(Icons.mode_edit),
       ),
