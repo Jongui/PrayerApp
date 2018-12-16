@@ -18,7 +18,7 @@ void main() {
       supportedLocales: [
         const Locale('en', ''),
         const Locale('pt', ''),
-
+        const Locale('de', ''),
       ],
       onGenerateTitle: (BuildContext context) =>
       AppLocalizations.of(context).title,

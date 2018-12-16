@@ -1,14 +1,14 @@
 {
-  "@@last_modified": "2018-12-16T19:50:33.086764",
-  "title": "Praying App",
+  "@@last_modified": "2018-12-08T20:21:41.305510",
+  "title": "Betten App",
   "@title": {
-    "description": "The application title",
+    "description": "Gemeinde Betten",
     "type": "text",
     "placeholders": {}
   },
-  "edit": "Edit",
+  "edit": "Bearbeiten",
   "@edit": {
-    "description": "Edit",
+    "description": "Bearbeiten",
     "type": "text",
     "placeholders": {}
   },
@@ -17,17 +17,17 @@
     "type": "text",
     "placeholders": {}
   },
-  "addNew": "Add new",
+  "addNew": "Add neu",
   "@addNew": {
     "type": "text",
     "placeholders": {}
   },
-  "save": "Save",
+  "save": "Speichern",
   "@save": {
     "type": "text",
     "placeholders": {}
   },
-  "hello": "Hello",
+  "hello": "Hallo",
   "@hello": {
     "type": "text",
     "placeholders": {}
@@ -37,82 +37,57 @@
     "type": "text",
     "placeholders": {}
   },
-  "churchName": "Church name",
+  "churchName": "Gemeindename",
   "@churchName": {
     "type": "text",
     "placeholders": {}
   },
-  "city": "City",
+  "city": "Stadt",
   "@city": {
     "type": "text",
     "placeholders": {}
   },
-  "notInformed": "Not informed",
+  "notInformed": "Nicht informierd",
   "@notInformed": {
     "type": "text",
     "placeholders": {}
   },
-  "churchCreated": "Church created!",
+  "churchCreated": "Gemeinde erzeugt!",
   "@churchCreated": {
     "type": "text",
     "placeholders": {}
   },
-  "errorWhileSaving": "Error while saving!",
+  "errorWhileSaving": "Fehler beim Speichern!",
   "@errorWhileSaving": {
     "type": "text",
     "placeholders": {}
   },
-  "startDate": "Start Date",
-  "@startDate": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "endDate": "End Date",
-  "@endDate": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "addYourPray": "Add your pray",
-  "@addYourPray": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "description": "Description",
-  "@description": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "prayCreated": "Pray created!",
-  "@prayCreated": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "churches": "Churches",
+  "churches": "Gemeinden",
   "@churches": {
     "type": "text",
     "placeholders": {}
   },
-  "churchUpdated": "Church updated!",
+  "churchUpdated": "Gemeinde aktualisiert!",
   "@churchUpdated": {
     "type": "text",
     "placeholders": {}
   },
-  "editYourPray": "Edit your pray",
+  "editYourPray": "Bearbeite dein Betten",
   "@editYourPray": {
     "type": "text",
     "placeholders": {}
   },
-  "editUser": "Edit User",
+  "editUser": "Benutzer bearbeiten",
   "@editUser": {
     "type": "text",
     "placeholders": {}
   },
-  "userUpdated": "User updated!",
+  "userUpdated": "Benutzer aktualisiert!",
   "@userUpdated": {
     "type": "text",
     "placeholders": {}
   },
-  "prayFromTo": "Pray from {startDate} to {endDate}",
+  "prayFromTo": "Betten von {startDate} bis {endDate}",
   "@prayFromTo": {
     "type": "text",
     "placeholders": {
@@ -120,40 +95,40 @@
       "endDate": {}
     }
   },
-  "yourRate": "Your rate: {rate}",
+  "yourRate": "Deine Bewertung: {rate}",
   "@yourRate": {
     "type": "text",
-    "placeholders": {
+      "placeholders": {
       "rate": {}
     }
   },
-  "createdBy": "Created by {userName}",
+  "createdBy": "Erzeugt von {userName}",
   "@createdBy": {
     "type": "text",
     "placeholders": {
       "userName": {}
     }
   },
-  "ratedByUser": "Rated by user: {rate}",
+  "ratedByUser": "Benutzerbewertung: {rate}",
   "@ratedByUser": {
     "type": "text",
     "placeholders": {
       "rate": {}
     }
   },
-  "createdAt": "Created at {createdAt}",
+  "createdAt": "Erzeugt am {createdAt}",
   "@createdAt": {
     "type": "text",
     "placeholders": {
       "createdAt": {}
     }
   },
-  "viewChurch": "View church",
+  "viewChurch": "Gemeinde sehen",
   "@viewChurch": {
     "type": "text",
     "placeholders": {}
   },
-  "confirmAddingUserToChurch": "Confirm adding user {userName} to church {churchName}?",
+  "confirmAddingUserToChurch": "Bestätigen das Benutzer {userName} zu {churchName} gehört?",
   "@confirmAddingUserToChurch": {
     "type": "text",
     "placeholders": {
