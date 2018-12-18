@@ -9,12 +9,13 @@ import 'package:prayer_app/utils/user_pray_http.dart';
 class PrayListView extends StatelessWidget {
 
   User user;
+  String token;
 
-  PrayListView({@required this.user});
+  PrayListView({@required this.user, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    return PrayListViewState(user);
+    return PrayListViewState(user, token);
   }
 
 }
@@ -22,21 +23,23 @@ class PrayListView extends StatelessWidget {
 class PrayListViewState extends StatefulWidget {
 
   User user;
+  String token;
 
-  PrayListViewState(this.user);
+  PrayListViewState(this.user, this.token);
 
   @override
-  _PrayListViewState createState() => new _PrayListViewState(user);
+  _PrayListViewState createState() => new _PrayListViewState(user, token);
 
 }
 
 class _PrayListViewState extends State<PrayListViewState>{
 
   User user;
+  String token;
   List<Widget> _views = [];
   bool _reload = false;
 
-  _PrayListViewState(this.user);
+  _PrayListViewState(this.user, this.token);
 
   @override
   void deactivate() {
@@ -83,7 +86,8 @@ class _PrayListViewState extends State<PrayListViewState>{
         }
         _views.add(PrayCardView(pray: pray,
           userPray: userPray,
-          user: user,));
+          user: user,
+          token: token,));
       }
     });
   }

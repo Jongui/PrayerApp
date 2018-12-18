@@ -6,8 +6,9 @@ import 'package:prayer_app/screens/prays_screen/views/prays_list_view.dart';
 class PrayView extends StatelessWidget{
 
   User user;
+  String token;
 
-  PrayView(this.user);
+  PrayView({@required this.user, @required this.token});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class PrayView extends StatelessWidget{
             ),
             child: new Column(
               children: <Widget>[
-                PrayListView(user: user),
+                PrayListView(user: user, token: token,),
               ],
             ),
           )

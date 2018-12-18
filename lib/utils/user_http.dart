@@ -23,13 +23,15 @@ class UserHttp{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User> createUser(FirebaseUser firebaseUser) async {
+    String token = await firebaseUser.getIdToken(refresh: false);
     User user = User( email: firebaseUser.email,
         userName: firebaseUser.displayName,
         city: "Not defined",
         country: "ND");
     final response = await http.post(serverIp + 'user',
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": token,
         },
         body: json.encode(user),
         encoding: Encoding.getByName("utf-8")
@@ -37,7 +39,9 @@ class UserHttp{
     try {
       var jsonVar = json.decode(response.body);
       if (response.statusCode == 201 && jsonVar != null) {
-        return User.fromJson(jsonVar);
+        User ret = User.fromJson(jsonVar);
+        ret.token = token;
+        return ret;
       }
     } catch (e){
       return null;
@@ -45,23 +49,34 @@ class UserHttp{
   }
 
   Future<User> fetchUser(FirebaseUser firebaseUser) async {
+    String token = await firebaseUser.getIdToken(refresh: false);
     final response =
     await http.get(serverIp + 'user/email/' + firebaseUser.email
-        + '/');
+        + '/',
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": "Basic " + token
+    });
     try {
       var jsonVar = json.decode(response.body);
       var value = jsonVar['value'];
       var userJson = value[0];
       if (response.statusCode == 200 && userJson != null) {
-        return User.fromJson(userJson);
+        User user = User.fromJson(userJson);
+        user.token = token;
+        return user;
       }
     } catch (e){
       return null;
     }
   }
 
-  Future<User> getUser(int idUser) async {
-    final response = await http.get(serverIp + 'user/' + idUser.toString());
+  Future<User> getUser(int idUser, String token) async {
+    final response = await http.get(serverIp + 'user/' + idUser.toString(),
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": "Basic " + token
+        });
     try{
       var userJson = json.decode(response.body);
       if(response.statusCode == 200 && userJson != null){

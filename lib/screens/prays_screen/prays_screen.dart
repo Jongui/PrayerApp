@@ -8,7 +8,7 @@ class PraysScreen extends StatelessWidget {
 
   User user;
 
-  PraysScreen(this.user);
+  PraysScreen({@required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +19,19 @@ class PraysScreen extends StatelessWidget {
 
 class PraysScreenState extends StatefulWidget {
 
-  PraysScreenState(this.user, {Key key}) : super(key: key);
+  PraysScreenState(this.user,{Key key}) : super(key: key);
   User user;
 
   @override
-  _PraysScreenState createState() => _PraysScreenState();
+  _PraysScreenState createState() => _PraysScreenState(user);
 
 }
 
 class _PraysScreenState extends State<PraysScreenState>{
 
-  User _user;
+  User user;
+
+  _PraysScreenState(this.user);
 
   @override
   void dispose() {
@@ -38,17 +40,17 @@ class _PraysScreenState extends State<PraysScreenState>{
 
   @override
   Widget build(BuildContext context) {
-    _user = this.widget.user;
     return Scaffold(
       appBar: AppBar(
         title: Text('Prays'),
       ),
-      body: PrayView(_user),
+      body: PrayView(user: user,
+        token: user.token,),
       floatingActionButton: FloatAddButton(
         onPressed:  () {
           Navigator.of(context).push(
               new MaterialPageRoute(
-                  builder: (context) => AddPrayScreen(user: _user,)
+                  builder: (context) => AddPrayScreen(user: user,)
               )).whenComplete(onReload);
         },
       ),

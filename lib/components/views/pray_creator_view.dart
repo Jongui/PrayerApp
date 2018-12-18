@@ -6,12 +6,13 @@ import 'package:prayer_app/utils/user_http.dart';
 class PrayCreatorView extends StatelessWidget {
 
   int idCreator;
+  String token;
 
-  PrayCreatorView({@required this.idCreator});
+  PrayCreatorView({@required this.idCreator, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    return PrayCreatorViewState(idCreator);
+    return PrayCreatorViewState(idCreator, token);
   }
 
 }
@@ -19,10 +20,11 @@ class PrayCreatorView extends StatelessWidget {
 class PrayCreatorViewState extends StatefulWidget{
 
   int idCreator;
+  String token;
 
-  PrayCreatorViewState(this.idCreator);
+  PrayCreatorViewState(this.idCreator, this.token);
 
-  _PrayCreatorViewState createState() => _PrayCreatorViewState(idCreator);
+  _PrayCreatorViewState createState() => _PrayCreatorViewState(idCreator, token);
 
 }
 
@@ -31,8 +33,9 @@ class _PrayCreatorViewState extends State<PrayCreatorViewState>{
   int idCreator;
   User _creator;
   String _subtext;
+  String token;
 
-  _PrayCreatorViewState(this.idCreator);
+  _PrayCreatorViewState(this.idCreator, this.token);
 
   @override
   void initState() {
@@ -70,7 +73,7 @@ class _PrayCreatorViewState extends State<PrayCreatorViewState>{
   }
 
   void _handleCreatorLoading(int idCreator) async{
-    User user = await UserHttp().getUser(idCreator);
+    User user = await UserHttp().getUser(idCreator, token);
     setState(() {
       _creator = user;
     });

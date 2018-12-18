@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreenState> {
     if(_user == null){
       _user = await UserHttp().createUser(_firebaseUser);
     }
-    _user.token = await _firebaseUser.getIdToken(refresh: false);
+
     if(_user.avatarUrl != _firebaseUser.photoUrl){
       _user.avatarUrl = _firebaseUser.photoUrl;
       await UserHttp().putUser(_user);

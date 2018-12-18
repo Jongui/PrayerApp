@@ -67,7 +67,7 @@ class HomeViewActions extends StatelessWidget{
             onPressed: () {
               Navigator.of(context).push(
                   new MaterialPageRoute(
-                      builder: (context) => PraysScreen(user)
+                      builder: (context) => PraysScreen(user: user)
                   ));
               },
           ),

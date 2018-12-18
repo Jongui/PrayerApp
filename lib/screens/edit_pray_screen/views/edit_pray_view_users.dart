@@ -59,7 +59,7 @@ class _EditPrayViewUsersState extends State<EditPrayViewUsersState>{
       UserPray userPray = list.elementAt(i);
       User user = UserHttp().getOfflineUser(userPray.idUser);
       if(user == null)
-        user = await UserHttp().getUser(userPray.idUser);
+        user = await UserHttp().getUser(userPray.idUser, token);
       userList.add(user);
     }
     setState(() {

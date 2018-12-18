@@ -16,12 +16,13 @@ class PrayCardView extends StatelessWidget{
   Pray pray;
   User user;
   UserPray userPray;
+  String token;
 
-  PrayCardView({@required this.pray, @required this.userPray, @required this.user});
+  PrayCardView({@required this.pray, @required this.userPray, @required this.user, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    return PrayCardViewState(pray, userPray, user);
+    return PrayCardViewState(pray, userPray, user, token);
   }
 
 }
@@ -31,9 +32,10 @@ class PrayCardViewState extends StatefulWidget {
   Pray pray;
   User user;
   UserPray userPray;
-  PrayCardViewState(this.pray, this.userPray, this.user);
+  String token;
+  PrayCardViewState(this.pray, this.userPray, this.user, this.token);
 
-  _PrayCardViewState createState() => _PrayCardViewState(pray,userPray,user);
+  _PrayCardViewState createState() => _PrayCardViewState(pray,userPray,user, token);
 
 }
 
@@ -44,8 +46,9 @@ class _PrayCardViewState extends State<PrayCardViewState>{
   Pray pray;
   User user;
   UserPray userPray;
+  String token;
   
-  _PrayCardViewState(this.pray, this.userPray, this.user);
+  _PrayCardViewState(this.pray, this.userPray, this.user, this.token);
 
   @override
   void initState() {
@@ -94,7 +97,8 @@ class _PrayCardViewState extends State<PrayCardViewState>{
                   children: <Widget>[
                     ButtonBar(
                       children: <Widget>[
-                        PrayCreatorView(idCreator: pray.idUser,),
+                        PrayCreatorView(idCreator: pray.idUser,
+                          token: token),
                         PrayRateView(userPray: userPray),
                       ],
                     )
