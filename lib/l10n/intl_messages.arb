@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-16T19:50:33.086764",
+  "@@last_modified": "2018-12-19T19:56:25.244740",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -159,6 +159,13 @@
     "placeholders": {
       "userName": {},
       "churchName": {}
+    }
+  },
+  "confirmAddingUserToPray": "Confirm adding user {userName} to this pray?",
+  "@confirmAddingUserToPray": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
     }
   }
 }

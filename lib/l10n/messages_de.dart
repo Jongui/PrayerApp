@@ -20,15 +20,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(userName, churchName) => "Bestätigen das Benutzer ${userName} zu ${churchName} gehört?";
 
-  static m1(createdAt) => "Erzeugt am ${createdAt}";
+  static m1(userName) => "Bestätigen Benutzer ${userName} zu diesem Gebet?";
 
-  static m2(userName) => "Erzeugt von ${userName}";
+  static m2(createdAt) => "Erzeugt am ${createdAt}";
 
-  static m3(startDate, endDate) => "Betten von ${startDate} bis ${endDate}";
+  static m3(userName) => "Erzeugt von ${userName}";
 
-  static m4(rate) => "Benutzerbewertung: ${rate}";
+  static m4(startDate, endDate) => "Betten von ${startDate} bis ${endDate}";
 
-  static m5(rate) => "Deine Bewertung: ${rate}";
+  static m5(rate) => "Benutzerbewertung: ${rate}";
+
+  static m6(rate) => "Deine Bewertung: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -40,8 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "churches" : MessageLookupByLibrary.simpleMessage("Gemeinden"),
     "city" : MessageLookupByLibrary.simpleMessage("Stadt"),
     "confirmAddingUserToChurch" : m0,
-    "createdAt" : m1,
-    "createdBy" : m2,
+    "confirmAddingUserToPray" : m1,
+    "createdAt" : m2,
+    "createdBy" : m3,
     "edit" : MessageLookupByLibrary.simpleMessage("Bearbeiten"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Benutzer bearbeiten"),
     "editYourPray" : MessageLookupByLibrary.simpleMessage("Bearbeite dein Betten"),
@@ -49,12 +52,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "hello" : MessageLookupByLibrary.simpleMessage("Hallo"),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Nicht informierd"),
-    "prayFromTo" : m3,
-    "ratedByUser" : m4,
+    "prayFromTo" : m4,
+    "ratedByUser" : m5,
     "save" : MessageLookupByLibrary.simpleMessage("Speichern"),
     "title" : MessageLookupByLibrary.simpleMessage("Betten App"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Benutzer aktualisiert!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde sehen"),
-    "yourRate" : m5
+    "yourRate" : m6
   };
 }

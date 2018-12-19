@@ -155,5 +155,12 @@
       "userName": {},
       "churchName": {}
     }
+  },
+  "confirmAddingUserToPray": "Confirmar usuário {userName} para essa oração?",
+  "@confirmAddingUserToPray": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
+    }
   }
 }

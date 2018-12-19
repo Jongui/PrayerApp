@@ -20,15 +20,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(userName, churchName) => "Confirmar usuario ${userName} para igreja ${churchName}?";
 
-  static m1(createdAt) => "Criado em ${createdAt}";
+  static m1(userName) => "Confirmar usuário ${userName} para essa oração?";
 
-  static m2(userName) => "Criado por ${userName}";
+  static m2(createdAt) => "Criado em ${createdAt}";
 
-  static m3(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
+  static m3(userName) => "Criado por ${userName}";
 
-  static m4(rate) => "Avaliação: ${rate}";
+  static m4(startDate, endDate) => "Orar de ${startDate} até ${endDate}";
 
-  static m5(rate) => "Sua avaliação: ${rate}";
+  static m5(rate) => "Avaliação: ${rate}";
+
+  static m6(rate) => "Sua avaliação: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -41,8 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "churches" : MessageLookupByLibrary.simpleMessage("Igrejas"),
     "city" : MessageLookupByLibrary.simpleMessage("Cidade"),
     "confirmAddingUserToChurch" : m0,
-    "createdAt" : m1,
-    "createdBy" : m2,
+    "confirmAddingUserToPray" : m1,
+    "createdAt" : m2,
+    "createdBy" : m3,
     "description" : MessageLookupByLibrary.simpleMessage("Descrição"),
     "edit" : MessageLookupByLibrary.simpleMessage("Editar"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Editar Usuário"),
@@ -53,12 +56,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "name" : MessageLookupByLibrary.simpleMessage("Nome"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Não informado"),
     "prayCreated" : MessageLookupByLibrary.simpleMessage("Oração criada!"),
-    "prayFromTo" : m3,
-    "ratedByUser" : m4,
+    "prayFromTo" : m4,
+    "ratedByUser" : m5,
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "startDate" : MessageLookupByLibrary.simpleMessage("Data Início"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
-    "yourRate" : m5
+    "yourRate" : m6
   };
 }

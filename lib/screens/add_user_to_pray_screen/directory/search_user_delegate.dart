@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/components/cardviews/user_card_view.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/user.dart';
 
 class SearchUserDelegate extends SearchDelegate<String>{
@@ -62,8 +63,7 @@ class SearchUserDelegate extends SearchDelegate<String>{
             Container(
               margin: EdgeInsets.all(10.0),
               child: Text(
-                "Teste",
-
+                AppLocalizations.of(context).confirmAddingUserToPray(this.selectedUser.userName),
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 20.0,

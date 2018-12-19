@@ -135,5 +135,12 @@
       "userName": {},
       "churchName": {}
     }
+  },
+  "confirmAddingUserToPray": "Bestätigen Benutzer {userName} zu diesem Gebet?",
+  "@confirmAddingUserToPray": {
+    "type": "text",
+    "placeholders": {
+      "userName": {}
+    }
   }
 }
