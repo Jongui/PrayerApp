@@ -54,7 +54,6 @@ class _SingleChurchViewUsersListState extends State<SingleChurchViewUsersListSta
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     if(_reload){

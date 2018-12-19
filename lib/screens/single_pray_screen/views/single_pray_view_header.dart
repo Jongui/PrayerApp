@@ -4,12 +4,12 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 
-class EditPrayViewHeader extends StatelessWidget{
+class SinglePrayViewHeader extends StatelessWidget{
 
   Pray pray;
   User user;
 
-  EditPrayViewHeader({@required this.pray, @required this.user});
+  SinglePrayViewHeader({@required this.pray, @required this.user});
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/cardviews/pray_card_view.dart';
-import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
-import 'package:prayer_app/utils/pray_http.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
 class PrayListView extends StatelessWidget {
@@ -69,26 +67,16 @@ class _PrayListViewState extends State<PrayListViewState>{
   }
 
   _handleLoadPray(User user) async {
-    List<Pray> prays = await PrayHttp().getPraysByUser(user);
     List<UserPray> userPrays = await UserPrayHttp().getUserPrayByUser(user.idUser, user.token);
     setState(() {
       _reload = false;
       _views = [];
-      for(int i = 0; i < prays.length; i++){
-        Pray pray = prays.elementAt(i);
-        UserPray userPray = UserPray();
         for(int j = 0; j < userPrays.length; j++){
-          UserPray tmp = userPrays.elementAt(j);
-          if(tmp.idPray == pray.idPray){
-            userPray = tmp;
-            break;
-          }
+          UserPray userPray = userPrays.elementAt(j);
+          _views.add(PrayCardView(  userPray: userPray,
+            user: user,
+            token: token,));
         }
-        _views.add(PrayCardView(pray: pray,
-          userPray: userPray,
-          user: user,
-          token: token,));
-      }
     });
   }
 

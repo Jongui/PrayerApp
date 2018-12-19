@@ -1,57 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/components/buttons/float_edit_button.dart';
-import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
-import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/edit_pray_screen/views/edit_pray_view.dart';
 
-class EditPrayScreen extends StatelessWidget {
+class EditPrayScreen extends StatelessWidget{
 
+  String token;
   Pray pray;
-  User user;
 
-  EditPrayScreen({@required this.pray, @required this.user});
+  EditPrayScreen({@required this.token, @required this.pray});
 
   @override
   Widget build(BuildContext context) {
-    return EditPrayScreenState(pray, user);
+    return EditPrayScreenState(token, pray);
   }
 
 }
 
-class EditPrayScreenState extends StatefulWidget {
-
-  EditPrayScreenState(this.pray, this.user, {Key key}) : super(key: key);
+class EditPrayScreenState extends StatefulWidget{
+  String token;
   Pray pray;
-  User user;
+  EditPrayScreenState(this.token, this.pray);
 
-  @override
-  _EditPrayScreenState createState() => _EditPrayScreenState(pray, user);
-
+  _EditPrayScreenState createState() => _EditPrayScreenState(token, pray);
 }
 
 class _EditPrayScreenState extends State<EditPrayScreenState>{
-
+  String token;
   Pray pray;
-  User user;
-
-  _EditPrayScreenState(this.pray, this.user);
+  _EditPrayScreenState(this.token, this.pray);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).editYourPray),
-      ),
-      body: EditPrayView(pray: pray,
-        user: user,
-      ),
-      floatingActionButton: user.idUser == pray.idUser ? FloatEditButton(onAddPressed: ()  {
 
-      }, onEditPressed: () {
-      }) : null,
-    );
-
+    return Text('Edit Pray Screen');
   }
-
 }

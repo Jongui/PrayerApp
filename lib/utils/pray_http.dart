@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -8,6 +9,8 @@ import 'package:prayer_app/resources/config.dart';
 
 class PrayHttp {
   static final PrayHttp _prayHttp = new PrayHttp._internal();
+
+  HashMap<int, Pray> _prayHash = HashMap();
 
   factory PrayHttp(){
     return _prayHttp;
@@ -57,6 +60,26 @@ class PrayHttp {
     }
     prays.sort((pray1, pray2) => pray1.description.compareTo(pray2.description));
     return prays;
+  }
+
+  Future<Pray> getPrayById(int idPray, String token) async{
+    final response =
+    await http.get(serverIp + 'pray/' + idPray.toString(),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      },
+    );
+    try{
+      var prayJson = json.decode(response.body);
+      if(response.statusCode == 200 && prayJson != null){
+        Pray pray = Pray.fromJson(prayJson);
+        _prayHash[pray.idPray] = pray;
+        return pray;
+      }
+    } catch (e){
+      return Pray();
+    }
   }
 
 }

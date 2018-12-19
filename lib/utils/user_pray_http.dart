@@ -17,7 +17,8 @@ class UserPrayHttp {
 
   UserPrayHttp._internal();
 
-  Future<http.Response> postUserPray(User user, Pray pray, DateTime acceptanceDate, DateTime endDate) async {
+  Future<http.Response> postUserPray(User user, Pray pray, DateTime acceptanceDate, DateTime endDate,
+      String token) async {
     UserPray userPray = UserPray(
       idUser:  user.idUser,
       idPray: pray.idPray,
@@ -29,7 +30,7 @@ class UserPrayHttp {
         await http.post(serverIp + 'userPray',
       headers: {
         "Content-Type": "application/json",
-        "authorization": "Basic " + user.token
+        "authorization": "Basic " + token
       },
       body: json.encode(userPray),
     );

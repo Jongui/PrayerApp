@@ -6,36 +6,42 @@ import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/utils/user_http.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
-class EditPrayViewUsers extends StatelessWidget{
+class SinglePrayViewUsers extends StatelessWidget{
 
   Pray pray;
   String token;
 
-  EditPrayViewUsers({@required this.pray, @required this.token});
+  SinglePrayViewUsers({@required this.pray, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    return EditPrayViewUsersState(pray, token);
+    return SinglePrayViewUsersState(pray, token);
   }
 
 }
 
-class EditPrayViewUsersState extends StatefulWidget {
+class SinglePrayViewUsersState extends StatefulWidget {
 
   Pray pray;
   String token;
-  EditPrayViewUsersState(this.pray, this.token);
+  SinglePrayViewUsersState(this.pray, this.token);
 
-  _EditPrayViewUsersState createState() => _EditPrayViewUsersState(pray, token);
+  _SinglePrayViewUsersState createState() => _SinglePrayViewUsersState(pray, token);
 }
 
-class _EditPrayViewUsersState extends State<EditPrayViewUsersState>{
+class _SinglePrayViewUsersState extends State<SinglePrayViewUsersState>{
 
   Pray pray;
   String token;
+  bool _reload = false;
   List<Widget> _usersList = [];
 
-  _EditPrayViewUsersState(this.pray, this.token);
+  _SinglePrayViewUsersState(this.pray, this.token);
+
+  @override
+  void deactivate() {
+    _reload = true;
+  }
 
   @override
   void initState() {
@@ -44,7 +50,16 @@ class _EditPrayViewUsersState extends State<EditPrayViewUsersState>{
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if(_reload){
+      _handleLoadPraysUsers();
+      _reload = false;
+    }
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20.0),

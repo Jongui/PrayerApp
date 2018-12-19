@@ -33,31 +33,31 @@ class AddPrayScreenState extends StatefulWidget {
   final User user;
 
   @override
-  _AddPrayScreenState createState() => new _AddPrayScreenState();
+  _AddPrayScreenState createState() => new _AddPrayScreenState(user);
 
 }
 
 class _AddPrayScreenState extends State<AddPrayScreenState>{
   TextEditingController _descriptionController = new TextEditingController();
 
+  User user;
+
   String _newDescription = '';
   String _newStartDate = '';
   String _newEndDate = '';
   Size _screenSize;
   Pray _pray = Pray();
-  User _user;
   String _valueStartDate;
   String _valueEndDate;
   AppLocalizations _appLocalizations;
-
   DatePicker _startDatePicker;
   DatePicker _endDatePicker;
+
+  _AddPrayScreenState(this.user);
 
   @override
   initState(){
     super.initState();
-    AddPrayScreenState state = this.widget;
-    _user = state.user;
     _descriptionController.addListener(_onDescriptionChanged);
   }
 
@@ -172,14 +172,15 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
     if(_newEndDate != '')
       _pray.endDate = formatterFrom.parse(_newEndDate);
 
-    _pray.idUser = _user.idUser;
+    _pray.idUser = user.idUser;
 
-    Response response = await PrayHttp().postPray(_pray, _user.token);
+    Response response = await PrayHttp().postPray(_pray, user.token);
     if(response.statusCode == 201) {
       var jsonVar = json.decode(response.body);
       _pray = Pray.fromJson(jsonVar);
       response =
-      await UserPrayHttp().postUserPray(_user, _pray, _pray.beginDate, _pray.endDate);
+      await UserPrayHttp().postUserPray(user, _pray, _pray.beginDate, _pray.endDate,
+      user.token);
     }
     if(response.statusCode == 200 || response.statusCode == 201){
       final snackBar = SnackBar(
