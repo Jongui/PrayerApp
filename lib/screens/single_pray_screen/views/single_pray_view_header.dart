@@ -1,28 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:prayer_app/components/inputs/rate_bar.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/model/user_pray.dart';
+import 'package:prayer_app/utils/user_pray_http.dart';
 
-class SinglePrayViewHeader extends StatelessWidget{
+class SinglePrayViewHeader extends StatelessWidget {
 
   Pray pray;
   User user;
+  UserPray userPray;
+  String token;
 
-  SinglePrayViewHeader({@required this.pray, @required this.user});
+  SinglePrayViewHeader(
+      {@required this.pray, @required this.user, @required this.userPray,
+        @required this.token});
+
+  @override
+  Widget build(BuildContext context) {
+    return SinglePrayViewHeaderState(pray, user, userPray, token);
+  }
+
+}
+
+class SinglePrayViewHeaderState extends StatefulWidget{
+  Pray pray;
+  User user;
+  UserPray userPray;
+  String token;
+
+  SinglePrayViewHeaderState(this.pray, this.user, this.userPray, this.token);
+
+  _SinglePrayViewHeaderState createState() => _SinglePrayViewHeaderState(pray, user, userPray, token);
+
+}
+
+class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
+
+  Pray pray;
+  User user;
+  UserPray userPray;
+  String token;
+  RateBar rateBar;
+
+  _SinglePrayViewHeaderState(this.pray, this.user, this.userPray, this.token);
+
+  @override
+  void dispose() {
+    UserPrayHttp().putUserPray(userPray, token);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    rateBar = RateBar(rateInput: userPray.rate,
+      onStarPressed: (rateInput) {
+        userPray.rate = rateInput;
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height: 180.0,
+      height: 220.0,
       decoration: new BoxDecoration(
           image: DecorationImage(image: AssetImage("assets/pray.jpg"),
               fit: BoxFit.cover)
       ),
-      child: new Column(
+      child: Column(
         children: <Widget>[
           _buildDetails(context),
-          new Divider()
+          Divider(),
+          _buildRateBar()
         ],
       ),
     );
@@ -48,6 +100,11 @@ class SinglePrayViewHeader extends StatelessWidget{
         ),
       ),
     );
+  }
+
+  Widget _buildRateBar() {
+
+    return rateBar;
   }
 
 }

@@ -71,4 +71,25 @@ class UserPrayHttp {
     return prays;
   }
 
+  Future<UserPray> putUserPray(UserPray userPray, String token) async {
+    final response =
+    await http.put(serverIp + 'userPray/' + userPray.idUser.toString(),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": "Basic " + token
+      },
+      body: json.encode(userPray),
+    );
+    try{
+      var userPrayJson = json.decode(response.body);
+      if(response.statusCode == 200 && userPrayJson != null){
+        UserPray userPray = UserPray.fromJson(userPrayJson);
+        return userPray;
+      }
+    } catch(e){
+      return UserPray();
+    }
+    return UserPray();
+  }
+
 }

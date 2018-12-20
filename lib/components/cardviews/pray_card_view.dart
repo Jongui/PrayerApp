@@ -89,7 +89,8 @@ class _PrayCardViewState extends State<PrayCardViewState>{
         Navigator.of(context).push(
             new MaterialPageRoute(
                 builder: (context) => SinglePrayScreen(pray: _pray,
-                  user: user,)
+                  user: user,
+                  userPray: userPray,)
             ));
       },
       child: Card(
