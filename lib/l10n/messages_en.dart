@@ -55,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "prayFromTo" : m4,
     "ratedByUser" : m5,
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
+    "takeAPicture" : MessageLookupByLibrary.simpleMessage("Take a picture"),
+    "tapACamera" : MessageLookupByLibrary.simpleMessage("Tap a camera"),
     "title" : MessageLookupByLibrary.simpleMessage("Praying App"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Usuário atualizado!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("View church"),

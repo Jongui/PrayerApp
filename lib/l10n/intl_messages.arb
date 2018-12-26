@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-19T19:56:25.244740",
+  "@@last_modified": "2018-12-26T19:22:50.049367",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -167,5 +167,15 @@
     "placeholders": {
       "userName": {}
     }
+  },
+  "takeAPicture": "Take a picture",
+  "@takeAPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapACamera": "Tap a camera",
+  "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
   }
 }

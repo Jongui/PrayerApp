@@ -162,5 +162,15 @@
     "placeholders": {
       "userName": {}
     }
+  },
+  "takeAPicture": "Tire uma foto",
+  "@takeAPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapACamera": "Escolha uma câmera",
+  "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
   }
 }

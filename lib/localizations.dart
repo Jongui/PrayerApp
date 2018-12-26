@@ -133,6 +133,14 @@ class AppLocalizations {
   confirmAddingUserToPray(userName) => Intl.message('Confirm adding user $userName to this pray?',
       name: 'confirmAddingUserToPray', args: [userName]);
 
+  String get takeAPicture{
+    return Intl.message('Take a picture', name: 'takeAPicture');
+  }
+
+  String get tapACamera{
+    return Intl.message('Tap a camera', name: 'tapACamera');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

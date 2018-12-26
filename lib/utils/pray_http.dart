@@ -8,7 +8,7 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/resources/config.dart';
 
 class PrayHttp {
-  static final PrayHttp _prayHttp = new PrayHttp._internal();
+  static final PrayHttp _prayHttp = PrayHttp._internal();
 
   HashMap<int, Pray> _prayHash = HashMap();
 

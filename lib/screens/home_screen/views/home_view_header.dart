@@ -72,7 +72,7 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new CircleAvatar(
+          CircleAvatar(
             radius: 40.0,
             backgroundColor: Colors.grey,
             backgroundImage: user.avatarUrl != null ? new NetworkImage(

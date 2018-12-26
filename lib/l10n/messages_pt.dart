@@ -60,6 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "ratedByUser" : m5,
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "startDate" : MessageLookupByLibrary.simpleMessage("Data Início"),
+    "takeAPicture" : MessageLookupByLibrary.simpleMessage("Tire uma foto"),
+    "tapACamera" : MessageLookupByLibrary.simpleMessage("Escolha uma câmera"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
     "yourRate" : m6

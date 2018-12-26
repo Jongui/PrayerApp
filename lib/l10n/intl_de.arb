@@ -142,5 +142,15 @@
     "placeholders": {
       "userName": {}
     }
+  },
+  "takeAPicture": "Machen Sie ein Foto",
+  "@takeAPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapACamera": "Kamera wählen",
+  "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
   }
 }

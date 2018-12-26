@@ -142,5 +142,15 @@
     "placeholders": {
       "userName": {}
     }
+  },
+  "takeAPicture": "Take a picture",
+  "@takeAPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "tapACamera": "Tap a camera",
+  "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
   }
 }

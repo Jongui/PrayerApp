@@ -73,8 +73,6 @@ class CountryDropdownButton<T> extends StatelessWidget {
       );
     });
     _dropDownList.sort((a1, a2) {
-      print(a1.value.name.toString());
-      print(a2.value.name.toString());
       return a1.value.name.toString().compareTo(a2.value.name.toString());
     });
   }
