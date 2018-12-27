@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-26T19:22:50.049367",
+  "@@last_modified": "2018-12-27T20:26:40.126047",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -175,6 +175,21 @@
   },
   "tapACamera": "Tap a camera",
   "@tapACamera": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pictureTaken": "Picture taken!",
+  "@pictureTaken": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "savingUser": "Saving user",
+  "@savingUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "takingPicture": "Taking picture",
+  "@takingPicture": {
     "type": "text",
     "placeholders": {}
   }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 
@@ -40,7 +41,8 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   String imagePath;
   List<CameraDescription> cameras;
   Widget _view;
-  BuildContext _context;
+  //BuildContext _context;
+  VoidCallback controllerListener;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -52,8 +54,23 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   @override
+  void deactivate() {
+    if (controller != null) {
+      controller.removeListener(controllerListener);
+    }
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    if (controller != null) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _context = context;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -122,12 +139,13 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     controller = CameraController(cameraDescription, ResolutionPreset.high);
 
     // If the controller is updated then update the UI.
-    controller.addListener(() {
+    controllerListener = () {
       if (mounted) setState(() {});
       if (controller.value.hasError) {
         showInSnackBar('Camera error ${controller.value.errorDescription}');
       }
-    });
+    };
+    controller.addListener(controllerListener);
 
     try {
       await controller.initialize();
@@ -137,20 +155,30 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
 
     if (mounted) {
       setState(() {
-        _view = _buildCameraView(_context);
+        _view = _buildCameraView(context);
       });
     }
   }
 
   void onTakePictureButtonPressed() {
+    showDialog(
+        context: context,
+        builder: (_) => ProcessDialog(
+          text: AppLocalizations.of(context).takingPicture,
+        )
+    );
     takePicture().then((String filePath) {
       this.widget.onTakePicture(filePath);
-//      if (mounted) {
-//        setState(() {
-//          imagePath = filePath;
-//        });
-//        if (filePath != null) showInSnackBar('Picture saved to $filePath');
-//      }
+      if (mounted) {
+        setState(() {
+          //imagePath = filePath;
+          _view = _buildCameraView(context);
+        });
+        if (filePath != null){
+          showInSnackBar(AppLocalizations.of(context).pictureTaken);
+        }
+      }
+      Navigator.pop(context);
     });
   }
 
@@ -192,6 +220,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _cameraTogglesRowWidget(),
+//              _thumbnailWidget(),
             ],
           ),
         ),
@@ -236,7 +265,24 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
       return;
     }
     setState(() {
-      _view = _buildCameraView(_context);
+      _view = _buildCameraView(context);
     });
   }
+
+  /// Display the thumbnail of the captured image or video.
+//  Widget _thumbnailWidget() {
+//    return Expanded(
+//      child: Align(
+//        alignment: Alignment.centerRight,
+//        child: imagePath == null
+//            ? null
+//            : SizedBox(
+//          child: Image.file(File(imagePath)),
+//          width: 64.0,
+//          height: 64.0,
+//        ),
+//      ),
+//    );
+//  }
+
 }

@@ -112,7 +112,7 @@ class AppLocalizations {
   }
 
   prayFromTo(startDate, endDate) => Intl.message('Pray from $startDate to $endDate',
-    name: 'prayFromTo', args: [startDate, endDate]);
+      name: 'prayFromTo', args: [startDate, endDate]);
 
   yourRate(rate) => Intl.message('Your rate: $rate', name: 'yourRate', args: [rate]);
 
@@ -121,14 +121,14 @@ class AppLocalizations {
   ratedByUser(rate) => Intl.message('Rated by user: $rate', name: 'ratedByUser', args: [rate]);
 
   createdAt(createdAt) => Intl.message('Created at $createdAt',
-    name: 'createdAt', args: [createdAt]);
+      name: 'createdAt', args: [createdAt]);
 
   String get viewChurch{
     return Intl.message('View church', name: 'viewChurch');
   }
 
   confirmAddingUserToChurch(userName, churchName) => Intl.message('Confirm adding user $userName to church $churchName?',
-    name: 'confirmAddingUserToChurch', args: [userName, churchName]);
+      name: 'confirmAddingUserToChurch', args: [userName, churchName]);
 
   confirmAddingUserToPray(userName) => Intl.message('Confirm adding user $userName to this pray?',
       name: 'confirmAddingUserToPray', args: [userName]);
@@ -139,6 +139,18 @@ class AppLocalizations {
 
   String get tapACamera{
     return Intl.message('Tap a camera', name: 'tapACamera');
+  }
+
+  String get pictureTaken{
+    return Intl.message('Picture taken!', name: 'pictureTaken');
+  }
+
+  String get savingUser{
+    return Intl.message('Saving user', name: 'savingUser');
+  }
+
+  String get takingPicture{
+    return Intl.message('Taking picture', name: 'takingPicture');
   }
 
 }

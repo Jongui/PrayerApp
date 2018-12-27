@@ -8,7 +8,6 @@ import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
-import 'package:prayer_app/utils/user_firebase_storage.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 import 'package:prayer_app/model/user.dart';
@@ -43,12 +42,12 @@ class _HomeScreenState extends State<HomeScreenState> {
       _user = await UserHttp().createUser(_firebaseUser);
     }
 
-    if(_user.avatarUrl != _firebaseUser.photoUrl){
+    if(_user.avatarUrl != _firebaseUser.photoUrl &&
+       _user.avatarUrl == null){
       _user.avatarUrl = _firebaseUser.photoUrl;
       await UserHttp().putUser(_user);
     }
     _church = await ChurchHttp().fetchChurch(_user.church, _user.token);
-    await UserFirebaseStorage().uploadFile(_firebaseUser.email);
     setState(() {
       _view = HomeView(
         user: _user,

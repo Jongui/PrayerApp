@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/dropdown/church_dropdown_button.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
@@ -11,6 +12,7 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/screens/take_picture_screen/take_picture_screen.dart';
 import 'package:prayer_app/utils/church_http.dart';
+import 'package:prayer_app/utils/user_firebase_storage.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class EditUserScreen extends StatelessWidget {
@@ -152,10 +154,19 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   }
 
   _savedButtonPressed(BuildContext context) async {
-    if (_newName == '' && _newCountry == '' && _newIdChurch == 0) return;
+    if (_newName == '' && _newCountry == '' && _newIdChurch == 0 && _newAvatarUrl == '') return;
     if (_newName != '') _user.userName = _newName;
     if (_newCountry != '') _user.country = _newCountry;
     if (_newIdChurch != 0) _user.church = _newIdChurch;
+    if(_newAvatarUrl != ''){
+      _user.avatarUrl = await UserFirebaseStorage().uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl));
+    }
+    showDialog(
+        context: context,
+        builder: (_) => ProcessDialog(
+          text: AppLocalizations.of(context).savingUser,
+        )
+    );
     int response = await UserHttp().putUser(_user);
     if (response == 200) {
       final snackBar = SnackBar(
@@ -174,6 +185,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+    Navigator.pop(context);
   }
 
   Widget _buildCountryDropDownButton() {

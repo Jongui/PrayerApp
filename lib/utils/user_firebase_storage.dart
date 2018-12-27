@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:uuid/uuid.dart';
 
 class UserFirebaseStorage{
   static final UserFirebaseStorage _userFirebaseStorage = UserFirebaseStorage._internal();
@@ -14,20 +13,19 @@ class UserFirebaseStorage{
 
   final FirebaseStorage _storage = FirebaseStorage(storageBucket: "gs://prayingapp-76292.appspot.com");
 
-  Future<Null> uploadFile(String userEmail) async {
-    final String uuid = Uuid().v1();
-    final Directory systemTempDir = Directory.systemTemp;
-    final File file = await File('${systemTempDir.path}/foo$uuid.txt').create();
-    await file.writeAsString("Hello World");
-    assert(await file.readAsString() == "Hello World");
+  Future<dynamic> uploadUserProfilePicture(int idUser, File file) async {
+    List<String> _files = file.path.split('.');
+    String _extension = _files[_files.length - 1];
     final StorageReference ref =
-    _storage.ref().child(userEmail).child('foo$uuid.txt');
-    ref.putFile(
+    _storage.ref().child(idUser.toString()).child('profile$idUser.$_extension');
+    StorageUploadTask task = ref.putFile(
       file,
       StorageMetadata(
         contentLanguage: 'en',
-        customMetadata: <String, String>{'activity': 'test'},
+        customMetadata: <String, String>{'avatarUrl': 'upload$idUser'},
       ),
     );
+    StorageTaskSnapshot snapshot = await task.onComplete;
+    return snapshot.ref.getDownloadURL();
   }
 }

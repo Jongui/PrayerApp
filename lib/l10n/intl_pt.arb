@@ -172,5 +172,20 @@
   "@tapACamera": {
     "type": "text",
     "placeholders": {}
+  },
+  "pictureTaken": "Foto tirada!",
+  "@pictureTaken": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "savingUser": "Salvando usuário",
+  "@savingUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "takingPicture": "Processando imagem",
+  "@takingPicture": {
+    "type": "text",
+    "placeholders": {}
   }
 }
