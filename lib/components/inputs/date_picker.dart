@@ -73,9 +73,9 @@ class _DatePickerState extends State<DatePickerState>{
   Future _selectDate() async {
     DateTime picked = await showDatePicker(
         context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime(2016),
-        lastDate: new DateTime(2019)
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2030)
     );
     if(picked != null) setState(() {
       _value = picked.toString();

@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 
-class FloatEditButton extends StatelessWidget{
-
+class FloatEditButton extends StatelessWidget {
   VoidCallback onEditPressed;
   VoidCallback onAddPressed;
+  VoidCallback onAddPicturePressed;
 
-  FloatEditButton({@required this.onAddPressed, @required this.onEditPressed});
+  FloatEditButton(
+      {@required this.onAddPressed,
+      @required this.onEditPressed,
+      @required this.onAddPicturePressed});
 
   @override
   Widget build(BuildContext context) {
-    return FloatEditButtonState(onAddPressed, onEditPressed);
+    return FloatEditButtonState(
+        onAddPressed, onEditPressed, onAddPicturePressed);
   }
-
 }
 
-class FloatEditButtonState extends StatefulWidget{
-
+class FloatEditButtonState extends StatefulWidget {
   VoidCallback onEditPressed;
   VoidCallback onAddPressed;
+  VoidCallback onAddPicturePressed;
 
-  FloatEditButtonState(this.onAddPressed, this.onEditPressed);
+  FloatEditButtonState(
+      this.onAddPressed, this.onEditPressed, this.onAddPicturePressed);
 
   @override
   _FloatEditButtonState createState() => _FloatEditButtonState();
 }
 
 class _FloatEditButtonState extends State<FloatEditButtonState>
-    with SingleTickerProviderStateMixin{
-
+    with SingleTickerProviderStateMixin {
   _FloatEditButtonState();
 
   bool isOpened = false;
@@ -41,10 +44,10 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
   @override
   initState() {
     _animationController =
-    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-      ..addListener(() {
-        setState(() {});
-      });
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..addListener(() {
+            setState(() {});
+          });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
@@ -85,6 +88,20 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
       _animationController.reverse();
     }
     isOpened = !isOpened;
+  }
+
+  Widget addPicture() {
+    return new Container(
+      child: FloatingActionButton(
+        heroTag: 'addPicture',
+        onPressed: () {
+          animate();
+          this.widget.onAddPicturePressed();
+        },
+        tooltip: 'Add picture',
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
   }
 
   Widget addUser() {
@@ -136,7 +153,7 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 2.0,
+            _translateButton.value * 3.0,
             0.0,
           ),
           child: addUser(),
@@ -144,14 +161,21 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value,
+            _translateButton.value * 2.0,
             0.0,
           ),
           child: edit(),
+        ),
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value,
+            0.0,
+          ),
+          child: addPicture(),
         ),
         toggle(),
       ],
     );
   }
-
 }

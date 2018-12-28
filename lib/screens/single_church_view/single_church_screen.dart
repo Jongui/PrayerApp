@@ -51,25 +51,29 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
         user: user,
       ),
       floatingActionButton: user.idUser == church.createdBy
-          ? FloatEditButton(onAddPressed: () async {
-              List<User> _users = await UserHttp().getAllUsers(user.token);
-              Navigator.of(context)
-                  .push(new MaterialPageRoute(
-                      builder: (context) => AddUserToChurchScreen(
-                            users: _users,
-                            church: church,
-                            token: user.token,
-                          )))
-                  .whenComplete(onReload);
-            }, onEditPressed: () {
-              Navigator.of(context)
-                  .push(new MaterialPageRoute(
-                      builder: (context) => EditChurchScreen(
-                            church: church,
-                            user: user,
-                          )))
-                  .whenComplete(onReload);
-            })
+          ? FloatEditButton(
+              onAddPressed: () async {
+                List<User> _users = await UserHttp().getAllUsers(user.token);
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(
+                        builder: (context) => AddUserToChurchScreen(
+                              users: _users,
+                              church: church,
+                              token: user.token,
+                            )))
+                    .whenComplete(onReload);
+              },
+              onEditPressed: () {
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(
+                        builder: (context) => EditChurchScreen(
+                              church: church,
+                              user: user,
+                            )))
+                    .whenComplete(onReload);
+              },
+              onAddPicturePressed: () {},
+            )
           : null,
     );
   }

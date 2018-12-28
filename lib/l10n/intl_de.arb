@@ -167,5 +167,15 @@
   "@takingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "prayEdited": "Gebet verändert",
+  "@prayEdited": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mandatoryField": "Wert eingeben",
+  "@mandatoryField": {
+    "type": "text",
+    "placeholders": {}
   }
 }

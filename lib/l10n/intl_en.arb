@@ -167,5 +167,15 @@
   "@takingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "prayEdited": "Pray edited",
+  "@prayEdited": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mandatoryField": "Inform a value",
+  "@mandatoryField": {
+    "type": "text",
+    "placeholders": {}
   }
 }

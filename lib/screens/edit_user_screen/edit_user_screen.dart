@@ -171,8 +171,8 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
-          text: AppLocalizations.of(context).savingUser,
-        ));
+              text: AppLocalizations.of(context).savingUser,
+            ));
     if (_newName != '') _user.userName = _newName;
     if (_newCountry != '') _user.country = _newCountry;
     if (_newIdChurch != 0) _user.church = _newIdChurch;
@@ -249,12 +249,6 @@ class _EditUserScreenState extends State<EditUserScreenState> {
                       });
                     },
                     fileAddress: this.widget.user.avatarUrl,
-//              new MaterialPageRoute(builder: (context) => TakePictureScreen(
-//                onTakePicture: (filePath) {
-//                  setState(() {
-//                    _newAvatarUrl = filePath;
-//                  });
-//                },
                   )));
         },
         child: Stack(

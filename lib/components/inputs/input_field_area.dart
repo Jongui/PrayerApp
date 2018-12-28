@@ -6,7 +6,8 @@ class InputFieldArea extends StatelessWidget {
   final bool obscure;
   final IconData icon;
   final TextEditingController controller;
-  InputFieldArea({this.hint, this.obscure, this.icon, this.controller, this.labelText});
+  final FormFieldValidator<String> validator;
+  InputFieldArea({this.hint, this.obscure, this.icon, this.controller, this.labelText, this.validator});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +34,7 @@ class InputFieldArea extends StatelessWidget {
           shape: BoxShape.rectangle
       ),
       child: TextFormField(
+        validator: validator,
         obscureText: obscure,
         style: const TextStyle(
           color: Colors.blueGrey,

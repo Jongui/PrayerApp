@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-27T20:26:40.126047",
+  "@@last_modified": "2018-12-28T20:51:34.440806",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -190,6 +190,16 @@
   },
   "takingPicture": "Taking picture",
   "@takingPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayEdited": "Pray edited",
+  "@prayEdited": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mandatoryField": "Inform a value",
+  "@mandatoryField": {
     "type": "text",
     "placeholders": {}
   }

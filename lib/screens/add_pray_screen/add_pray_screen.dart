@@ -14,7 +14,7 @@ import 'package:prayer_app/utils/user_pray_http.dart';
 
 class AddPrayScreen extends StatelessWidget {
 
-  User user;
+  final User user;
 
   AddPrayScreen({@required this.user});
 
@@ -33,14 +33,12 @@ class AddPrayScreenState extends StatefulWidget {
   final User user;
 
   @override
-  _AddPrayScreenState createState() => new _AddPrayScreenState(user);
+  _AddPrayScreenState createState() => new _AddPrayScreenState();
 
 }
 
 class _AddPrayScreenState extends State<AddPrayScreenState>{
   TextEditingController _descriptionController = new TextEditingController();
-
-  User user;
 
   String _newDescription = '';
   String _newStartDate = '';
@@ -49,11 +47,10 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
   Pray _pray = Pray();
   String _valueStartDate;
   String _valueEndDate;
-  AppLocalizations _appLocalizations;
   DatePicker _startDatePicker;
   DatePicker _endDatePicker;
 
-  _AddPrayScreenState(this.user);
+  _AddPrayScreenState();
 
   @override
   initState(){
@@ -63,12 +60,11 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
 
   @override
   Widget build(BuildContext context) {
-    _appLocalizations = AppLocalizations.of(context);
     if(_valueStartDate == null){
-      _valueStartDate = _appLocalizations.startDate;
+      _valueStartDate = AppLocalizations.of(context).startDate;
     }
     if(_valueEndDate == null){
-      _valueEndDate = _appLocalizations.endDate;
+      _valueEndDate = AppLocalizations.of(context).endDate;
     }
     _screenSize = MediaQuery.of(context).size;
     _startDatePicker = DatePicker(value: _valueStartDate,
@@ -118,10 +114,15 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
     return Container(
       padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
-        hint: _appLocalizations.description,
+        validator: (value){
+          if (value.isEmpty) {
+            return 'Please enter some text';
+          }
+        },
+        hint: AppLocalizations.of(context).description,
         obscure: false,
         controller: _descriptionController,
-        labelText: _appLocalizations.description + ':',
+        labelText: AppLocalizations.of(context).description + ':',
       ),
     );
   }
@@ -162,7 +163,7 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
   }
 
   _savedButtonPressed(BuildContext context) async{
-    if(_newDescription == '' || _newStartDate == '')
+    if(_newDescription == '' || _newStartDate == '' || _newDescription == '')
       return;
     var formatterFrom = new DateFormat('dd/MM/yyyy');
     if(_newDescription != '')
@@ -172,19 +173,19 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
     if(_newEndDate != '')
       _pray.endDate = formatterFrom.parse(_newEndDate);
 
-    _pray.idUser = user.idUser;
+    _pray.idUser = this.widget.user.idUser;
 
-    Response response = await PrayHttp().postPray(_pray, user.token);
+    Response response = await PrayHttp().postPray(_pray, this.widget.user.token);
     if(response.statusCode == 201) {
       var jsonVar = json.decode(response.body);
       _pray = Pray.fromJson(jsonVar);
       response =
-      await UserPrayHttp().postUserPray(user, _pray, _pray.beginDate, _pray.endDate,
-      user.token);
+      await UserPrayHttp().postUserPray(this.widget.user, _pray, _pray.beginDate, _pray.endDate,
+          this.widget.user.token);
     }
     if(response.statusCode == 200 || response.statusCode == 201){
       final snackBar = SnackBar(
-        content: Text(_appLocalizations.prayCreated,
+        content: Text(AppLocalizations.of(context).prayCreated,
           style: TextStyle(
               color: Colors.green
           ),
@@ -193,7 +194,7 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text(_appLocalizations.errorWhileSaving,
+        content: Text(AppLocalizations.of(context).errorWhileSaving,
           style: TextStyle(
               color: Colors.red
           ),

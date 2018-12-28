@@ -153,6 +153,14 @@ class AppLocalizations {
     return Intl.message('Taking picture', name: 'takingPicture');
   }
 
+  String get prayEdited{
+    return Intl.message('Pray edited', name: 'prayEdited');
+  }
+
+  String get mandatoryField{
+    return Intl.message('Inform a value', name: 'mandatoryField');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

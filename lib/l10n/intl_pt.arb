@@ -187,5 +187,15 @@
   "@takingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "prayEdited": "Oração editada",
+  "@prayEdited": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mandatoryField": "Informar valor",
+  "@mandatoryField": {
+    "type": "text",
+    "placeholders": {}
   }
 }

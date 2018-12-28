@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/components/inputs/date_picker.dart';
+import 'package:prayer_app/components/inputs/input_field_area.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
+import 'package:prayer_app/utils/pray_http.dart';
 
 class EditPrayScreen extends StatelessWidget{
 
@@ -18,19 +25,185 @@ class EditPrayScreen extends StatelessWidget{
 class EditPrayScreenState extends StatefulWidget{
   String token;
   Pray pray;
+
   EditPrayScreenState(this.token, this.pray);
 
-  _EditPrayScreenState createState() => _EditPrayScreenState(token, pray);
+  _EditPrayScreenState createState() => _EditPrayScreenState();
 }
 
 class _EditPrayScreenState extends State<EditPrayScreenState>{
-  String token;
-  Pray pray;
-  _EditPrayScreenState(this.token, this.pray);
+  TextEditingController _descriptionController = new TextEditingController();
+
+  String _newDescription = '';
+  String _newStartDate = '';
+  String _newEndDate = '';
+  Size _screenSize;
+  String _description;
+  String _valueStartDate;
+  String _valueEndDate;
+  DatePicker _startDatePicker;
+  DatePicker _endDatePicker;
+  final _formKey = GlobalKey<FormState>();
+
+  _EditPrayScreenState();
+
+  @override
+  void initState() {
+    _descriptionController.addListener(_onDescriptionChanged);
+    var formatterFrom = new DateFormat('yyyy/MM/dd');
+    var formatterTo = new DateFormat('dd/MM/yyyy');
+
+    _valueStartDate = formatterFrom.format(this.widget.pray.beginDate);
+    DateTime dateTime = formatterFrom.parse(_valueStartDate);
+    _valueStartDate = formatterTo.format(dateTime);
+
+    _valueEndDate = formatterFrom.format(this.widget.pray.endDate);
+    dateTime = formatterFrom.parse(_valueEndDate);
+    _valueEndDate = formatterTo.format(dateTime);
+
+    _description = this.widget.pray.description;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    return Text('Edit Pray Screen');
+    if(_valueStartDate == null){
+      _valueStartDate = AppLocalizations.of(context).startDate;
+    }
+    if(_valueEndDate == null){
+      _valueEndDate = AppLocalizations.of(context).endDate;
+    }
+    _screenSize = MediaQuery.of(context).size;
+    _startDatePicker = DatePicker(value: _valueStartDate,
+        onPressed: _startDatePicked);
+    _endDatePicker = DatePicker(value: _valueEndDate,
+        onPressed: _endDatePicked);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).addYourPray),
+      ),
+      body: Builder(builder: (context) => _buildInputForm(context)),
+    );
   }
+
+  void _onDescriptionChanged(){
+    _newDescription = _descriptionController.text;
+  }
+
+  Widget _buildInputForm(BuildContext context){
+    return SingleChildScrollView(
+      child: Container(
+        width: _screenSize.width,
+        height: _screenSize.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _buildDescriptionInputField(),
+                  _buildStartDatePicker(),
+                  _buildEndDatePicker(),
+                  _buildBarButton(context),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDescriptionInputField() {
+    return Container(
+      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+      child: InputFieldArea(
+        validator: (value){
+          if (value.isEmpty) {
+            return AppLocalizations.of(context).mandatoryField;
+          }
+        },
+        hint: _description,
+        obscure: false,
+        controller: _descriptionController,
+        labelText: _description,
+      ),
+    );
+  }
+
+  Widget _buildStartDatePicker(){
+    return _startDatePicker;
+  }
+
+  Widget _buildEndDatePicker(){
+    return _endDatePicker;
+  }
+
+  _startDatePicked(String newValue){
+    setState(() {
+      _newStartDate = _valueStartDate = newValue;
+    });
+  }
+
+  _endDatePicked(String newValue){
+    setState(() {
+      _newEndDate = _valueEndDate = newValue;
+    });
+  }
+
+  Widget _buildBarButton(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.only(top: 24.0, left: 84.0),
+        child: Row(
+          children: <Widget>[
+            SaveButton(
+              height: 50.0,
+              width: _screenSize.width / 2,
+              onPressed: () =>_savedButtonPressed(context),
+            ),
+          ],
+        )
+    );
+  }
+
+  _savedButtonPressed(BuildContext context) async{
+    if(!_formKey.currentState.validate()){
+      return;
+    }
+    if(_newDescription == '' && _newStartDate == '' && _newDescription == '')
+      return;
+    var formatterFrom = new DateFormat('dd/MM/yyyy');
+    if(_newDescription != '')
+      this.widget.pray.description = _newDescription;
+    if(_newStartDate != '')
+      this.widget.pray.beginDate = formatterFrom.parse(_newStartDate);
+    if(_newEndDate != '')
+      this.widget.pray.endDate = formatterFrom.parse(_newEndDate);
+
+    Response response = await PrayHttp().putPray(this.widget.pray, this.widget.token);
+    if(response.statusCode == 200 || response.statusCode == 201){
+      final snackBar = SnackBar(
+        content: Text(AppLocalizations.of(context).prayEdited,
+          style: TextStyle(
+              color: Colors.green
+          ),
+        ),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    } else {
+      final snackBar = SnackBar(
+        content: Text(AppLocalizations.of(context).errorWhileSaving,
+          style: TextStyle(
+              color: Colors.red
+          ),
+        ),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+  }
+
 }
