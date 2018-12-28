@@ -9,7 +9,6 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 
 class TakePictureScreen extends StatefulWidget {
-
   final ValueChanged<String> onTakePicture;
 
   TakePictureScreen({@required this.onTakePicture});
@@ -164,9 +163,8 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
-          text: AppLocalizations.of(context).takingPicture,
-        )
-    );
+              text: AppLocalizations.of(context).takingPicture,
+            ));
     takePicture().then((String filePath) {
       this.widget.onTakePicture(filePath);
       if (mounted) {
@@ -174,7 +172,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
           //imagePath = filePath;
           _view = _buildCameraView(context);
         });
-        if (filePath != null){
+        if (filePath != null) {
           showInSnackBar(AppLocalizations.of(context).pictureTaken);
         }
       }
@@ -211,7 +209,7 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 
-  Widget _buildCameraView(BuildContext context){
+  Widget _buildCameraView(BuildContext context) {
     return Column(
       children: <Widget>[
         Padding(
@@ -244,16 +242,18 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
           ),
         ),
         IconButton(
-          icon: Icon(Icons.camera_alt,
-            size: 45.0,),
+          icon: Icon(
+            Icons.camera_alt,
+            size: 45.0,
+          ),
           color: Colors.blue,
           onPressed: controller != null &&
-              controller.value.isInitialized &&
-              !controller.value.isRecordingVideo
+                  controller.value.isInitialized &&
+                  !controller.value.isRecordingVideo
               ? onTakePictureButtonPressed
               : null,
         ),
-              ],
+      ],
     );
   }
 

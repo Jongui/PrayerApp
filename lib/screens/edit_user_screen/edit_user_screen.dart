@@ -9,8 +9,8 @@ import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
-import 'package:prayer_app/screens/take_picture_screen/take_picture_screen.dart';
 import 'package:prayer_app/utils/church_http.dart';
 import 'package:prayer_app/utils/user_firebase_storage.dart';
 import 'package:prayer_app/utils/user_http.dart';
@@ -58,6 +58,17 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   }
 
   @override
+  void dispose() {
+    _newAvatarUrl = '';
+    super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _user = this.widget.user;
     if (_newCountry == '')
@@ -88,7 +99,6 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   }
 
   Widget _buildInputForm(BuildContext context) {
-    EditUserScreenState state = this.widget;
     return Container(
       width: _screenSize.width,
       height: _screenSize.height,
@@ -100,8 +110,8 @@ class _EditUserScreenState extends State<EditUserScreenState> {
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                _buildUserAvatarInputField(state.user.avatarUrl, context),
-                _buildUserNameInputField(state.user.userName),
+                _buildUserAvatarInputField(_user.avatarUrl, context),
+                _buildUserNameInputField(_user.userName),
                 _buildChurchInputField(_churchList),
                 _buildCountryDropDownButton(),
                 _buildBarButton(context),
@@ -154,19 +164,23 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   }
 
   _savedButtonPressed(BuildContext context) async {
-    if (_newName == '' && _newCountry == '' && _newIdChurch == 0 && _newAvatarUrl == '') return;
-    if (_newName != '') _user.userName = _newName;
-    if (_newCountry != '') _user.country = _newCountry;
-    if (_newIdChurch != 0) _user.church = _newIdChurch;
-    if(_newAvatarUrl != ''){
-      _user.avatarUrl = await UserFirebaseStorage().uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl));
-    }
+    if (_newName == '' &&
+        _newCountry == '' &&
+        _newIdChurch == 0 &&
+        _newAvatarUrl == '') return;
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
           text: AppLocalizations.of(context).savingUser,
-        )
-    );
+        ));
+    if (_newName != '') _user.userName = _newName;
+    if (_newCountry != '') _user.country = _newCountry;
+    if (_newIdChurch != 0) _user.church = _newIdChurch;
+    if (_newAvatarUrl != '') {
+      _user.avatarUrl = await UserFirebaseStorage()
+          .uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl));
+    }
+
     int response = await UserHttp().putUser(_user);
     if (response == 200) {
       final snackBar = SnackBar(
@@ -185,6 +199,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+    _newAvatarUrl = '';
     Navigator.pop(context);
   }
 
@@ -221,19 +236,26 @@ class _EditUserScreenState extends State<EditUserScreenState> {
 
   Widget _buildUserAvatarInputField(String avatarUrl, BuildContext context) {
     ImageProvider avatarImage = NetworkImage(avatarUrl);
-    if(_newAvatarUrl != ''){
+    if (_newAvatarUrl != '') {
       avatarImage = FileImage(File(_newAvatarUrl));
     }
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-              new MaterialPageRoute(builder: (context) => TakePictureScreen(
-                onTakePicture: (filePath) {
-                  setState(() {
-                    _newAvatarUrl = filePath;
-                  });
-                },
-              )));
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (context) => ImagePickerScreen(
+                    onImagePicked: (filePath) {
+                      setState(() {
+                        _newAvatarUrl = filePath;
+                      });
+                    },
+                    fileAddress: this.widget.user.avatarUrl,
+//              new MaterialPageRoute(builder: (context) => TakePictureScreen(
+//                onTakePicture: (filePath) {
+//                  setState(() {
+//                    _newAvatarUrl = filePath;
+//                  });
+//                },
+                  )));
         },
         child: Stack(
           alignment: const Alignment(0.0, 0.8),
@@ -241,8 +263,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
             CircleAvatar(
               radius: 60.0,
               backgroundColor: Colors.grey,
-              backgroundImage:
-                avatarImage != null ? avatarImage : null,
+              backgroundImage: avatarImage != null ? avatarImage : null,
             ),
             Container(
               decoration: BoxDecoration(

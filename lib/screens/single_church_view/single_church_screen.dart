@@ -9,7 +9,6 @@ import 'package:prayer_app/screens/single_church_view/views/single_church_view.d
 import 'package:prayer_app/utils/user_http.dart';
 
 class SingleChurchScreen extends StatelessWidget {
-
   Church church;
   User user;
 
@@ -19,21 +18,18 @@ class SingleChurchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChurchScreenState(church, user);
   }
-
 }
 
 class SingleChurchScreenState extends StatefulWidget {
-
   Church church;
   User user;
   SingleChurchScreenState(this.church, this.user);
 
-  _SingleChurchScreenState createState() => _SingleChurchScreenState(church, user);
-
+  _SingleChurchScreenState createState() =>
+      _SingleChurchScreenState(church, user);
 }
 
 class _SingleChurchScreenState extends State<SingleChurchScreenState> {
-
   Church church;
   User user;
 
@@ -47,39 +43,38 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
         title: Text(AppLocalizations.of(context).viewChurch),
-    ),
-    body: SingleChurchView(church: church,
-      user: user,
-    ),
-      floatingActionButton: user.idUser == church.createdBy ? FloatEditButton(
-          onAddPressed: () async {
-            List<User> _users = await UserHttp().getAllUsers(user.token);
-            Navigator.of(context).push(
-                new MaterialPageRoute(
-                    builder: (context) => AddUserToChurchScreen(users: _users,
-                      church: church,
-                      token: user.token,)
-                )
-            ).whenComplete(onReload);
-          },
-          onEditPressed: () {
-            Navigator.of(context).push(
-              new MaterialPageRoute(
-                builder: (context) => EditChurchScreen(church: church,
-                  user: user,)
-              )
-            ).whenComplete(onReload);
-          }
-          ) : null,
+      ),
+      body: SingleChurchView(
+        church: church,
+        user: user,
+      ),
+      floatingActionButton: user.idUser == church.createdBy
+          ? FloatEditButton(onAddPressed: () async {
+              List<User> _users = await UserHttp().getAllUsers(user.token);
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(
+                      builder: (context) => AddUserToChurchScreen(
+                            users: _users,
+                            church: church,
+                            token: user.token,
+                          )))
+                  .whenComplete(onReload);
+            }, onEditPressed: () {
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(
+                      builder: (context) => EditChurchScreen(
+                            church: church,
+                            user: user,
+                          )))
+                  .whenComplete(onReload);
+            })
+          : null,
     );
   }
 
-  onReload(){
-    setState(() {
-
-    });
+  onReload() {
+    setState(() {});
   }
-
 }

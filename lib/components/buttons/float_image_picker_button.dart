@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 
-class FloatEditButton extends StatelessWidget{
+class FloatImagePickerButton extends StatelessWidget{
 
-  VoidCallback onEditPressed;
-  VoidCallback onAddPressed;
+  VoidCallback onCameraClicked;
+  VoidCallback onFileSystemClicked;
 
-  FloatEditButton({@required this.onAddPressed, @required this.onEditPressed});
+  FloatImagePickerButton({@required this.onCameraClicked, @required this.onFileSystemClicked});
 
   @override
   Widget build(BuildContext context) {
-    return FloatEditButtonState(onAddPressed, onEditPressed);
+    return FloatImagePickerButtonState(onCameraClicked, onFileSystemClicked);
   }
 
 }
 
-class FloatEditButtonState extends StatefulWidget{
+class FloatImagePickerButtonState extends StatefulWidget{
+  VoidCallback onCameraClicked;
+  VoidCallback onFileSystemClicked;
+  FloatImagePickerButtonState(this.onCameraClicked, this.onFileSystemClicked);
 
-  VoidCallback onEditPressed;
-  VoidCallback onAddPressed;
+  _FloatImagePickerButtonState createState() => _FloatImagePickerButtonState();
 
-  FloatEditButtonState(this.onAddPressed, this.onEditPressed);
-
-  @override
-  _FloatEditButtonState createState() => _FloatEditButtonState();
 }
 
-class _FloatEditButtonState extends State<FloatEditButtonState>
+class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
     with SingleTickerProviderStateMixin{
-
-  _FloatEditButtonState();
 
   bool isOpened = false;
   AnimationController _animationController;
@@ -72,45 +68,30 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     super.initState();
   }
 
-  @override
-  dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  animate() {
-    if (!isOpened) {
-      _animationController.forward();
-    } else {
-      _animationController.reverse();
-    }
-    isOpened = !isOpened;
-  }
-
-  Widget addUser() {
+  Widget cameraButton() {
     return new Container(
       child: FloatingActionButton(
-        heroTag: 'addUser',
+        heroTag: 'cameraButton',
         onPressed: () {
           animate();
-          this.widget.onAddPressed();
+          this.widget.onCameraClicked();
         },
-        tooltip: 'Add user',
-        child: Icon(Icons.person_add),
+        tooltip: 'Camera',
+        child: Icon(Icons.camera_alt),
       ),
     );
   }
 
-  Widget edit() {
+  Widget fileSystemButton() {
     return new Container(
       child: FloatingActionButton(
-        heroTag: 'editChurch',
+        heroTag: 'fileSystemButton',
         onPressed: () {
           animate();
-          this.widget.onEditPressed();
+          this.widget.onFileSystemClicked();
         },
-        tooltip: 'Edit Church',
-        child: Icon(Icons.mode_edit),
+        tooltip: 'File System',
+        child: Icon(Icons.insert_drive_file),
       ),
     );
   }
@@ -129,6 +110,20 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
   }
 
   @override
+  dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  animate() {
+    if (!isOpened) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
+    isOpened = !isOpened;
+  }
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -139,7 +134,7 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
             _translateButton.value * 2.0,
             0.0,
           ),
-          child: addUser(),
+          child: cameraButton(),
         ),
         Transform(
           transform: Matrix4.translationValues(
@@ -147,7 +142,7 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
             _translateButton.value,
             0.0,
           ),
-          child: edit(),
+          child: fileSystemButton(),
         ),
         toggle(),
       ],
