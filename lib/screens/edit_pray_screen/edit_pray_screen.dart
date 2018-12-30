@@ -1,15 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/inputs/date_picker.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
+import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
+import 'package:prayer_app/utils/pray_firebase_storage.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 
-class EditPrayScreen extends StatelessWidget{
-
+class EditPrayScreen extends StatelessWidget {
   String token;
   Pray pray;
 
@@ -19,10 +23,9 @@ class EditPrayScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return EditPrayScreenState(token, pray);
   }
-
 }
 
-class EditPrayScreenState extends StatefulWidget{
+class EditPrayScreenState extends StatefulWidget {
   String token;
   Pray pray;
 
@@ -31,7 +34,7 @@ class EditPrayScreenState extends StatefulWidget{
   _EditPrayScreenState createState() => _EditPrayScreenState();
 }
 
-class _EditPrayScreenState extends State<EditPrayScreenState>{
+class _EditPrayScreenState extends State<EditPrayScreenState> {
   TextEditingController _descriptionController = new TextEditingController();
 
   String _newDescription = '';
@@ -43,12 +46,19 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
   String _valueEndDate;
   DatePicker _startDatePicker;
   DatePicker _endDatePicker;
+  ImageProvider _profileImageProvider;
+  String _imageUrl;
+  File _newFile;
+
   final _formKey = GlobalKey<FormState>();
 
   _EditPrayScreenState();
 
   @override
   void initState() {
+    _profileImageProvider = AssetImage("assets/pray.jpg");
+    _uploadFirebasePrayProfileImage();
+
     _descriptionController.addListener(_onDescriptionChanged);
     var formatterFrom = new DateFormat('yyyy/MM/dd');
     var formatterTo = new DateFormat('dd/MM/yyyy');
@@ -68,17 +78,17 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
 
   @override
   Widget build(BuildContext context) {
-    if(_valueStartDate == null){
+    if (_valueStartDate == null) {
       _valueStartDate = AppLocalizations.of(context).startDate;
     }
-    if(_valueEndDate == null){
+    if (_valueEndDate == null) {
       _valueEndDate = AppLocalizations.of(context).endDate;
     }
     _screenSize = MediaQuery.of(context).size;
-    _startDatePicker = DatePicker(value: _valueStartDate,
-        onPressed: _startDatePicked);
-    _endDatePicker = DatePicker(value: _valueEndDate,
-        onPressed: _endDatePicked);
+    _startDatePicker =
+        DatePicker(value: _valueStartDate, onPressed: _startDatePicked);
+    _endDatePicker =
+        DatePicker(value: _valueEndDate, onPressed: _endDatePicked);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).addYourPray),
@@ -87,11 +97,11 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
     );
   }
 
-  void _onDescriptionChanged(){
+  void _onDescriptionChanged() {
     _newDescription = _descriptionController.text;
   }
 
-  Widget _buildInputForm(BuildContext context){
+  Widget _buildInputForm(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
         width: _screenSize.width,
@@ -105,6 +115,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  _buildPrayProfilePicture(),
                   _buildDescriptionInputField(),
                   _buildStartDatePicker(),
                   _buildEndDatePicker(),
@@ -120,10 +131,11 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
 
   Widget _buildDescriptionInputField() {
     return Container(
-      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+      padding:
+          EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
-        validator: (value){
-          if (value.isEmpty) {
+        validator: (value) {
+          if (value.isEmpty && _newFile == null) {
             return AppLocalizations.of(context).mandatoryField;
           }
         },
@@ -135,21 +147,21 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
     );
   }
 
-  Widget _buildStartDatePicker(){
+  Widget _buildStartDatePicker() {
     return _startDatePicker;
   }
 
-  Widget _buildEndDatePicker(){
+  Widget _buildEndDatePicker() {
     return _endDatePicker;
   }
 
-  _startDatePicked(String newValue){
+  _startDatePicked(String newValue) {
     setState(() {
       _newStartDate = _valueStartDate = newValue;
     });
   }
 
-  _endDatePicked(String newValue){
+  _endDatePicked(String newValue) {
     setState(() {
       _newEndDate = _valueEndDate = newValue;
     });
@@ -163,47 +175,101 @@ class _EditPrayScreenState extends State<EditPrayScreenState>{
             SaveButton(
               height: 50.0,
               width: _screenSize.width / 2,
-              onPressed: () =>_savedButtonPressed(context),
+              onPressed: () => _savedButtonPressed(context),
             ),
           ],
-        )
-    );
+        ));
   }
 
-  _savedButtonPressed(BuildContext context) async{
-    if(!_formKey.currentState.validate()){
+  _savedButtonPressed(BuildContext context) async {
+    if (!_formKey.currentState.validate()) {
       return;
     }
-    if(_newDescription == '' && _newStartDate == '' && _newDescription == '')
+    if (_newDescription == '' && _newStartDate == '' && _newDescription == ''
+      && _newFile == null)
       return;
     var formatterFrom = new DateFormat('dd/MM/yyyy');
-    if(_newDescription != '')
-      this.widget.pray.description = _newDescription;
-    if(_newStartDate != '')
+    if (_newDescription != '') this.widget.pray.description = _newDescription;
+    if (_newStartDate != '')
       this.widget.pray.beginDate = formatterFrom.parse(_newStartDate);
-    if(_newEndDate != '')
+    if (_newEndDate != '')
       this.widget.pray.endDate = formatterFrom.parse(_newEndDate);
+    showDialog(
+        context: context,
+        builder: (_) => ProcessDialog(
+          text: AppLocalizations.of(context).savingPray,
+        ));
 
-    Response response = await PrayHttp().putPray(this.widget.pray, this.widget.token);
-    if(response.statusCode == 200 || response.statusCode == 201){
+    if(_newFile != null){
+      await PrayFirebaseStorage().uploadPrayProfilePicture(
+          this.widget.pray.idPray, _newFile);
+    }
+
+    Response response =
+        await PrayHttp().putPray(this.widget.pray, this.widget.token);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).prayEdited,
-          style: TextStyle(
-              color: Colors.green
-          ),
+        content: Text(
+          AppLocalizations.of(context).prayEdited,
+          style: TextStyle(color: Colors.green),
         ),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).errorWhileSaving,
-          style: TextStyle(
-              color: Colors.red
-          ),
+        content: Text(
+          AppLocalizations.of(context).errorWhileSaving,
+          style: TextStyle(color: Colors.red),
         ),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+    Navigator.pop(context);
   }
 
+  Widget _buildPrayProfilePicture() {
+    return Container(
+      height: 220.0,
+      padding: EdgeInsets.only(right: 10.0),
+      decoration: new BoxDecoration(
+          image:
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            child: FloatingActionButton(
+              heroTag: 'cameraButton',
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => ImagePickerScreen(
+                      onImagePicked: (filePath) async {
+                        setState(() {
+                          _newFile = File(filePath);
+                          _profileImageProvider = FileImage(_newFile);
+                        });
+                      },
+                      fileAddress: _imageUrl,
+                    )));
+              },
+              tooltip: 'Camera',
+              child: Icon(Icons.camera_alt),
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+
+  void _uploadFirebasePrayProfileImage() async {
+    _imageUrl = await PrayFirebaseStorage()
+        .downloadPrayProfilePicture(this.widget.pray.idPray);
+    setState(() {
+      if (_imageUrl != null) {
+        _profileImageProvider = NetworkImage(_imageUrl);
+      }
+    });
+  }
 }

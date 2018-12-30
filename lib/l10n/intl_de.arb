@@ -1,8 +1,8 @@
 {
   "@@last_modified": "2018-12-08T20:21:41.305510",
-  "title": "Betten App",
+  "title": "Gebets App",
   "@title": {
-    "description": "Gemeinde Betten",
+    "description": "Gemeinde beten",
     "type": "text",
     "placeholders": {}
   },
@@ -72,7 +72,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "editYourPray": "Bearbeite dein Betten",
+  "editYourPray": "Bearbeiten dein Gebet",
   "@editYourPray": {
     "type": "text",
     "placeholders": {}
@@ -87,7 +87,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "prayFromTo": "Betten von {startDate} bis {endDate}",
+  "prayFromTo": "Gebet von {startDate} bis {endDate}",
   "@prayFromTo": {
     "type": "text",
     "placeholders": {
@@ -175,6 +175,11 @@
   },
   "mandatoryField": "Wert eingeben",
   "@mandatoryField": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "savingPray": "Gebet speichern",
+  "@savingPray": {
     "type": "text",
     "placeholders": {}
   }

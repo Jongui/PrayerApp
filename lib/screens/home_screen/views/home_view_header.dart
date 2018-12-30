@@ -75,7 +75,7 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
           CircleAvatar(
             radius: 40.0,
             backgroundColor: Colors.grey,
-            backgroundImage: user.avatarUrl != null ? new NetworkImage(
+            backgroundImage: user.avatarUrl != null ? NetworkImage(
                 user.avatarUrl) : null,
           ),
         ],

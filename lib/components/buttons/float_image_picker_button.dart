@@ -69,7 +69,7 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
   }
 
   Widget cameraButton() {
-    return new Container(
+    return Container(
       child: FloatingActionButton(
         heroTag: 'cameraButton',
         onPressed: () {

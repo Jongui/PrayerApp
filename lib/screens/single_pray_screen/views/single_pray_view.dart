@@ -10,9 +10,11 @@ class SinglePrayView extends StatelessWidget {
   User user;
   UserPray userPray;
   String token;
+  bool reload = false;
 
   SinglePrayView(
-      {@required this.pray, @required this.user, @required this.userPray, @required this.token});
+      {@required this.pray, @required this.user, @required this.userPray, @required this.token,
+        this.reload});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class SinglePrayView extends StatelessWidget {
         user: user,
         userPray: userPray,
         token: token,
+        reload: reload,
       ),
       SinglePrayViewUsers(
         pray: pray,
@@ -29,4 +32,5 @@ class SinglePrayView extends StatelessWidget {
       )
     ]);
   }
+
 }

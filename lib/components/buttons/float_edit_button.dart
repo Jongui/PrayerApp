@@ -91,7 +91,7 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
   }
 
   Widget addPicture() {
-    return new Container(
+    return Container(
       child: FloatingActionButton(
         heroTag: 'addPicture',
         onPressed: () {

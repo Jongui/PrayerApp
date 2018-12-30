@@ -10,9 +10,11 @@ class EditButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _height = screenSize != null ? screenSize.height : 500.0;
+    double _width = screenSize != null ? screenSize.width : 500.0;
     return Container(
-        height: screenSize.height / 20,
-        width: screenSize.width / 4,
+        height: _height / 20,
+        width: _width / 4,
         margin: EdgeInsets.only(left: 18.0),
         padding: const EdgeInsets.all(0.0),
         decoration: new BoxDecoration(

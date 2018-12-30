@@ -177,5 +177,10 @@
   "@mandatoryField": {
     "type": "text",
     "placeholders": {}
+  },
+  "savingPray": "Saving Pray",
+  "@savingPray": {
+    "type": "text",
+    "placeholders": {}
   }
 }

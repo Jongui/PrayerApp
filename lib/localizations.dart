@@ -161,6 +161,10 @@ class AppLocalizations {
     return Intl.message('Inform a value', name: 'mandatoryField');
   }
 
+  String get savingPray{
+    return Intl.message('Saving Pray', name: 'savingPray');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

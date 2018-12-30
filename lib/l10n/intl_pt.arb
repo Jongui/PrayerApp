@@ -197,5 +197,10 @@
   "@mandatoryField": {
     "type": "text",
     "placeholders": {}
+  },
+  "savingPray": "Salvando oração",
+  "@savingPray": {
+    "type": "text",
+    "placeholders": {}
   }
 }

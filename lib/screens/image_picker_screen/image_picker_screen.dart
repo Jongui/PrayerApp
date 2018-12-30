@@ -81,9 +81,15 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
   }
 
   void _buildImageView() {
-    ImageProvider _image = NetworkImage(this.widget.fileAddress);
-    if (_newFileAddress != null) {
-      _image = FileImage(File(_newFileAddress));
+    ImageProvider _image;
+    try{
+      if (_newFileAddress != null) {
+        _image = FileImage(File(_newFileAddress));
+      } else {
+        _image = NetworkImage(this.widget.fileAddress);
+      }
+    } catch(e){
+      _image = AssetImage("assets/pray.jpg");
     }
     _view = Image(image: _image);
   }

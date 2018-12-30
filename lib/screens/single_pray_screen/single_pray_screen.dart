@@ -6,7 +6,6 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/screens/add_user_to_pray_screen/add_user_to_pray_screen.dart';
 import 'package:prayer_app/screens/edit_pray_screen/edit_pray_screen.dart';
-import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/single_pray_screen/views/single_pray_view.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
@@ -40,6 +39,7 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
   Pray pray;
   User user;
   UserPray userPray;
+  bool _reload = false;
 
   _SinglePrayScreenState(this.pray, this.user, this.userPray);
 
@@ -50,6 +50,9 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
 
   @override
   Widget build(BuildContext context) {
+    bool _reloadParam = _reload;
+    if(_reload)
+      _reload = !_reload;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).editYourPray),
@@ -59,6 +62,7 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
         user: user,
         userPray: userPray,
         token: user.token,
+        reload: _reloadParam
       ),
       floatingActionButton: user.idUser == pray.idUser
           ? FloatEditButton(
@@ -83,15 +87,7 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
                     .whenComplete(onReload);
               },
               onAddPicturePressed: () {
-                Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => ImagePickerScreen(
-                      onImagePicked: (filePath) {
-                        setState(() {
 
-                        });
-                      },
-                      fileAddress: this.widget.user.avatarUrl,
-                    )));
               },
             )
           : null,
@@ -99,6 +95,8 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
   }
 
   onReload() {
-    setState(() {});
+    setState(() {
+      _reload = true;
+    });
   }
 }

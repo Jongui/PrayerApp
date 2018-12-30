@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m3(userName) => "Erzeugt von ${userName}";
 
-  static m4(startDate, endDate) => "Betten von ${startDate} bis ${endDate}";
+  static m4(startDate, endDate) => "Gebet von ${startDate} bis ${endDate}";
 
   static m5(rate) => "Benutzerbewertung: ${rate}";
 
@@ -47,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "createdBy" : m3,
     "edit" : MessageLookupByLibrary.simpleMessage("Bearbeiten"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Benutzer bearbeiten"),
-    "editYourPray" : MessageLookupByLibrary.simpleMessage("Bearbeite dein Betten"),
+    "editYourPray" : MessageLookupByLibrary.simpleMessage("Bearbeiten dein Gebet"),
     "errorWhileSaving" : MessageLookupByLibrary.simpleMessage("Fehler beim Speichern!"),
     "hello" : MessageLookupByLibrary.simpleMessage("Hallo"),
     "mandatoryField" : MessageLookupByLibrary.simpleMessage("Wert eingeben"),
@@ -58,11 +58,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "prayFromTo" : m4,
     "ratedByUser" : m5,
     "save" : MessageLookupByLibrary.simpleMessage("Speichern"),
+    "savingPray" : MessageLookupByLibrary.simpleMessage("Gebet speichern"),
     "savingUser" : MessageLookupByLibrary.simpleMessage("Benutzer speichern"),
     "takeAPicture" : MessageLookupByLibrary.simpleMessage("Machen Sie ein Foto"),
     "takingPicture" : MessageLookupByLibrary.simpleMessage("Bild verarbeiten"),
     "tapACamera" : MessageLookupByLibrary.simpleMessage("Kamera wählen"),
-    "title" : MessageLookupByLibrary.simpleMessage("Betten App"),
+    "title" : MessageLookupByLibrary.simpleMessage("Gebets App"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Benutzer aktualisiert!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde sehen"),
     "yourRate" : m6
