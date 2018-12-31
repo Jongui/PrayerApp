@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:prayer_app/utils/firebase_storage_utils.dart';
 
 class PrayFirebaseStorage{
 
   static final PrayFirebaseStorage _prayFirebaseStorage = PrayFirebaseStorage._internal();
-  final FirebaseStorage _storage = FirebaseStorage(storageBucket: "gs://prayingapp-76292.appspot.com");
+  final StorageReference _storage = FirebaseStorageUtils().getInstanceStorageReference();
 
   factory PrayFirebaseStorage(){
     return _prayFirebaseStorage;
@@ -17,7 +18,7 @@ class PrayFirebaseStorage{
   Future<dynamic> uploadPrayProfilePicture(int idPray, File file) async {
 
     final StorageReference ref =
-    _storage.ref().child('prays').child('prayprofile$idPray.$_extension');
+    _storage.child('prays').child('prayprofile$idPray.$_extension');
     StorageUploadTask task = ref.putFile(
       file,
       StorageMetadata(
@@ -31,7 +32,7 @@ class PrayFirebaseStorage{
 
   Future<dynamic> downloadPrayProfilePicture(int idPray) async {
     final StorageReference ref =
-    _storage.ref().child('prays').child('prayprofile$idPray.$_extension');
+    _storage.child('prays').child('prayprofile$idPray.$_extension');
     return ref.getDownloadURL();
   }
 
