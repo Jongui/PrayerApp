@@ -4,16 +4,18 @@ class FloatEditButton extends StatelessWidget {
   VoidCallback onEditPressed;
   VoidCallback onAddPressed;
   VoidCallback onAddPicturePressed;
+  VoidCallback onAlbumClicked;
 
   FloatEditButton(
       {@required this.onAddPressed,
       @required this.onEditPressed,
-      @required this.onAddPicturePressed});
+      @required this.onAddPicturePressed,
+      @required this.onAlbumClicked});
 
   @override
   Widget build(BuildContext context) {
     return FloatEditButtonState(
-        onAddPressed, onEditPressed, onAddPicturePressed);
+        onAddPressed, onEditPressed, onAddPicturePressed, onAlbumClicked);
   }
 }
 
@@ -21,9 +23,10 @@ class FloatEditButtonState extends StatefulWidget {
   VoidCallback onEditPressed;
   VoidCallback onAddPressed;
   VoidCallback onAddPicturePressed;
+  VoidCallback onAlbumClicked;
 
   FloatEditButtonState(
-      this.onAddPressed, this.onEditPressed, this.onAddPicturePressed);
+      this.onAddPressed, this.onEditPressed, this.onAddPicturePressed, this.onAlbumClicked);
 
   @override
   _FloatEditButtonState createState() => _FloatEditButtonState();
@@ -132,6 +135,20 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     );
   }
 
+  Widget viewAlbum() {
+    return new Container(
+      child: FloatingActionButton(
+        heroTag: 'viewAlbum',
+        onPressed: () {
+          animate();
+          this.widget.onAlbumClicked();
+        },
+        tooltip: 'View Album',
+        child: Icon(Icons.photo_album),
+      ),
+    );
+  }
+
   Widget toggle() {
     return FloatingActionButton(
       heroTag: 'toggle',
@@ -150,6 +167,14 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value * 4.0,
+            0.0,
+          ),
+          child: viewAlbum(),
+        ),
         Transform(
           transform: Matrix4.translationValues(
             0.0,

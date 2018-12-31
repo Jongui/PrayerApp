@@ -269,20 +269,4 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
     });
   }
 
-  /// Display the thumbnail of the captured image or video.
-//  Widget _thumbnailWidget() {
-//    return Expanded(
-//      child: Align(
-//        alignment: Alignment.centerRight,
-//        child: imagePath == null
-//            ? null
-//            : SizedBox(
-//          child: Image.file(File(imagePath)),
-//          width: 64.0,
-//          height: 64.0,
-//        ),
-//      ),
-//    );
-//  }
-
 }
