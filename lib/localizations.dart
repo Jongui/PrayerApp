@@ -165,6 +165,10 @@ class AppLocalizations {
     return Intl.message('Saving Pray', name: 'savingPray');
   }
 
+  String get rotatingImage{
+    return Intl.message('Rotating Image...', name: 'rotatingImage');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

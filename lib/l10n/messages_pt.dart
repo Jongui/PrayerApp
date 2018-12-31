@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "prayEdited" : MessageLookupByLibrary.simpleMessage("Oração editada"),
     "prayFromTo" : m4,
     "ratedByUser" : m5,
+    "rotatingImage" : MessageLookupByLibrary.simpleMessage("Girando imagem..."),
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
     "savingPray" : MessageLookupByLibrary.simpleMessage("Salvando oração"),
     "savingUser" : MessageLookupByLibrary.simpleMessage("Salvando usuário"),

@@ -4,12 +4,14 @@ class FloatImagePickerButton extends StatelessWidget{
 
   VoidCallback onCameraClicked;
   VoidCallback onFileSystemClicked;
+  VoidCallback onRotateImageClicked;
 
-  FloatImagePickerButton({@required this.onCameraClicked, @required this.onFileSystemClicked});
+  FloatImagePickerButton({@required this.onCameraClicked, @required this.onFileSystemClicked,
+    @required this.onRotateImageClicked});
 
   @override
   Widget build(BuildContext context) {
-    return FloatImagePickerButtonState(onCameraClicked, onFileSystemClicked);
+    return FloatImagePickerButtonState(onCameraClicked, onFileSystemClicked, onRotateImageClicked);
   }
 
 }
@@ -17,7 +19,9 @@ class FloatImagePickerButton extends StatelessWidget{
 class FloatImagePickerButtonState extends StatefulWidget{
   VoidCallback onCameraClicked;
   VoidCallback onFileSystemClicked;
-  FloatImagePickerButtonState(this.onCameraClicked, this.onFileSystemClicked);
+  VoidCallback onRotateImageClicked;
+
+  FloatImagePickerButtonState(this.onCameraClicked, this.onFileSystemClicked, this.onRotateImageClicked);
 
   _FloatImagePickerButtonState createState() => _FloatImagePickerButtonState();
 
@@ -96,6 +100,20 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
     );
   }
 
+  Widget rotateImageButton(){
+    return new Container(
+      child: FloatingActionButton(
+        heroTag: 'rotateImageButton',
+        onPressed: () {
+          //animate();
+          this.widget.onRotateImageClicked();
+        },
+        tooltip: 'File System',
+        child: Icon(Icons.rotate_left),
+      ),
+    );
+  }
+
   Widget toggle() {
     return FloatingActionButton(
       heroTag: 'toggle',
@@ -128,6 +146,14 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value * 3.0,
+            0.0,
+          ),
+          child: rotateImageButton(),
+        ),
         Transform(
           transform: Matrix4.translationValues(
             0.0,

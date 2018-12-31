@@ -76,8 +76,8 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
       ),
       child: Column(
         children: <Widget>[
-          _buildDetails(context),
           Divider(),
+          _buildDetails(context),
           _buildRateBar()
         ],
       ),

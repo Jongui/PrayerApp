@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as im;
+import 'package:path_provider/path_provider.dart';
 import 'package:prayer_app/components/buttons/float_image_picker_button.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/screens/take_picture_screen/take_picture_screen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -44,12 +47,6 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
   }
 
   @override
-  void deactivate() {
-    _newFileAddress = '';
-    super.deactivate();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context).title)),
@@ -77,18 +74,45 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
               this.widget.onImagePicked(image.path);
             });
           },
+          onRotateImageClicked: () async {
+            if (_newFileAddress == null || _newFileAddress == '') return;
+            showDialog(
+                context: context,
+                builder: (_) => ProcessDialog(
+                      text: AppLocalizations.of(context).rotatingImage,
+                    ));
+            File _fileImage = File(_newFileAddress);
+            List<int> _bytes = _fileImage.readAsBytesSync();
+            im.Image tmpImage = im.decodeImage(_bytes);
+            tmpImage = im.copyRotate(tmpImage, -90);
+            final Directory extDir = await getApplicationDocumentsDirectory();
+            final String dirPath = '${extDir.path}/Pictures';
+            await Directory(dirPath).create(recursive: true);
+            final String filePath = '$dirPath/${timestamp()}.jpg';
+            File _newFile =
+                await File(filePath).writeAsBytes(im.encodeJpg(tmpImage));
+            _fileImage.delete();
+            setState(() {
+              _newFileAddress = _newFile.path;
+              _buildImageView();
+              this.widget.onImagePicked(_newFileAddress);
+              Navigator.pop(context);
+            });
+          },
         ));
   }
 
+  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
   void _buildImageView() {
     ImageProvider _image;
-    try{
+    try {
       if (_newFileAddress != null) {
         _image = FileImage(File(_newFileAddress));
       } else {
         _image = NetworkImage(this.widget.fileAddress);
       }
-    } catch(e){
+    } catch (e) {
       _image = AssetImage("assets/pray.jpg");
     }
     _view = Image(image: _image);

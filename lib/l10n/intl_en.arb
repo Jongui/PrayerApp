@@ -182,5 +182,10 @@
   "@savingPray": {
     "type": "text",
     "placeholders": {}
+  },
+  "rotatingImage": "Rotating Image...",
+  "@rotatingImage": {
+    "type": "text",
+    "placeholders": {}
   }
 }

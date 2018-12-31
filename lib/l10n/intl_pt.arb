@@ -202,5 +202,10 @@
   "@savingPray": {
     "type": "text",
     "placeholders": {}
+  },
+  "rotatingImage": "Girando imagem...",
+  "@rotatingImage": {
+    "type": "text",
+    "placeholders": {}
   }
 }
