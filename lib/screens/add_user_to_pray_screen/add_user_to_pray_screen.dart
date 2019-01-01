@@ -3,7 +3,7 @@ import 'package:prayer_app/components/cardviews/user_card_view.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/add_user_to_pray_screen/directory/search_user_delegate.dart';
+import 'package:prayer_app/screens/add_user_to_pray_screen/delegates/search_user_delegate.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
 class AddUserToPrayScreen extends StatelessWidget {

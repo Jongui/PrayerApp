@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2018-12-31T14:28:09.223344",
+  "@@last_modified": "2019-01-01T14:25:38.327335",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -210,6 +210,11 @@
   },
   "rotatingImage": "Rotating Image...",
   "@rotatingImage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchUser": "Search User",
+  "@searchUser": {
     "type": "text",
     "placeholders": {}
   }

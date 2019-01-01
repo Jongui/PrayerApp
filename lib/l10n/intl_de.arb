@@ -187,5 +187,10 @@
   "@rotatingImage": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchUser": "Benutzer suchen",
+  "@searchUser": {
+    "type": "text",
+    "placeholders": {}
   }
 }

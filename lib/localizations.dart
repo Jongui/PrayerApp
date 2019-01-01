@@ -169,6 +169,10 @@ class AppLocalizations {
     return Intl.message('Rotating Image...', name: 'rotatingImage');
   }
 
+  String get searchUser{
+    return Intl.message('Search User', name: 'searchUser');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

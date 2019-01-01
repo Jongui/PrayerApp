@@ -8,12 +8,12 @@ import 'package:prayer_app/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_app/resources/config.dart';
 
-class UserHttp{
+class UserHttp {
   static final UserHttp _userHttp = new UserHttp._internal();
 
   HashMap<int, User> _userHash = HashMap();
 
-  factory UserHttp(){
+  factory UserHttp() {
     return _userHttp;
   }
 
@@ -24,7 +24,8 @@ class UserHttp{
 
   Future<User> createUser(FirebaseUser firebaseUser) async {
     String token = await firebaseUser.getIdToken(refresh: false);
-    User user = User( email: firebaseUser.email,
+    User user = User(
+        email: firebaseUser.email,
         userName: firebaseUser.displayName,
         city: "Not defined",
         country: "ND");
@@ -34,8 +35,7 @@ class UserHttp{
           "Authorization": token,
         },
         body: json.encode(user),
-        encoding: Encoding.getByName("utf-8")
-    );
+        encoding: Encoding.getByName("utf-8"));
     try {
       var jsonVar = json.decode(response.body);
       if (response.statusCode == 201 && jsonVar != null) {
@@ -43,19 +43,17 @@ class UserHttp{
         ret.token = token;
         return ret;
       }
-    } catch (e){
+    } catch (e) {
       return null;
     }
   }
 
   Future<User> fetchUser(FirebaseUser firebaseUser) async {
     String token = await firebaseUser.getIdToken(refresh: false);
-    final response =
-    await http.get(serverIp + 'user/email/' + firebaseUser.email
-        + '/',
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": "Basic " + token
+    final response = await http
+        .get(serverIp + 'user/email/' + firebaseUser.email + '/', headers: {
+      "Content-Type": "application/json",
+      "authorization": "Basic " + token
     });
     try {
       var jsonVar = json.decode(response.body);
@@ -66,7 +64,7 @@ class UserHttp{
         user.token = token;
         return user;
       }
-    } catch (e){
+    } catch (e) {
       return null;
     }
   }
@@ -77,19 +75,19 @@ class UserHttp{
           "Content-Type": "application/json",
           "authorization": "Basic " + token
         });
-    try{
+    try {
       var userJson = json.decode(response.body);
-      if(response.statusCode == 200 && userJson != null){
+      if (response.statusCode == 200 && userJson != null) {
         User user = User.fromJson(userJson);
         _userHash[user.idUser] = user;
         return user;
       }
-    } catch(e){
+    } catch (e) {
       return User();
     }
   }
 
-  Future<FirebaseUser> performFirebaseSignIn() async{
+  Future<FirebaseUser> performFirebaseSignIn() async {
     // Attempt to get the currently authenticated user
     GoogleSignInAccount currentUser = _googleSignIn.currentUser;
     if (currentUser == null) {
@@ -109,69 +107,89 @@ class UserHttp{
     return firebaseUser;
   }
 
-  Future<int> putUser(User user, {String token}) async{
-    if(user.token != null){
+  Future<int> putUser(User user, {String token}) async {
+    if (user.token != null) {
       token = user.token;
     }
-    final response =
-        await http.put(serverIp + 'user/' + user.idUser.toString(),
-          headers: {
-            "Content-Type": "application/json",
-            "authorization": "Basic " + token
-          },
-          body: json.encode(user),
-        );
-    return response.statusCode;
-  }
-
-  User getOfflineUser(int idUser){
-    return _userHash[idUser];
-  }
-
-  Future<List<User>> getUsersByChurch(int idChurch, String token) async{
-    List<User> users = [];
-    final response = await http.get(serverIp + 'user/church/' + idChurch.toString(),
+    final response = await http.put(
+      serverIp + 'user/' + user.idUser.toString(),
       headers: {
         "Content-Type": "application/json",
         "authorization": "Basic " + token
+      },
+      body: json.encode(user),
+    );
+    return response.statusCode;
+  }
+
+  User getOfflineUser(int idUser) {
+    return _userHash[idUser];
+  }
+
+  Future<List<User>> getUsersByChurch(int idChurch, String token) async {
+    List<User> users = [];
+    final response = await http
+        .get(serverIp + 'user/church/' + idChurch.toString(), headers: {
+      "Content-Type": "application/json",
+      "authorization": "Basic " + token
+    });
+    try {
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar['value'];
+      users = value.map((userJson) => User.fromJson(userJson)).toList();
+      for (int i = 0; i < users.length; i++) {
+        User user = users.elementAt(i);
+        _userHash[user.idUser] = user;
       }
+    } catch (e) {
+      return users;
+    }
+    users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
+    return users;
+  }
+
+  Future<List<User>> getAllUsers(String token) async {
+    List<User> users = [];
+    final response = await http.get(serverIp + 'user/', headers: {
+      "Content-Type": "appliation/json",
+      "Authorization": "Basic " + token
+    });
+    try {
+      var jsonVar = json.decode(response.body);
+      List value = jsonVar['value'];
+      users = value.map((userJson) => User.fromJson(userJson)).toList();
+      for (int i = 0; i < users.length; i++) {
+        User user = users.elementAt(i);
+        _userHash[user.idUser] = user;
+      }
+    } catch (e) {
+      return users;
+    }
+    users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
+    return users;
+  }
+
+  Future<List<User>> getUsersByUserName(String pattern, String token) async {
+    List<User> users = [];
+    final response = await http.get(
+      serverIp + 'user/userName/' + pattern + '?size=20',
+      headers: {
+        "Content-Type": "appliation/json",
+        "Authorization": "Basic " + token,
+      },
     );
     try {
       var jsonVar = json.decode(response.body);
       List value = jsonVar['value'];
       users = value.map((userJson) => User.fromJson(userJson)).toList();
-      for(int i = 0; i < users.length; i++){
+      for (int i = 0; i < users.length; i++) {
         User user = users.elementAt(i);
         _userHash[user.idUser] = user;
       }
-    } catch (e){
+    } catch (e) {
       return users;
     }
     users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
     return users;
   }
-
-  Future<List<User>> getAllUsers(String token) async{
-    List<User> users = [];
-    final response = await http.get(serverIp + 'user/',
-        headers: {
-          "Content-Type": "appliation/json",
-          "Authorization": "Basic " + token
-        }
-    );
-    try{
-      var jsonVar = json.decode(response.body);
-      List value = jsonVar['value'];
-      users = value.map((userJson) => User.fromJson(userJson)).toList();
-      for(int i = 0; i < users.length; i++){
-        User user = users.elementAt(i);
-        _userHash[user.idUser] = user;
-      }
-    } catch (e){
-      return users;
-    }
-    users.sort((user1, user2) => user1.userName.compareTo(user2.userName));
-    return users;
-  }
-
 }

@@ -207,5 +207,10 @@
   "@rotatingImage": {
     "type": "text",
     "placeholders": {}
+  },
+  "searchUser": "Buscar usuários",
+  "@searchUser": {
+    "type": "text",
+    "placeholders": {}
   }
 }
