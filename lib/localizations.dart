@@ -181,6 +181,14 @@ class AppLocalizations {
     return Intl.message('Uploading picture', name: 'uploadingPicture');
   }
 
+  String get noPicturesFound{
+    return Intl.message('No pictures found', name: 'noPicturesFound');
+  }
+
+  String get pictureUploaded{
+    return Intl.message('Picture uploaded', name: 'pictureUploaded');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

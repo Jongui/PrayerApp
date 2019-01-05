@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -273,8 +274,9 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
   }
 
   void _downloadFirebasePrayProfileImage() async {
-    _imageUrl = await PrayFirebase()
+    StorageReference ref = await PrayFirebase()
         .downloadPrayProfilePicture(this.widget.pray.idPray);
+    _imageUrl = await ref.getDownloadURL();
     setState(() {
       if (_imageUrl != null) {
         _profileImageProvider = NetworkImage(_imageUrl);

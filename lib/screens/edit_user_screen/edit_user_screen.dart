@@ -12,7 +12,7 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
-import 'package:prayer_app/utils/user_firebase_storage.dart';
+import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class EditUserScreen extends StatelessWidget {
@@ -178,7 +178,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     if (_newCountry != '') _user.country = _newCountry;
     if (_newIdChurch != 0) _user.church = _newIdChurch;
     if (_newAvatarUrl != '') {
-      _user.avatarUrl = await UserFirebaseStorage()
+      _user.avatarUrl = await UserFirebase()
           .uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl),
           _profilePictureDescription);
     }

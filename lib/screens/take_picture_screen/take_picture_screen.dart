@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
+import 'package:image/image.dart' as im;
 
 class TakePictureScreen extends StatefulWidget {
   final ValueChanged<String> onTakePicture;
@@ -166,6 +167,13 @@ class _TakePictureScreenState extends State<TakePictureScreen> {
               text: AppLocalizations.of(context).takingPicture,
             ));
     takePicture().then((String filePath) {
+      File _tmpFile = File(filePath);
+      im.Image _tmpImage = im.decodeImage(_tmpFile.readAsBytesSync());
+      im.Image _resizedImg = im.copyResize(_tmpImage, 800);
+
+      _tmpFile = File(filePath)
+        ..writeAsBytesSync(im.encodeJpg(_resizedImg));
+
       this.widget.onTakePicture(filePath);
       if (mounted) {
         setState(() {

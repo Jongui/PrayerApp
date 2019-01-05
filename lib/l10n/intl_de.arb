@@ -192,5 +192,25 @@
   "@searchUser": {
     "type": "text",
     "placeholders": {}
+  },
+  "prays": "Gebete",
+  "@prays": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "uploadingPicture": "Bild hochladen",
+  "@uploadingPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noPicturesFound": "Keine Bilder gefunden",
+  "@noPicturesFound": {
+    "type": "text",
+    "placeholders": {}
+  },
+   "pictureUploaded": "Bild hochgeladen",
+  "@pictureUploaded": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-01-01T14:25:38.327335",
+  "@@last_modified": "2019-01-05T23:03:52.730074",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -215,6 +215,26 @@
   },
   "searchUser": "Search User",
   "@searchUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prays": "Prays",
+  "@prays": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "uploadingPicture": "Uploading picture",
+  "@uploadingPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noPicturesFound": "No pictures found",
+  "@noPicturesFound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pictureUploaded": "Picture uploaded",
+  "@pictureUploaded": {
     "type": "text",
     "placeholders": {}
   }

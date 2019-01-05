@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/inputs/rate_bar.dart';
@@ -111,7 +112,8 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
   }
 
   void uploadFirebasePrayProfileImage() async{
-    String _imageUrl = await PrayFirebase().downloadPrayProfilePicture(this.widget.pray.idPray);
+    StorageReference ref = await PrayFirebase().downloadPrayProfilePicture(this.widget.pray.idPray);
+    String _imageUrl = await ref.getDownloadURL();
     setState(() {
       if(_imageUrl != null){
         _profileImageProvider = NetworkImage(_imageUrl);

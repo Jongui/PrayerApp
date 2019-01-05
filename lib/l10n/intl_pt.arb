@@ -212,5 +212,25 @@
   "@searchUser": {
     "type": "text",
     "placeholders": {}
+  },
+  "prays": "Orações",
+  "@prays": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "uploadingPicture": "Salvando imagem",
+  "@uploadingPicture": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noPicturesFound": "Nenhuma foto encontrada",
+  "@noPicturesFound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pictureUploaded": "Imagem salva",
+  "@pictureUploaded": {
+    "type": "text",
+    "placeholders": {}
   }
 }

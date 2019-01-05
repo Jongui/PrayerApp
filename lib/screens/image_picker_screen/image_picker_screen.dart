@@ -76,7 +76,6 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
           },
           onUploadPressed: () {
             this.widget.onUploadPressed();
-            Navigator.pop(context);
           },
           onFileSystemClicked: () async {
             File image =
@@ -133,7 +132,8 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     _view = SingleChildScrollView(
         child: Column(
         children: <Widget>[
-          Image(image: _image),
+          Image(image: _image,
+            height: 560.0,),
           Container(
             padding: EdgeInsets.only(left: 20.0, right: 20.0),
             child: SmallInputFieldArea(

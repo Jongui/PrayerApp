@@ -55,11 +55,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "hello" : MessageLookupByLibrary.simpleMessage("Olá"),
     "mandatoryField" : MessageLookupByLibrary.simpleMessage("Informar valor"),
     "name" : MessageLookupByLibrary.simpleMessage("Nome"),
+    "noPicturesFound" : MessageLookupByLibrary.simpleMessage("Nenhuma foto encontrada"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Não informado"),
     "pictureTaken" : MessageLookupByLibrary.simpleMessage("Foto tirada!"),
+    "pictureUploaded" : MessageLookupByLibrary.simpleMessage("Imagem salva"),
     "prayCreated" : MessageLookupByLibrary.simpleMessage("Oração criada!"),
     "prayEdited" : MessageLookupByLibrary.simpleMessage("Oração editada"),
     "prayFromTo" : m4,
+    "prays" : MessageLookupByLibrary.simpleMessage("Orações"),
     "ratedByUser" : m5,
     "rotatingImage" : MessageLookupByLibrary.simpleMessage("Girando imagem..."),
     "save" : MessageLookupByLibrary.simpleMessage("Salvar"),
@@ -71,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "takingPicture" : MessageLookupByLibrary.simpleMessage("Processando imagem"),
     "tapACamera" : MessageLookupByLibrary.simpleMessage("Escolha uma câmera"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
+    "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Salvando imagem"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
     "yourRate" : m6
   };

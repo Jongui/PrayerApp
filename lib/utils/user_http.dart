@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_app/resources/config.dart';
@@ -18,9 +17,6 @@ class UserHttp {
   }
 
   UserHttp._internal();
-
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User> createUser(FirebaseUser firebaseUser) async {
     String token = await firebaseUser.getIdToken(refresh: false);
@@ -85,26 +81,6 @@ class UserHttp {
     } catch (e) {
       return User();
     }
-  }
-
-  Future<FirebaseUser> performFirebaseSignIn() async {
-    // Attempt to get the currently authenticated user
-    GoogleSignInAccount currentUser = _googleSignIn.currentUser;
-    if (currentUser == null) {
-      // Attempt to sign in without user interaction
-      currentUser = await _googleSignIn.signInSilently();
-    }
-    if (currentUser == null) {
-      // Force the user to interactively sign in
-      currentUser = await _googleSignIn.signIn();
-    }
-    GoogleSignInAuthentication googleAuth = await currentUser.authentication;
-    FirebaseUser firebaseUser = await _auth.signInWithGoogle(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    print("signed in " + firebaseUser.displayName);
-    return firebaseUser;
   }
 
   Future<int> putUser(User user, {String token}) async {

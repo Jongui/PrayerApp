@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:prayer_app/utils/firebase_utils.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class PrayFirebase{
 
   static final PrayFirebase _prayFirebase = PrayFirebase._internal();
   final StorageReference _storage = FirebaseUtils().getInstanceStorageReference();
+  final DatabaseReference _database = FirebaseUtils().getInstanceDatabaseReference();
 
   factory PrayFirebase(){
     return _prayFirebase;
@@ -30,19 +32,27 @@ class PrayFirebase{
     return snapshot.ref.getDownloadURL();
   }
 
-  Future<dynamic> downloadPrayProfilePicture(int idPray) async {
+  Future<StorageReference> downloadPrayProfilePicture(int idPray) async {
     final StorageReference ref =
     _storage.child('prays').child('$idPray').child('prayprofile$idPray.$_extension');
-    return ref.getDownloadURL();
+    return ref;
   }
 
-  Future<dynamic> uploadPrayAlbumPicture(int idPray, File file, String description) async {
+  Future<StorageReference> downloadPrayAlbumPicture(int idPray, String fileName) async{
+    return _storage.child('prays').child('$idPray').child('album').child(fileName);
+  }
+
+  Future<Map<String, String>> uploadPrayAlbumPicture(int idPray, File file, String description) async {
+    Map<String, String> _ret = Map();
     if(description == null || description == '')
       description = 'No description';
     String _fileName = _timestamp() + _extension;
-    final StorageReference ref =
+
+    _ret['fileName'] = _fileName;
+
+    final StorageReference storageRef =
     _storage.child('prays').child('$idPray').child('album').child(_fileName);
-    StorageUploadTask task = ref.putFile(
+    StorageUploadTask task = storageRef.putFile(
       file,
       StorageMetadata(
         contentLanguage: 'en',
@@ -50,14 +60,21 @@ class PrayFirebase{
       ),
     );
     StorageTaskSnapshot snapshot = await task.onComplete;
-    return snapshot.ref.getDownloadURL();
+    var downloadUrl = await snapshot.ref.getDownloadURL();
+
+    final DatabaseReference databaseReference = _database.child('prays').child('$idPray');
+    await databaseReference.child(_fileName).set({
+      'fileAddress': downloadUrl
+    });
+    _ret['downloadUrl'] = downloadUrl;
+
+    return _ret;
   }
 
   String _timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-  Future<dynamic> downloadPrayAlbum(int idPray) async{
-    final StorageReference ref =
-    _storage.child('prays').child('$idPray').child('album');
-    return ref;
+  Future<DatabaseReference> downloadPrayAlbum(int idPray) async{
+    final DatabaseReference databaseReference = _database.child('prays').child('$idPray');
+    return databaseReference;
   }
 }

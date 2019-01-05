@@ -8,6 +8,7 @@ import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
+import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 import 'package:prayer_app/model/user.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreenState> {
   Widget _view;
 
   _handleSignIn() async {
-    _firebaseUser = await UserHttp().performFirebaseSignIn();
+    _firebaseUser = await UserFirebase().performFirebaseSignIn();
     _user = await UserHttp().fetchUser(_firebaseUser);
     if(_user == null){
       _user = await UserHttp().createUser(_firebaseUser);
@@ -57,7 +58,7 @@ class _HomeScreenState extends State<HomeScreenState> {
   }
 
   _handleReload() async{
-    FirebaseUser firebaseUser = await UserHttp().performFirebaseSignIn();
+    FirebaseUser firebaseUser = await UserFirebase().performFirebaseSignIn();
     String token = await firebaseUser.getIdToken(refresh: false);
     _church = await ChurchHttp().fetchChurch(_user.church, token);
     setState(() {
