@@ -173,6 +173,14 @@ class AppLocalizations {
     return Intl.message('Search User', name: 'searchUser');
   }
 
+  String get prays{
+    return Intl.message('Prays', name: 'prays');
+  }
+
+  String get uploadingPicture{
+    return Intl.message('Uploading picture', name: 'uploadingPicture');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

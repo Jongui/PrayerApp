@@ -1,38 +1,26 @@
 import 'package:flutter/material.dart';
 
-class FloatEditButton extends StatelessWidget {
-  VoidCallback onEditPressed;
-  VoidCallback onAddPressed;
-  VoidCallback onAlbumClicked;
+class FloatAlbumButton extends StatelessWidget {
+  VoidCallback onAddPicturePressed;
 
-  FloatEditButton(
-      {@required this.onAddPressed,
-      @required this.onEditPressed,
-      @required this.onAlbumClicked});
+  FloatAlbumButton({@required this.onAddPicturePressed});
 
   @override
   Widget build(BuildContext context) {
-    return FloatEditButtonState(
-        onAddPressed, onEditPressed, onAlbumClicked);
+    return FloatAlbumButtonState(onAddPicturePressed);
   }
 }
 
-class FloatEditButtonState extends StatefulWidget {
-  VoidCallback onEditPressed;
-  VoidCallback onAddPressed;
-  VoidCallback onAlbumClicked;
+class FloatAlbumButtonState extends StatefulWidget {
+  VoidCallback onAddPicturePressed;
 
-  FloatEditButtonState(
-      this.onAddPressed, this.onEditPressed, this.onAlbumClicked);
+  FloatAlbumButtonState(this.onAddPicturePressed);
 
-  @override
-  _FloatEditButtonState createState() => _FloatEditButtonState();
+  _FloatAlbumButtonState createState() => _FloatAlbumButtonState();
 }
 
-class _FloatEditButtonState extends State<FloatEditButtonState>
+class _FloatAlbumButtonState extends State<FloatAlbumButtonState>
     with SingleTickerProviderStateMixin {
-  _FloatEditButtonState();
-
   bool isOpened = false;
   AnimationController _animationController;
   Animation<Color> _buttonColor;
@@ -90,44 +78,16 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
     isOpened = !isOpened;
   }
 
-  Widget addUser() {
-    return new Container(
+  Widget addPicture() {
+    return Container(
       child: FloatingActionButton(
-        heroTag: 'addUser',
+        heroTag: 'addPicture',
         onPressed: () {
           animate();
-          this.widget.onAddPressed();
+          this.widget.onAddPicturePressed();
         },
-        tooltip: 'Add user',
-        child: Icon(Icons.person_add),
-      ),
-    );
-  }
-
-  Widget edit() {
-    return new Container(
-      child: FloatingActionButton(
-        heroTag: 'editChurch',
-        onPressed: () {
-          animate();
-          this.widget.onEditPressed();
-        },
-        tooltip: 'Edit Church',
-        child: Icon(Icons.mode_edit),
-      ),
-    );
-  }
-
-  Widget viewAlbum() {
-    return new Container(
-      child: FloatingActionButton(
-        heroTag: 'viewAlbum',
-        onPressed: () {
-          animate();
-          this.widget.onAlbumClicked();
-        },
-        tooltip: 'View Album',
-        child: Icon(Icons.photo_album),
+        tooltip: 'Add picture',
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }
@@ -153,26 +113,10 @@ class _FloatEditButtonState extends State<FloatEditButtonState>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 3.0,
-            0.0,
-          ),
-          child: viewAlbum(),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
-            _translateButton.value * 2.0,
-            0.0,
-          ),
-          child: addUser(),
-        ),
-        Transform(
-          transform: Matrix4.translationValues(
-            0.0,
             _translateButton.value,
             0.0,
           ),
-          child: edit(),
+          child: addPicture(),
         ),
         toggle(),
       ],

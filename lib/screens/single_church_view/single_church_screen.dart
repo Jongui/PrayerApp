@@ -72,7 +72,6 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
                             )))
                     .whenComplete(onReload);
               },
-              onAddPicturePressed: () {},
               onAlbumClicked: () {},
             )
           : null,

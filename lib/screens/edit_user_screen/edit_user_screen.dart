@@ -49,6 +49,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   User _user;
   List<Church> _churchList = List();
   String _language;
+  String _profilePictureDescription;
 
   @override
   initState() {
@@ -178,7 +179,8 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     if (_newIdChurch != 0) _user.church = _newIdChurch;
     if (_newAvatarUrl != '') {
       _user.avatarUrl = await UserFirebaseStorage()
-          .uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl));
+          .uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl),
+          _profilePictureDescription);
     }
 
     int response = await UserHttp().putUser(_user);
@@ -247,6 +249,12 @@ class _EditUserScreenState extends State<EditUserScreenState> {
                       setState(() {
                         _newAvatarUrl = filePath;
                       });
+                    },
+                    onDescriptionChanged: (newDescription){
+                      _profilePictureDescription = newDescription;
+                    },
+                    onUploadPressed: (){
+
                     },
                     fileAddress: this.widget.user.avatarUrl,
                   )));

@@ -5,7 +5,7 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
-import 'package:prayer_app/utils/pray_firebase_storage.dart';
+import 'package:prayer_app/utils/pray_firebase.dart';
 
 class SinglePrayViewHeader extends StatelessWidget {
 
@@ -111,7 +111,7 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
   }
 
   void uploadFirebasePrayProfileImage() async{
-    String _imageUrl = await PrayFirebaseStorage().downloadPrayProfilePicture(this.widget.pray.idPray);
+    String _imageUrl = await PrayFirebase().downloadPrayProfilePicture(this.widget.pray.idPray);
     setState(() {
       if(_imageUrl != null){
         _profileImageProvider = NetworkImage(_imageUrl);

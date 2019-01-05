@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:prayer_app/utils/firebase_storage_utils.dart';
+import 'package:prayer_app/utils/firebase_utils.dart';
 
 class UserFirebaseStorage{
   static final UserFirebaseStorage _userFirebaseStorage = UserFirebaseStorage._internal();
@@ -12,9 +12,9 @@ class UserFirebaseStorage{
 
   UserFirebaseStorage._internal();
 
-  final StorageReference _storage = FirebaseStorageUtils().getInstanceStorageReference();
+  final StorageReference _storage = FirebaseUtils().getInstanceStorageReference();
 
-  Future<dynamic> uploadUserProfilePicture(int idUser, File file) async {
+  Future<dynamic> uploadUserProfilePicture(int idUser, File file, String description) async {
     List<String> _files = file.path.split('.');
     String _extension = _files[_files.length - 1];
     final StorageReference ref =
@@ -23,7 +23,8 @@ class UserFirebaseStorage{
       file,
       StorageMetadata(
         contentLanguage: 'en',
-        customMetadata: <String, String>{'avatarUrl': 'upload$idUser'},
+        customMetadata: <String, String>{'avatarUrl': 'upload$idUser',
+          'description': '$description'},
       ),
     );
     StorageTaskSnapshot snapshot = await task.onComplete;

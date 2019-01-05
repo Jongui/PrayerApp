@@ -5,27 +5,34 @@ import 'package:image/image.dart' as im;
 import 'package:path_provider/path_provider.dart';
 import 'package:prayer_app/components/buttons/float_image_picker_button.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
+import 'package:prayer_app/components/inputs/small_input_field_area.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/screens/take_picture_screen/take_picture_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerScreen extends StatelessWidget {
   final ValueChanged<String> onImagePicked;
+  final ValueChanged<String> onDescriptionChanged;
+  final VoidCallback onUploadPressed;
   String fileAddress;
 
-  ImagePickerScreen({@required this.onImagePicked, @required this.fileAddress});
+  ImagePickerScreen({@required this.onImagePicked, @required this.fileAddress,
+    @required this.onDescriptionChanged, @required this.onUploadPressed});
 
   @override
   Widget build(BuildContext context) {
-    return ImagePickerScreenState(onImagePicked, fileAddress);
+    return ImagePickerScreenState(onImagePicked, fileAddress, onDescriptionChanged, onUploadPressed);
   }
 }
 
 class ImagePickerScreenState extends StatefulWidget {
   final ValueChanged<String> onImagePicked;
   String fileAddress;
+  ValueChanged<String> onDescriptionChanged;
+  VoidCallback onUploadPressed;
 
-  ImagePickerScreenState(this.onImagePicked, this.fileAddress);
+  ImagePickerScreenState(this.onImagePicked, this.fileAddress,
+      this.onDescriptionChanged, this.onUploadPressed);
 
   _ImagePickerScreenState createState() => _ImagePickerScreenState();
 }
@@ -33,10 +40,12 @@ class ImagePickerScreenState extends StatefulWidget {
 class _ImagePickerScreenState extends State<ImagePickerScreenState> {
   Widget _view;
   String _newFileAddress;
+  TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     _buildImageView();
+    _descriptionController.addListener(_onDescriptionChanged);
     super.initState();
   }
 
@@ -65,14 +74,20 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
                       },
                     )));
           },
+          onUploadPressed: () {
+            this.widget.onUploadPressed();
+            Navigator.pop(context);
+          },
           onFileSystemClicked: () async {
             File image =
                 await ImagePicker.pickImage(source: ImageSource.gallery);
-            setState(() {
-              _newFileAddress = image.path;
-              _buildImageView();
-              this.widget.onImagePicked(image.path);
-            });
+            if(image != null){
+              setState(() {
+                _newFileAddress = image.path;
+                _buildImageView();
+                this.widget.onImagePicked(image.path);
+              });
+            }
           },
           onRotateImageClicked: () async {
             if (_newFileAddress == null || _newFileAddress == '') return;
@@ -115,6 +130,22 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     } catch (e) {
       _image = AssetImage("assets/pray.jpg");
     }
-    _view = Image(image: _image);
+    _view = SingleChildScrollView(
+        child: Column(
+        children: <Widget>[
+          Image(image: _image),
+          Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            child: SmallInputFieldArea(
+              controller: _descriptionController,
+            ),
+          ),
+        ],
+    ));
   }
+
+  void _onDescriptionChanged() {
+    this.widget.onDescriptionChanged(_descriptionController.text);
+  }
+
 }

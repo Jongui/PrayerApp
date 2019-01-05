@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/float_add_button.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_pray_screen/add_pray_screen.dart';
 import 'package:prayer_app/screens/prays_screen/views/prays_view.dart';
@@ -42,7 +43,7 @@ class _PraysScreenState extends State<PraysScreenState>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prays'),
+        title: Text(AppLocalizations.of(context).prays),
       ),
       body: PrayView(user: user,
         token: user.token,),

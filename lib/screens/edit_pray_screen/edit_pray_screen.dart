@@ -10,7 +10,7 @@ import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
-import 'package:prayer_app/utils/pray_firebase_storage.dart';
+import 'package:prayer_app/utils/pray_firebase.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 
 class EditPrayScreen extends StatelessWidget {
@@ -49,6 +49,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
   ImageProvider _profileImageProvider;
   String _imageUrl;
   File _newFile;
+  String _profilePictureDescription;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -56,8 +57,10 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
 
   @override
   void initState() {
+    _profilePictureDescription = '';
+
     _profileImageProvider = AssetImage("assets/pray.jpg");
-    _uploadFirebasePrayProfileImage();
+    _downloadFirebasePrayProfileImage();
 
     _descriptionController.addListener(_onDescriptionChanged);
     var formatterFrom = new DateFormat('yyyy/MM/dd');
@@ -201,8 +204,8 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
         ));
 
     if(_newFile != null){
-      await PrayFirebaseStorage().uploadPrayProfilePicture(
-          this.widget.pray.idPray, _newFile);
+      await PrayFirebase().uploadPrayProfilePicture(
+          this.widget.pray.idPray, _newFile, _profilePictureDescription);
     }
 
     Response response =
@@ -250,6 +253,12 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
                           _profileImageProvider = FileImage(_newFile);
                         });
                       },
+                      onUploadPressed: (){
+
+                      },
+                      onDescriptionChanged: (newDescription){
+                        _profilePictureDescription = newDescription;
+                      },
                       fileAddress: _imageUrl,
                     )));
               },
@@ -263,8 +272,8 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
     );
   }
 
-  void _uploadFirebasePrayProfileImage() async {
-    _imageUrl = await PrayFirebaseStorage()
+  void _downloadFirebasePrayProfileImage() async {
+    _imageUrl = await PrayFirebase()
         .downloadPrayProfilePicture(this.widget.pray.idPray);
     setState(() {
       if (_imageUrl != null) {

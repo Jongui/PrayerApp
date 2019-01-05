@@ -1,35 +1,38 @@
 import 'package:flutter/material.dart';
 
-class FloatImagePickerButton extends StatelessWidget{
-
+class FloatImagePickerButton extends StatelessWidget {
   VoidCallback onCameraClicked;
   VoidCallback onFileSystemClicked;
   VoidCallback onRotateImageClicked;
+  VoidCallback onUploadPressed;
 
-  FloatImagePickerButton({@required this.onCameraClicked, @required this.onFileSystemClicked,
-    @required this.onRotateImageClicked});
+  FloatImagePickerButton(
+      {@required this.onCameraClicked,
+      @required this.onFileSystemClicked,
+      @required this.onRotateImageClicked,
+      @required this.onUploadPressed});
 
   @override
   Widget build(BuildContext context) {
-    return FloatImagePickerButtonState(onCameraClicked, onFileSystemClicked, onRotateImageClicked);
+    return FloatImagePickerButtonState(onCameraClicked, onFileSystemClicked,
+        onRotateImageClicked, onUploadPressed);
   }
-
 }
 
-class FloatImagePickerButtonState extends StatefulWidget{
+class FloatImagePickerButtonState extends StatefulWidget {
   VoidCallback onCameraClicked;
   VoidCallback onFileSystemClicked;
   VoidCallback onRotateImageClicked;
+  VoidCallback onUploadPressed;
 
-  FloatImagePickerButtonState(this.onCameraClicked, this.onFileSystemClicked, this.onRotateImageClicked);
+  FloatImagePickerButtonState(this.onCameraClicked, this.onFileSystemClicked,
+      this.onRotateImageClicked, this.onUploadPressed);
 
   _FloatImagePickerButtonState createState() => _FloatImagePickerButtonState();
-
 }
 
 class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
-    with SingleTickerProviderStateMixin{
-
+    with SingleTickerProviderStateMixin {
   bool isOpened = false;
   AnimationController _animationController;
   Animation<Color> _buttonColor;
@@ -41,10 +44,10 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
   @override
   initState() {
     _animationController =
-    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-      ..addListener(() {
-        setState(() {});
-      });
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+          ..addListener(() {
+            setState(() {});
+          });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
@@ -70,6 +73,20 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
       ),
     ));
     super.initState();
+  }
+
+  Widget uploadPicture() {
+    return Container(
+      child: FloatingActionButton(
+        heroTag: 'uploadPicture',
+        onPressed: () {
+          animate();
+          this.widget.onUploadPressed();
+        },
+        tooltip: 'Upload Picture',
+        child: Icon(Icons.file_upload),
+      ),
+    );
   }
 
   Widget cameraButton() {
@@ -100,7 +117,7 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
     );
   }
 
-  Widget rotateImageButton(){
+  Widget rotateImageButton() {
     return new Container(
       child: FloatingActionButton(
         heroTag: 'rotateImageButton',
@@ -141,11 +158,20 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
     }
     isOpened = !isOpened;
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value * 4.0,
+            0.0,
+          ),
+          child: uploadPicture(),
+        ),
         Transform(
           transform: Matrix4.translationValues(
             0.0,
@@ -174,5 +200,4 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
       ],
     );
   }
-
 }

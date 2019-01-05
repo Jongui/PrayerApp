@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/float_edit_button.dart';
 import 'package:prayer_app/localizations.dart';
@@ -8,9 +6,8 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/screens/add_user_to_pray_screen/add_user_to_pray_screen.dart';
 import 'package:prayer_app/screens/edit_pray_screen/edit_pray_screen.dart';
-import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
+import 'package:prayer_app/screens/pray_album_screen/pray_album_screen.dart';
 import 'package:prayer_app/screens/single_pray_screen/views/single_pray_view.dart';
-import 'package:prayer_app/utils/pray_firebase_storage.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class SinglePrayScreen extends StatelessWidget {
@@ -90,21 +87,14 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState> {
                             )))
                     .whenComplete(onReload);
               },
-              onAddPicturePressed: () {
-                Navigator.of(context).push(new MaterialPageRoute(
-                    builder: (context) => ImagePickerScreen(
-                      onImagePicked: (filePath) async {
-                        File file = File(filePath);
-                        await PrayFirebaseStorage().uploadPrayAlbumPicture(pray.idPray, file, 'New picture');
-                        setState(() {
-
-                        });
-                      },
-                      fileAddress: '',
-                    )));
-              },
               onAlbumClicked: () {
-
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(
+                    builder: (context) => PrayAlbumScreen(
+                      pray: pray,
+                      token: user.token,
+                    )))
+                    .whenComplete(onReload);
               },
             )
           : null,
