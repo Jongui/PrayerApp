@@ -189,6 +189,11 @@ class AppLocalizations {
     return Intl.message('Picture uploaded', name: 'pictureUploaded');
   }
 
+  String get savingChurch{
+    return Intl.message('Saving church...', name: 'savingChurch');
+  }
+
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

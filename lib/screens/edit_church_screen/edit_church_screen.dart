@@ -1,10 +1,16 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
+import 'package:prayer_app/utils/church_firebase.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
 class EditChurchScreen extends StatelessWidget {
@@ -51,12 +57,19 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   String _newCity = '';
   AppLocalizations _appLocalizations;
   String _language;
+  ImageProvider _profileImageProvider;
+  File _newFile;
+  String _profilePictureDescription;
+  String _imageUrl;
 
   @override
   initState(){
-    super.initState();
+    _profilePictureDescription = '';
+    _profileImageProvider = AssetImage("assets/church_background.jpg");
     _churchNameController.addListener(_onChurchNameChanged);
     _cityController.addListener(_onCityChanged);
+    downloadFirebaseChurchProfileImage();
+    super.initState();
   }
 
   @override
@@ -92,6 +105,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  _buildChurchProfilePicture(),
                   _buildChurchNameInputField(state.church.name),
                   _buildCityInputField(state.church.city),
                   _buildCountryDropDownButton(),
@@ -153,7 +167,8 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   }
 
   _savedButtonPressed(BuildContext context) async{
-    if(_newChurchName == '' && _newCountry == '' && _newCity == '')
+    if(_newChurchName == '' && _newCountry == '' && _newCity == ''
+      && _newFile == null)
       return;
     if(_newChurchName != '')
       church.name = _newChurchName;
@@ -161,8 +176,20 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       church.country = _newCountry;
     if(_newCity != '')
       church.city = _newCity;
+    showDialog(
+        context: context,
+        builder: (_) => ProcessDialog(
+          text: AppLocalizations.of(context).savingChurch,
+        ));
+
     church.changedAt = DateTime.now();
     church.changedBy = user.idUser;
+
+    if(_newFile != null){
+      await ChurchFirebase().uploadChurchProfilePicture(
+          this.widget.church.idChurch, _newFile, _profilePictureDescription);
+    }
+
     int response = await ChurchHttp().putChurch(church, user.token);
     if(response == 200){
       final snackBar = SnackBar(
@@ -183,6 +210,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       );
       Scaffold.of(context).showSnackBar(snackBar);
     }
+    Navigator.pop(context);
   }
 
   Widget _buildCountryDropDownButton(){
@@ -198,5 +226,58 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
         },
       ),
     );
+  }
+
+  Widget _buildChurchProfilePicture() {
+    return Container(
+      height: 220.0,
+      padding: EdgeInsets.only(right: 10.0),
+      decoration: new BoxDecoration(
+          image:
+          DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            child: FloatingActionButton(
+              heroTag: 'cameraButton',
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => ImagePickerScreen(
+                      onImagePicked: (filePath) async {
+                        setState(() {
+                          _newFile = File(filePath);
+                          _profileImageProvider = FileImage(_newFile);
+                        });
+                      },
+                      onUploadPressed: (){
+                        downloadFirebaseChurchProfileImage();
+                      },
+                      onDescriptionChanged: (newDescription){
+                        _profilePictureDescription = newDescription;
+                      },
+                      fileAddress: _imageUrl,
+                    )));
+              },
+              tooltip: 'Camera',
+              child: Icon(Icons.camera_alt),
+            ),
+          ),
+          Divider(),
+        ],
+      ),
+    );
+  }
+
+  void downloadFirebaseChurchProfileImage() async {
+    StorageReference ref = await ChurchFirebase().downloadPrayProfilePicture(this.widget.church.idChurch);
+    String _imageUrlLocal = await ref.getDownloadURL();
+    setState(() {
+      if(_imageUrlLocal != null){
+        _profileImageProvider = NetworkImage(_imageUrlLocal);
+        _imageUrl = _imageUrlLocal;
+      }
+    });
   }
 }

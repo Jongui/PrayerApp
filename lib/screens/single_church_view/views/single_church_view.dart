@@ -8,14 +8,16 @@ class SingleChurchView extends StatelessWidget{
 
   Church church;
   User user;
+  bool reload = false;
 
-  SingleChurchView({@required this.church, @required this.user});
+  SingleChurchView({@required this.church, @required this.user, this.reload});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
         children: <Widget>[
-          SingleChurchViewHeader(church: church),
+          SingleChurchViewHeader(church: church,
+              reload: reload),
           SingleChurchViewUsersList(church: church,
             user: user,)
         ],

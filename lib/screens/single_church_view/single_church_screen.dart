@@ -33,6 +33,8 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
   Church church;
   User user;
 
+  bool _reload = false;
+
   _SingleChurchScreenState(this.church, this.user);
 
   @override
@@ -42,14 +44,13 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
 
   @override
   Widget build(BuildContext context) {
+    bool _reloadParam = _reload;
+    if (_reload) _reload = !_reload;
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).viewChurch),
       ),
-      body: SingleChurchView(
-        church: church,
-        user: user,
-      ),
+      body: SingleChurchView(church: church, user: user, reload: _reloadParam),
       floatingActionButton: user.idUser == church.createdBy
           ? FloatEditButton(
               onAddPressed: () async {
@@ -79,6 +80,8 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
   }
 
   onReload() {
-    setState(() {});
+    setState(() {
+      _reload = true;
+    });
   }
 }
