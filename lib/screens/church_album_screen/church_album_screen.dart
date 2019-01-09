@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -7,33 +6,33 @@ import 'package:prayer_app/components/buttons/float_album_button.dart';
 import 'package:prayer_app/components/cardviews/album_picture_card_view.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/localizations.dart';
-import 'package:prayer_app/model/pray.dart';
+import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
-import 'package:prayer_app/utils/pray_firebase.dart';
+import 'package:prayer_app/utils/church_firebase.dart';
 
-class PrayAlbumScreen extends StatelessWidget {
-  Pray pray;
+class ChurchAlbumScreen extends StatelessWidget {
+  Church church;
   String token;
 
-  PrayAlbumScreen({@required this.pray, @required this.token});
+  ChurchAlbumScreen({@required this.church, @required this.token});
 
   @override
   Widget build(BuildContext context) {
-    return PrayAlbumScreenState(pray, token);
+    return ChurchAlbumScreenState(church, token);
   }
 }
 
-class PrayAlbumScreenState extends StatefulWidget {
-  Pray pray;
+class ChurchAlbumScreenState extends StatefulWidget {
+  Church church;
   String token;
-  PrayAlbumScreenState(this.pray, this.token);
 
-  @override
-  _PrayAlbumScreenState createState() => _PrayAlbumScreenState();
+  ChurchAlbumScreenState(this.church, this.token);
+
+  _ChurchAlbumScreenState createState() => _ChurchAlbumScreenState();
 }
 
-class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
+class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
   Widget _view;
   File _newImage;
   String _newImageDescription;
@@ -62,7 +61,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).prays),
+        title: Text(AppLocalizations.of(context).churches),
       ),
       body: _view,
       floatingActionButton: FloatAlbumButton(
@@ -93,8 +92,8 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
           builder: (_) => ProcessDialog(
                 text: AppLocalizations.of(context).uploadingPicture,
               ));
-      Future fut = PrayFirebase().uploadPrayAlbumPicture(
-        this.widget.pray.idPray,
+      Future fut = ChurchFirebase().uploadChurchAlbumPicture(
+        this.widget.church.idChurch,
         _newImage,
         _newImageDescription,
       );
@@ -106,7 +105,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
             ..add(AlbumPictureCardView(
               fileName: mapValues['fileName'],
               pictureUrl: mapValues['downloadUrl'],
-              pray: this.widget.pray,
+              church: this.widget.church,
             ));
           _widgets
               .sort((view1, view2) => view2.fileName.compareTo(view1.fileName));
@@ -115,7 +114,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
             _newWidgets.add(AlbumPictureCardView(
                 pictureUrl: widget.pictureUrl,
                 fileName: widget.fileName,
-                pray: widget.pray));
+                church: widget.church));
           });
           _view = ListView(
             shrinkWrap: true,
@@ -127,9 +126,9 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
     }
   }
 
-  _handleImagesLoad() async {
+  void _handleImagesLoad() async {
     DatabaseReference _ref =
-        await PrayFirebase().downloadPrayAlbum(this.widget.pray.idPray);
+        await ChurchFirebase().downloadChurchAlbum(this.widget.church.idChurch);
 
     _ref.once().then((snapshot) {
       Map picture = snapshot.value;
@@ -138,7 +137,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
           _widgets.add(AlbumPictureCardView(
             pictureUrl: value['fileAddress'],
             fileName: key,
-            pray: this.widget.pray,
+            church: this.widget.church,
           ));
         });
         _widgets

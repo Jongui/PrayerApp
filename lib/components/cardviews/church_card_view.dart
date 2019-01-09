@@ -91,7 +91,7 @@ class _ChurchCardViewState extends State<ChurchCardViewState>{
   }
 
   void uploadFirebaseChurchProfileImage() async {
-    StorageReference ref = await ChurchFirebase().downloadPrayProfilePicture(this.widget.church.idChurch);
+    StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
     String _imageUrl = await ref.getDownloadURL();
     setState(() {
       if(_imageUrl != null){

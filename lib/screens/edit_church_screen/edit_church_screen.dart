@@ -271,7 +271,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   }
 
   void downloadFirebaseChurchProfileImage() async {
-    StorageReference ref = await ChurchFirebase().downloadPrayProfilePicture(this.widget.church.idChurch);
+    StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
     String _imageUrlLocal = await ref.getDownloadURL();
     setState(() {
       if(_imageUrlLocal != null){
