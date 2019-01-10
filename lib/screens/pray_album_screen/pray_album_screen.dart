@@ -100,13 +100,15 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
       );
       fut.then((mapValues) {
         Navigator.pop(context);
-        Navigator.pop(context);
         setState(() {
           _widgets = List.from(_widgets)
             ..add(AlbumPictureCardView(
               fileName: mapValues['fileName'],
               pictureUrl: mapValues['downloadUrl'],
               pray: this.widget.pray,
+              onItemDeleted: (fileName) {
+                _itemDeleted(fileName);
+              },
             ));
           _widgets
               .sort((view1, view2) => view2.fileName.compareTo(view1.fileName));
@@ -115,6 +117,9 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
             _newWidgets.add(AlbumPictureCardView(
                 pictureUrl: widget.pictureUrl,
                 fileName: widget.fileName,
+                onItemDeleted: (fileName) {
+                  _itemDeleted(fileName);
+                },
                 pray: widget.pray));
           });
           _view = ListView(
@@ -137,6 +142,9 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
         picture.forEach((key, value) {
           _widgets.add(AlbumPictureCardView(
             pictureUrl: value['fileAddress'],
+            onItemDeleted: (fileName) {
+              _itemDeleted(fileName);
+            },
             fileName: key,
             pray: this.widget.pray,
           ));
@@ -153,6 +161,27 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
         _view = Text(AppLocalizations.of(context).noPicturesFound);
       }
       setState(() {});
+    });
+  }
+
+  void _itemDeleted(String _fileName) {
+    _widgets.removeWhere((view) => view.fileName == _fileName);
+
+    setState(() {
+      _widgets.sort((view1, view2) => view2.fileName.compareTo(view1.fileName));
+      List<Widget> _newWidgets = [];
+      _widgets.forEach((widget) async {
+        _newWidgets.add(AlbumPictureCardView(
+            pictureUrl: widget.pictureUrl,
+            fileName: widget.fileName,
+            onItemDeleted: widget.onItemDeleted,
+            pray: widget.pray));
+      });
+      _view = ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: _newWidgets,
+      );
     });
   }
 }

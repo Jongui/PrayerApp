@@ -99,12 +99,14 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
       );
       fut.then((mapValues) {
         Navigator.pop(context);
-        Navigator.pop(context);
         setState(() {
           _widgets = List.from(_widgets)
             ..add(AlbumPictureCardView(
               fileName: mapValues['fileName'],
               pictureUrl: mapValues['downloadUrl'],
+              onItemDeleted: (_fileName){
+                _itemDeleted(_fileName);
+              },
               church: this.widget.church,
             ));
           _widgets
@@ -114,6 +116,7 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
             _newWidgets.add(AlbumPictureCardView(
                 pictureUrl: widget.pictureUrl,
                 fileName: widget.fileName,
+                onItemDeleted: widget.onItemDeleted,
                 church: widget.church));
           });
           _view = ListView(
@@ -138,6 +141,9 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
             pictureUrl: value['fileAddress'],
             fileName: key,
             church: this.widget.church,
+            onItemDeleted: (fileName){
+              _itemDeleted(fileName);
+            },
           ));
         });
         _widgets
@@ -152,6 +158,28 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
         _view = Text(AppLocalizations.of(context).noPicturesFound);
       }
       setState(() {});
+    });
+  }
+
+  void _itemDeleted(String _fileName) {
+
+    _widgets.removeWhere((view) => view.fileName == _fileName);
+    setState(() {
+      _widgets
+          .sort((view1, view2) => view2.fileName.compareTo(view1.fileName));
+      List<Widget> _newWidgets = [];
+      _widgets.forEach((widget) async {
+        _newWidgets.add(AlbumPictureCardView(
+            pictureUrl: widget.pictureUrl,
+            fileName: widget.fileName,
+            onItemDeleted: widget.onItemDeleted,
+            church: widget.church));
+      });
+      _view = ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: _newWidgets,
+      );
     });
   }
 }

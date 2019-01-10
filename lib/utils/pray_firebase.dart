@@ -77,4 +77,17 @@ class PrayFirebase{
     final DatabaseReference databaseReference = _database.child('prays').child('$idPray');
     return databaseReference;
   }
+
+  deletePrayPictureAlbum(int idPray, String fileName) async {
+    final StorageReference storageRef = _storage
+        .child('prays')
+        .child('$idPray')
+        .child('album')
+        .child('$fileName');
+
+    await storageRef.delete();
+    final DatabaseReference databaseReference =
+    _database.child('prays').child('$idPray').child('$fileName');
+    await databaseReference.remove();
+  }
 }

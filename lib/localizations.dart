@@ -193,6 +193,17 @@ class AppLocalizations {
     return Intl.message('Saving church...', name: 'savingChurch');
   }
 
+  String get possibleActions{
+    return Intl.message('Possible Actions', name: 'possibleActions');
+  }
+
+  String get delete{
+    return Intl.message('Delete', name: 'delete');
+  }
+
+  String get deletingPicture{
+    return Intl.message('Deleting Picture', name: 'deletingPicture');
+  }
 
 }
 
