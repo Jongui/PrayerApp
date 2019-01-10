@@ -212,5 +212,25 @@
   "@pictureUploaded": {
     "type": "text",
     "placeholders": {}
+  },
+  "savingChurch": "Saving church...",
+  "@savingChurch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "possibleActions": "Possible Actions",
+  "@possibleActions": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Delete",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletingPicture": "Deleting Picture",
+  "@deletingPicture": {
+    "type": "text",
+    "placeholders": {}
   }
 }

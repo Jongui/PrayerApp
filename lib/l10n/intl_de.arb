@@ -212,5 +212,25 @@
   "@pictureUploaded": {
     "type": "text",
     "placeholders": {}
+  },
+  "savingChurch": "Gemeinde wird gespeichert...",
+  "@savingChurch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "possibleActions": "Aktionen",
+  "@possibleActions": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Löschen",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletingPicture": "Bild wird gelöscht",
+  "@deletingPicture": {
+    "type": "text",
+    "placeholders": {}
   }
 }
