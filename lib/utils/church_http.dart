@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:prayer_app/resources/config.dart';
 
 class ChurchHttp {
-  static final ChurchHttp _churchHttp = new ChurchHttp._internal();
+  static final ChurchHttp _churchHttp = ChurchHttp._internal();
 
   factory ChurchHttp(){
     return _churchHttp;

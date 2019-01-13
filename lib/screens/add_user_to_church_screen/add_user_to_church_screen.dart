@@ -4,6 +4,7 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_church_screen/delegates/search_user_delegate.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class AddUserToChurchScreen extends StatelessWidget{
@@ -80,8 +81,13 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
                 title: UserCardView(user: users[idx],),
                 onTap: () async {
                   User _user = users[idx];
+                  int oldChurch = _user.church;
                   _user.church = church.idChurch;
-                  await UserHttp().putUser(_user, token: token);
+                  int returnCode = await UserHttp().putUser(_user, token: token);
+                  if(returnCode == 200 || returnCode == 201){
+                    FirebaseMessagingUtils().unsubscribeFromTopic(oldChurch);
+                    FirebaseMessagingUtils().subscribeToChurchTopic(_user.church);
+                  }
                   Navigator.pop(context, true);
                 },
               )

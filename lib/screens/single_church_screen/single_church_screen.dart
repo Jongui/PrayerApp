@@ -6,9 +6,8 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_church_screen/add_user_to_church_screen.dart';
 import 'package:prayer_app/screens/church_album_screen/church_album_screen.dart';
 import 'package:prayer_app/screens/edit_church_screen/edit_church_screen.dart';
-import 'package:prayer_app/screens/loading_screen/loading_view.dart';
-import 'package:prayer_app/screens/single_church_view/views/single_church_view.dart';
-import 'package:prayer_app/screens/single_church_view/views/single_church_view_messages.dart';
+import 'package:prayer_app/screens/single_church_screen/views/single_church_view.dart';
+import 'package:prayer_app/screens/single_church_screen/views/single_church_view_messages.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class SingleChurchScreen extends StatelessWidget {

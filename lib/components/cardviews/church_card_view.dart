@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/single_church_view/single_church_screen.dart';
+import 'package:prayer_app/screens/single_church_screen/single_church_screen.dart';
 import 'package:prayer_app/utils/church_firebase.dart';
 
 class ChurchCardView extends StatelessWidget {

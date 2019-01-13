@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
-import 'package:prayer_app/screens/single_church_view/views/single_church_view_header.dart';
-import 'package:prayer_app/screens/single_church_view/views/single_church_view_users_list.dart';
+import 'package:prayer_app/screens/single_church_screen/views/single_church_view_header.dart';
+import 'package:prayer_app/screens/single_church_screen/views/single_church_view_users_list.dart';
 
 class SingleChurchView extends StatelessWidget{
 
