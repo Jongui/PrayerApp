@@ -46,14 +46,21 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
 
   void _handleChurchesLoad() async {
     List<Church> churches = await ChurchHttp().getChurches();
+    Church _church = await ChurchHttp().getChurch(user.idUser, user.token);
     setState(() {
       _churchList = [];
+      _churchList.add(ChurchCardView(
+        church: _church,
+        user: user,
+      ));
       for (int i = 0; i < churches.length; i++) {
         Church church = churches.elementAt(i);
-        _churchList.add(ChurchCardView(
-          church: church,
-          user: user,
-        ));
+        if(church.idChurch != _church.idChurch){
+          _churchList.add(ChurchCardView(
+            church: church,
+            user: user,
+          ));
+        }
       }
       _view = ListView(
         shrinkWrap: true,
