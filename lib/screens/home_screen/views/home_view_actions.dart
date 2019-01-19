@@ -49,8 +49,7 @@ class HomeViewActions extends StatelessWidget{
             onPressed: () {
               Navigator.of(context).push(
                   new MaterialPageRoute(
-                      builder: (context) => new ChurchesScreen(church: church,
-                          user: user)
+                      builder: (context) => new ChurchesScreen(user: user)
                   ));
             },
           ),

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/churches_screen/views/churches_list_views.dart';
 
-class ChurchView extends StatelessWidget{
+class ChurchesView extends StatelessWidget{
 
-  Church church;
   User user;
 
-  ChurchView(this.church, this.user);
+  ChurchesView({@required this.user});
 
   @override
   Widget build(BuildContext context) {

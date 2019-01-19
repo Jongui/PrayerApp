@@ -66,8 +66,11 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
               );
               User _user = _delegate.selectedUser;
               if(_user != null){
-                _user.church = church.idChurch;
-                await UserHttp().putUser(_user, token: token);
+                //_user.church = church.idChurch;
+                //await UserHttp().putUser(_user, token: token);
+                String _churchName = this.widget.church.name;
+                String _message = 'You were invited to church $_churchName. Confirm?';
+                FirebaseMessagingUtils().sendToUserTopic(_user.idUser, _message);
                 Navigator.pop(context, true);
               }
             },
@@ -81,12 +84,12 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
                 title: UserCardView(user: users[idx],),
                 onTap: () async {
                   User _user = users[idx];
-                  int oldChurch = _user.church;
                   _user.church = church.idChurch;
                   int returnCode = await UserHttp().putUser(_user, token: token);
                   if(returnCode == 200 || returnCode == 201){
-                    FirebaseMessagingUtils().unsubscribeFromTopic(oldChurch);
-                    FirebaseMessagingUtils().subscribeToChurchTopic(_user.church);
+                    String _churchName= church.name;
+                    FirebaseMessagingUtils().sendToUserTopic(_user.idUser,
+                      'Your were added to church $_churchName. Confirm it?');
                   }
                   Navigator.pop(context, true);
                 },

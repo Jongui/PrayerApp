@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:prayer_app/resources/config.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 
 class UserHttp {
   static final UserHttp _userHttp = new UserHttp._internal();
@@ -37,6 +38,7 @@ class UserHttp {
       if (response.statusCode == 201 && jsonVar != null) {
         User ret = User.fromJson(jsonVar);
         ret.token = token;
+        FirebaseMessagingUtils().subscribeToUserTopic(ret.idUser);
         return ret;
       }
     } catch (e) {

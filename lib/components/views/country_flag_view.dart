@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/resources/country_codes.dart';
 
 class CountyFlagView extends StatelessWidget {
@@ -19,6 +20,9 @@ class CountyFlagView extends StatelessWidget {
     _language = locale.languageCode;
     String assetString = "assets/countries_flags/" + country.toLowerCase() + ".png";
     _formatCountryName();
+    if(_countryName == null){
+      _countryName = AppLocalizations.of(context).notInformed;
+    }
 
     return Container(
       width: width,
