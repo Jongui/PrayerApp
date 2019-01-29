@@ -38,7 +38,7 @@ class _ChurchCardViewState extends State<ChurchCardViewState>{
   @override
   void initState() {
     _profileImageProvider = AssetImage("assets/church_background.jpg");
-    uploadFirebaseChurchProfileImage();
+    downloadFirebaseChurchProfileImage();
     super.initState();
   }
 
@@ -90,18 +90,25 @@ class _ChurchCardViewState extends State<ChurchCardViewState>{
     return ret;
   }
 
-  void uploadFirebaseChurchProfileImage() async {
+  void downloadFirebaseChurchProfileImage() async {
     StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
-    String _imageUrl = await ref.getDownloadURL();
-    setState(() {
-      if(_imageUrl != null){
-        _profileImageProvider = NetworkImage(_imageUrl);
-      }
-    });
+    if(ref == null){
+      return;
+    }
+    try {
+      String _imageUrl = await ref.getDownloadURL();
+      setState(() {
+        if (_imageUrl != null) {
+          _profileImageProvider = NetworkImage(_imageUrl);
+        }
+      });
+    } catch(e){
+
+    }
   }
 
   onReload() {
-    uploadFirebaseChurchProfileImage();
+    downloadFirebaseChurchProfileImage();
   }
 
 }

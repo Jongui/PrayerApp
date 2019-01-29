@@ -5,35 +5,32 @@ import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_church_screen/delegates/search_user_delegate.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
-import 'package:prayer_app/utils/user_http.dart';
 
-class AddUserToChurchScreen extends StatelessWidget{
-
+class AddUserToChurchScreen extends StatelessWidget {
   List<User> users;
   Church church;
   String token;
 
-  AddUserToChurchScreen({@required this.users, @required this.church, @required this.token});
+  AddUserToChurchScreen(
+      {@required this.users, @required this.church, @required this.token});
 
   @override
   Widget build(BuildContext context) {
     return AddUserToChurchScreenState(users, church, token);
   }
-
 }
 
-class AddUserToChurchScreenState extends StatefulWidget{
-
+class AddUserToChurchScreenState extends StatefulWidget {
   List<User> users;
   Church church;
   String token;
   AddUserToChurchScreenState(this.users, this.church, this.token);
 
-  _AddUserToChurchScreenState createState() => _AddUserToChurchScreenState(users, church, token);
+  _AddUserToChurchScreenState createState() =>
+      _AddUserToChurchScreenState(users, church, token);
 }
 
-class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
-
+class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
   List<User> users;
   Church church;
   String token;
@@ -44,8 +41,8 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
 
   @override
   void initState() {
-    _delegate = SearchUserDelegate(users: users, churchName: church.name,
-      token: token);
+    _delegate =
+        SearchUserDelegate(users: users, churchName: church.name, token: token);
     super.initState();
   }
 
@@ -65,12 +62,8 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
                 delegate: _delegate,
               );
               User _user = _delegate.selectedUser;
-              if(_user != null){
-                //_user.church = church.idChurch;
-                //await UserHttp().putUser(_user, token: token);
-                String _churchName = this.widget.church.name;
-                String _message = 'You were invited to church $_churchName. Confirm?';
-                FirebaseMessagingUtils().sendToUserTopic(_user.idUser, _message);
+              if (_user != null) {
+                _sendFirebaseMessage(_user);
                 Navigator.pop(context, true);
               }
             },
@@ -81,22 +74,30 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState>{
           child: ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, idx) => ListTile(
-                title: UserCardView(user: users[idx],),
-                onTap: () async {
-                  User _user = users[idx];
-                  _user.church = church.idChurch;
-                  int returnCode = await UserHttp().putUser(_user, token: token);
-                  if(returnCode == 200 || returnCode == 201){
-                    String _churchName= church.name;
-                    FirebaseMessagingUtils().sendToUserTopic(_user.idUser,
-                      'Your were added to church $_churchName. Confirm it?');
-                  }
-                  Navigator.pop(context, true);
-                },
-              )
-          )
-      ),
+                    title: UserCardView(
+                      user: users[idx],
+                    ),
+                    onTap: () async {
+                      User _user = users[idx];
+                      _sendFirebaseMessage(_user);
+                      Navigator.pop(context, true);
+                    },
+                  ))),
     );
   }
 
+  Map<String, dynamic> _buildDataPayload(int action, int idChurch) =>
+      {'action': action, 'idChurch': idChurch};
+
+  void _sendFirebaseMessage(User user) {
+    String _churchName = church.name;
+    String _message =
+        'You were invited to church $_churchName. Confirm?';
+    FirebaseMessagingUtils().sendToUserTopic(
+        user.idUser,
+        'Church membership invitation',
+        _message,
+        _buildDataPayload(FirebaseMessagingUtils.ADD_USER_TO_CHURCH,
+            church.idChurch));
+  }
 }

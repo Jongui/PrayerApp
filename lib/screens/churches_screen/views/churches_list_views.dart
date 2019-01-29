@@ -52,7 +52,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
     Church _church = await ChurchHttp().getChurch(user.church, user.token);
     setState(() {
       _churchList = [];
-      if (_church != null) {
+      if (_church.idChurch != null) {
         _churchList.add(ChurchCardView(
           church: _church,
           user: user,

@@ -10,6 +10,8 @@ class FirebaseMessagingUtils {
   static final String _userTopic = 'user';
   static final String _topic = '/topics/';
 
+  static const int ADD_USER_TO_CHURCH = 1;
+
   static final FirebaseMessagingUtils _firebaseMessagingUtils =
       FirebaseMessagingUtils._internal();
 
@@ -21,7 +23,11 @@ class FirebaseMessagingUtils {
 
   FirebaseMessagingUtils._internal();
 
-  void firebaseCloudMessagingListeners() {
+  void firebaseCloudMessagingListeners({
+    MessageHandler onMessage,
+    MessageHandler onLaunch,
+    MessageHandler onResume,
+  }) {
     if (Platform.isIOS) iOSPermission();
 
     _firebaseMessaging.getToken().then((token) {
@@ -29,15 +35,9 @@ class FirebaseMessagingUtils {
     });
 
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print('on resume $message');
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('on launch $message');
-      },
+      onMessage: (Map<String, dynamic> message) async => onMessage(message),
+      onResume: (Map<String, dynamic> message) async => onResume(message),
+      onLaunch: (Map<String, dynamic> message) async => onLaunch(message),
     );
   }
 
@@ -74,27 +74,28 @@ class FirebaseMessagingUtils {
     });
   }
 
-  void sendToUserTopic(int idUser, String message) async{
+  void sendToUserTopic(int idUser, String title, String message,
+      Map<String, dynamic> data) async {
     String topic = _topic + firebaseEnv + _userTopic + idUser.toString();
-    Map<String, dynamic> body = _buildNotificationPayload(topic, message);
+    Map<String, dynamic> body =
+        _buildNotificationPayload(topic, title, message, data);
     var send = json.encode(body);
     final response = await http.post("https://fcm.googleapis.com/fcm/send",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "key=" + firebaseServerKey},
-        body: send
-          );
-    if(response.statusCode == 200){
+          "Authorization": "key=" + firebaseServerKey
+        },
+        body: send);
+    if (response.statusCode == 200) {
       print("Successfully send");
     }
   }
 
   Map<String, dynamic> _buildNotificationPayload(
-          String topic, String message) =>
+          String topic, String title, String body, Map<String, dynamic> data) =>
       {
         'to': topic,
-        'data': {
-          'message': message,
-        }
+        'notification': {'title': title, 'body': body},
+        'data': data,
       };
 }

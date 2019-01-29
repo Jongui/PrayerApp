@@ -205,6 +205,18 @@ class AppLocalizations {
     return Intl.message('Deleting Picture', name: 'deletingPicture');
   }
 
+  confirmChurchMembership(String churchName) =>
+    Intl.message('Confirm membership to church $churchName', name: 'confirmChurchMembership',
+      args: [churchName]);
+
+  String get confirm{
+    return Intl.message('Confirm', name: 'confirm');
+  }
+
+  String get cancel{
+    return Intl.message('Cancel', name: 'cancel');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

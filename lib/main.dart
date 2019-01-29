@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'localizations.dart';
 
 import 'package:prayer_app/screens/home_screen/home_screen.dart';
 
 //void main() => runApp(new PrayerApp());
 void main() {
-  FirebaseMessagingUtils().firebaseCloudMessagingListeners();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MaterialApp(

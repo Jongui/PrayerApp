@@ -84,12 +84,19 @@ class _SingleChurchViewHeaderState extends State<SingleChurchViewHeaderState>{
 
   void uploadFirebaseChurchProfileImage() async {
     StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
-    String _imageUrl = await ref.getDownloadURL();
-    setState(() {
-      if(_imageUrl != null){
-        _profileImageProvider = NetworkImage(_imageUrl);
-      }
-    });
+    if(ref == null){
+      return;
+    }
+    try {
+      String _imageUrl = await ref.getDownloadURL();
+      setState(() {
+        if (_imageUrl != null) {
+          _profileImageProvider = NetworkImage(_imageUrl);
+        }
+      });
+    }catch(e){
+
+    }
   }
 
 
