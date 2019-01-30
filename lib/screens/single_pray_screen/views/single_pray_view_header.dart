@@ -9,7 +9,6 @@ import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/utils/pray_firebase.dart';
 
 class SinglePrayViewHeader extends StatelessWidget {
-
   Pray pray;
   User user;
   UserPray userPray;
@@ -17,31 +16,33 @@ class SinglePrayViewHeader extends StatelessWidget {
   bool reload = false;
 
   SinglePrayViewHeader(
-      {@required this.pray, @required this.user, @required this.userPray,
-        @required this.token, this.reload});
+      {@required this.pray,
+      @required this.user,
+      @required this.userPray,
+      @required this.token,
+      this.reload});
 
   @override
   Widget build(BuildContext context) {
     return SinglePrayViewHeaderState(pray, user, userPray, token, reload);
   }
-
 }
 
-class SinglePrayViewHeaderState extends StatefulWidget{
+class SinglePrayViewHeaderState extends StatefulWidget {
   Pray pray;
   User user;
   UserPray userPray;
   String token;
   bool reload;
 
-  SinglePrayViewHeaderState(this.pray, this.user, this.userPray, this.token, this.reload);
+  SinglePrayViewHeaderState(
+      this.pray, this.user, this.userPray, this.token, this.reload);
 
-  _SinglePrayViewHeaderState createState() => _SinglePrayViewHeaderState(pray, user, userPray, token);
-
+  _SinglePrayViewHeaderState createState() =>
+      _SinglePrayViewHeaderState(pray, user, userPray, token);
 }
 
-class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
-
+class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
   Pray pray;
   User user;
   UserPray userPray;
@@ -55,53 +56,53 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
   @override
   void initState() {
     _profileImageProvider = AssetImage("assets/pray.jpg");
-    rateBar = RateBar(rateInput: userPray.rate,
-      onStarPressed: (rateInput) {
-        userPray.rate = rateInput;
-      });
+    rateBar = RateBar(
+        rateInput: userPray.rate,
+        onStarPressed: (rateInput) {
+          userPray.rate = rateInput;
+        });
     uploadFirebasePrayProfileImage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(this.widget.reload){
+    if (this.widget.reload) {
       uploadFirebasePrayProfileImage();
     }
     this.widget.reload = !this.widget.reload;
-    return  Container(
+    return Container(
       height: 220.0,
       decoration: BoxDecoration(
-          image: DecorationImage(image: _profileImageProvider,
-              fit: BoxFit.cover)
-      ),
+          image:
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
       child: Column(
-        children: <Widget>[
-          Divider(),
-          _buildDetails(context),
-          _buildRateBar()
-        ],
+        children: <Widget>[Divider(), _buildDetails(context), _buildRateBar()],
       ),
     );
   }
 
-  Widget _buildDetails(BuildContext context){
+  Widget _buildDetails(BuildContext context) {
     var formatterTo = new DateFormat('dd-MM-yyyy');
-    String _subtitle = AppLocalizations.of(context).prayFromTo(formatterTo.format(pray.beginDate),
-          formatterTo.format(pray.endDate));
+    String _subtitle = AppLocalizations.of(context).prayFromTo(
+        formatterTo.format(pray.beginDate), formatterTo.format(pray.endDate));
     return Container(
       padding: EdgeInsets.only(top: 76.0),
       child: ListTile(
-        title: Text(pray.description,
+        title: Text(
+          pray.description,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 24.0,
-          ),),
-        subtitle: Text(_subtitle,
-            style: TextStyle(
+          ),
+        ),
+        subtitle: Text(
+          _subtitle,
+          style: TextStyle(
             color: Colors.white,
-            fontSize: 18.0,),
+            fontSize: 18.0,
+          ),
         ),
       ),
     );
@@ -111,14 +112,19 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState>{
     return rateBar;
   }
 
-  void uploadFirebasePrayProfileImage() async{
-    StorageReference ref = await PrayFirebase().downloadPrayProfilePicture(this.widget.pray.idPray);
-    String _imageUrl = await ref.getDownloadURL();
-    setState(() {
-      if(_imageUrl != null){
-        _profileImageProvider = NetworkImage(_imageUrl);
-      }
-    });
+  void uploadFirebasePrayProfileImage() async {
+    StorageReference ref = await PrayFirebase()
+        .downloadPrayProfilePicture(this.widget.pray.idPray);
+    if (ref == null) {
+      return;
+    }
+    try {
+      String _imageUrl = await ref.getDownloadURL();
+      setState(() {
+        if (_imageUrl != null) {
+          _profileImageProvider = NetworkImage(_imageUrl);
+        }
+      });
+    } catch (e) {}
   }
-
 }

@@ -4,7 +4,7 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_pray_screen/delegates/search_user_delegate.dart';
-import 'package:prayer_app/utils/user_pray_http.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 
 class AddUserToPrayScreen extends StatelessWidget {
 
@@ -61,10 +61,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
                 delegate: _delegate,
               );
               User _user = _delegate.selectedUser;
-              if(_user != null){
-                await UserPrayHttp().postUserPray(_user, pray, DateTime.now(), pray.endDate, token);
-                Navigator.pop(context, true);
-              }
+              _sendFirebaseMessage(_user);
             },
           ),
         ],
@@ -76,7 +73,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
                 title: UserCardView(user: users[idx],),
                 onTap: () async {
                   User _user = users[idx];
-                  await UserPrayHttp().postUserPray(_user, pray, DateTime.now(), pray.endDate, token);
+                  _sendFirebaseMessage(_user);
                   Navigator.pop(context, true);
                 },
               )
@@ -85,5 +82,22 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
     );
   }
 
+  void _sendFirebaseMessage(User user) async{
+    if(user != null){
+      String _churchName = pray.description;
+      String _message =
+          'You were invited to pray $_churchName. Confirm?';
+      FirebaseMessagingUtils().sendToUserTopic(
+          user.idUser,
+          'Pray membership invitation',
+          _message,
+          _buildDataPayload(FirebaseMessagingUtils.ADD_USER_TO_PRAY,
+              pray.idPray));
+      Navigator.pop(context, true);
+    }
+  }
+
+  Map<String, dynamic> _buildDataPayload(int action, int idPray) =>
+      {'action': action, 'idPray': idPray};
 
 }

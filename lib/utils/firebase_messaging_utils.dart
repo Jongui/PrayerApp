@@ -8,9 +8,11 @@ import 'package:prayer_app/resources/config.dart';
 class FirebaseMessagingUtils {
   static final String _churchTopic = 'church';
   static final String _userTopic = 'user';
+  static final String _prayTopic = 'pray';
   static final String _topic = '/topics/';
 
   static const int ADD_USER_TO_CHURCH = 1;
+  static const int ADD_USER_TO_PRAY = 2;
 
   static final FirebaseMessagingUtils _firebaseMessagingUtils =
       FirebaseMessagingUtils._internal();
@@ -98,4 +100,10 @@ class FirebaseMessagingUtils {
         'notification': {'title': title, 'body': body},
         'data': data,
       };
+
+  void subscribeToPrayTopic(int idPray) {
+    if (idPray == null) return;
+    String topic = firebaseEnv + _prayTopic + idPray.toString();
+    _firebaseMessaging.subscribeToTopic(topic);
+  }
 }

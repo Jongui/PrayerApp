@@ -128,7 +128,7 @@ class UserHttp {
 
   Future<List<User>> getAllUsers(String token) async {
     List<User> users = [];
-    final response = await http.get(serverIp + 'user/', headers: {
+    final response = await http.get(serverIp + 'user/' + '?size=20', headers: {
       "Content-Type": "appliation/json",
       "Authorization": "Basic " + token
     });

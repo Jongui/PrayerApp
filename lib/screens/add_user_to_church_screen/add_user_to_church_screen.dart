@@ -42,7 +42,7 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
   @override
   void initState() {
     _delegate =
-        SearchUserDelegate(users: users, churchName: church.name, token: token);
+        SearchUserDelegate(users: users, church: church, token: token);
     super.initState();
   }
 

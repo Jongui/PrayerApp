@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/components/cardviews/user_card_view.dart';
 import 'package:prayer_app/localizations.dart';
+import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class SearchUserDelegate extends SearchDelegate<String> {
   List<User> users;
   User selectedUser;
-  String churchName;
+  Church church;
   String token;
   _SuggestionList _suggestionList;
 
   SearchUserDelegate(
-      {@required this.users, @required this.churchName, @required this.token});
+      {@required this.users, @required this.church, @required this.token});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -65,7 +66,7 @@ class SearchUserDelegate extends SearchDelegate<String> {
             margin: EdgeInsets.all(10.0),
             child: Text(
               AppLocalizations.of(context).confirmAddingUserToChurch(
-                  this.selectedUser.userName, churchName),
+                  this.selectedUser.userName, church.name),
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 20.0,
@@ -94,29 +95,36 @@ class SearchUserDelegate extends SearchDelegate<String> {
         showResults(context);
       },
       token: token,
+      idChurch: church.idChurch,
     );
   }
 }
 
 class _SuggestionList extends StatelessWidget {
   final String query;
+  final int idChurch;
   final ValueChanged<User> onSelected;
   final String token;
 
-  _SuggestionList({this.query, this.onSelected, this.token});
+  _SuggestionList(
+      {@required this.query,
+      @required this.onSelected,
+      @required this.token,
+      @required this.idChurch});
 
   @override
   Widget build(BuildContext context) {
-    return _SuggestionListState(query, onSelected, token);
+    return _SuggestionListState(query, onSelected, token, idChurch);
   }
 }
 
 class _SuggestionListState extends StatefulWidget {
   String query;
+  int idChurch;
   ValueChanged<User> onSelected;
   String token;
 
-  _SuggestionListState(this.query, this.onSelected, this.token);
+  _SuggestionListState(this.query, this.onSelected, this.token, this.idChurch);
 
   _SuggestionListStateCont createState() => _SuggestionListStateCont();
 }
@@ -133,23 +141,23 @@ class _SuggestionListStateCont extends State<_SuggestionListState> {
 
   @override
   Widget build(BuildContext context) {
-    if(_view == null){
+    if (_view == null) {
       _view = Padding(
           padding: EdgeInsets.all(8.0),
           child: Center(
               child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(10.0),
-                  child: Text(
-                    AppLocalizations.of(context).searchUser,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.normal,
-                        fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ])));
+            Container(
+              margin: EdgeInsets.all(10.0),
+              child: Text(
+                AppLocalizations.of(context).searchUser,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.normal,
+                    fontStyle: FontStyle.italic),
+              ),
+            ),
+          ])));
     }
     if (_oldQuery != this.widget.query && this.widget.query.length >= 3) {
       _handleLoadingUsers();
@@ -161,6 +169,7 @@ class _SuggestionListStateCont extends State<_SuggestionListState> {
   void _handleLoadingUsers() async {
     List<User> _users = await UserHttp()
         .getUsersByUserName(this.widget.query, this.widget.token);
+    _users.removeWhere((_user) => _user.church == this.widget.idChurch);
     setState(() {
       _view = ListView.builder(
           itemCount: _users.length,

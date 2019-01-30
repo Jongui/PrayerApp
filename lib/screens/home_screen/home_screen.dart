@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:prayer_app/components/dialogs/confirm_church_membership_dialog.dart';
+import 'package:prayer_app/components/dialogs/confirm_pray_membership_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
+import 'package:prayer_app/utils/pray_http.dart';
 import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
@@ -39,11 +42,15 @@ class _HomeScreenState extends State<HomeScreenState> {
   @override
   void initState() {
     FirebaseMessagingUtils().firebaseCloudMessagingListeners(
-        onLaunch: (Map<String, dynamic> message) {},
+        onLaunch: (Map<String, dynamic> message) {
+          _handleOnMessage(message);
+        },
         onMessage: (Map<String, dynamic> message) {
           _handleOnMessage(message);
         },
-        onResume: (Map<String, dynamic> message) {});
+        onResume: (Map<String, dynamic> message) {
+          _handleOnMessage(message);
+        });
   }
 
   _handleSignIn() async {
@@ -118,6 +125,12 @@ class _HomeScreenState extends State<HomeScreenState> {
       case FirebaseMessagingUtils.ADD_USER_TO_CHURCH:
         _handleAddUserToChurch(_data);
         break;
+      case FirebaseMessagingUtils.ADD_USER_TO_PRAY:
+        _handleAddUserToPray(_data);
+        break;
+      default:
+        print(message);
+        break;
     }
   }
 
@@ -131,5 +144,17 @@ class _HomeScreenState extends State<HomeScreenState> {
               user: _user,
               token: _token,
             ));
+  }
+
+  void _handleAddUserToPray(dynamic data) async {
+    int idPray = int.parse(data['idPray']);
+    Pray _localPray = await PrayHttp().getPrayById(idPray, _token);
+    showDialog(context: context,
+      builder: (_) => ConfirmPrayMembershipDialog(
+        pray: _localPray,
+        user: _user,
+        token: _token,
+      )
+    );
   }
 }

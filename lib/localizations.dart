@@ -217,6 +217,10 @@ class AppLocalizations {
     return Intl.message('Cancel', name: 'cancel');
   }
 
+  confirmPrayMembership(String description) =>
+      Intl.message('Confirm membership to pray $description', name: 'confirmPrayMembership',
+          args: [description]);
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
