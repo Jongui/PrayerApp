@@ -61,7 +61,10 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
     if (_reload) _reload = !_reload;
     _tabPages = [
       SingleChurchView(church: church, user: user, reload: _reloadParam),
-      SingleChurchViewMessages(),
+      SingleChurchViewMessages(
+        user: user,
+        church: church,
+      ),
     ];
     if (user.church == church.idChurch) {
       _view = DefaultTabController(

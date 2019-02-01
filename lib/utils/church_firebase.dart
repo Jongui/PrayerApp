@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/firebase_utils.dart';
 
 class ChurchFirebase {
@@ -109,4 +110,22 @@ class ChurchFirebase {
         _database.child('churchs').child('$idChurch').child('$fileName');
     await databaseReference.remove();
   }
+
+  Future<void> sendMessageToChurch(String text, User user, int idChurch) async {
+    DatabaseReference _firebaseMsgRef = _database.child('churchs').child('$idChurch')
+      .child('messages');
+    _firebaseMsgRef.push().set({
+      'senderId': user.idUser,
+      'senderName': user.userName,
+      'avatarUrl': user.avatarUrl,
+      'text': text,
+      'timestamp': DateTime.now().millisecondsSinceEpoch
+    });
+  }
+
+  DatabaseReference messagesDatabaseReference(int idChurch){
+    return _database.child('churchs').child('$idChurch')
+        .child('messages');
+  }
+
 }

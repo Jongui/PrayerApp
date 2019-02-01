@@ -252,7 +252,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
                         });
                       },
                       onUploadPressed: (){
-                        downloadFirebaseChurchProfileImage();
+
                       },
                       onDescriptionChanged: (newDescription){
                         _profilePictureDescription = newDescription;
