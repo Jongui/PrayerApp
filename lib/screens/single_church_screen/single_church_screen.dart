@@ -6,8 +6,8 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_church_screen/add_user_to_church_screen.dart';
 import 'package:prayer_app/screens/church_album_screen/church_album_screen.dart';
 import 'package:prayer_app/screens/edit_church_screen/edit_church_screen.dart';
+import 'package:prayer_app/screens/single_church_screen/views/single_church_tab_bar_view.dart';
 import 'package:prayer_app/screens/single_church_screen/views/single_church_view.dart';
-import 'package:prayer_app/screens/single_church_screen/views/single_church_view_messages.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class SingleChurchScreen extends StatelessWidget {
@@ -31,18 +31,10 @@ class SingleChurchScreenState extends StatefulWidget {
       _SingleChurchScreenState(church, user);
 }
 
-class _SingleChurchScreenState extends State<SingleChurchScreenState> {
+class _SingleChurchScreenState extends State<SingleChurchScreenState>
+    with SingleTickerProviderStateMixin {
   Church church;
   User user;
-  var _tabPages = <Widget>[];
-  final _tabButtons = <Tab>[
-    Tab(
-      icon: Icon(Icons.people, color: Colors.white70),
-    ),
-    Tab(
-      icon: Icon(Icons.message, color: Colors.white70),
-    )
-  ];
 
   Widget _view;
 
@@ -56,60 +48,17 @@ class _SingleChurchScreenState extends State<SingleChurchScreenState> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool _reloadParam = _reload;
     if (_reload) _reload = !_reload;
-    _tabPages = [
-      SingleChurchView(church: church, user: user, reload: _reloadParam),
-      SingleChurchViewMessages(
-        user: user,
-        church: church,
-      ),
-    ];
     if (user.church == church.idChurch) {
-      _view = DefaultTabController(
-          length: _tabButtons.length,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(AppLocalizations.of(context).viewChurch),
-              bottom: TabBar(tabs: _tabButtons),
-            ),
-            body: TabBarView(children: _tabPages),
-            floatingActionButton: user.idUser == church.createdBy
-                ? FloatEditButton(
-                    onAddPressed: () async {
-                      List<User> _users =
-                          await UserHttp().getAllUsers(user.token);
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(
-                              builder: (context) => AddUserToChurchScreen(
-                                    users: _users,
-                                    church: church,
-                                    token: user.token,
-                                  )))
-                          .whenComplete(onReload);
-                    },
-                    onEditPressed: () {
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(
-                              builder: (context) => EditChurchScreen(
-                                    church: church,
-                                    user: user,
-                                  )))
-                          .whenComplete(onReload);
-                    },
-                    onAlbumClicked: () {
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(
-                              builder: (context) => ChurchAlbumScreen(
-                                    church: church,
-                                    token: user.token,
-                                  )))
-                          .whenComplete(onReload);
-                    },
-                  )
-                : null,
-          ));
+      _view = SingleChurchTabBarView(church: church,
+            user: user,);
     } else {
       _view = Scaffold(
         appBar: AppBar(

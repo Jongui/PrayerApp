@@ -91,7 +91,11 @@ class _PrayCardViewState extends State<PrayCardViewState>{
                 builder: (context) => SinglePrayScreen(pray: _pray,
                   user: user,
                   userPray: userPray,)
-            ));
+            )).whenComplete((){
+              setState(() {
+
+              });
+        });
       },
       child: Card(
         child: Column(

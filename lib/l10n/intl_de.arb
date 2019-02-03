@@ -232,5 +232,29 @@
   "@deletingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "confirmChurchMembership": "Bestätigen Angehörigkeit zur Gemeinde {churchName}",
+  "@confirmChurchMembership": {
+    "type": "text",
+    "placeholders": {
+      "churchName": {}
+    }
+  },
+  "confirm": "Bestätigen",
+  "@confirm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Abbrechen",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirmPrayMembership": "Bestätigen Teilnahme in Gebet {description}",
+  "@confirmPrayMembership": {
+    "type": "text",
+    "placeholders": {
+      "description": {}
+    }
   }
 }

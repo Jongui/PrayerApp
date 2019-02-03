@@ -1,35 +1,36 @@
 import 'package:flutter/material.dart';
 
-class FloatEditButton extends StatelessWidget {
+class FloatEditButton extends StatefulWidget {
+//  VoidCallback onEditPressed;
+//  VoidCallback onAddPressed;
+//  VoidCallback onAlbumClicked;
+
+//  FloatEditButton(
+//      {@required this.onAddPressed,
+//      @required this.onEditPressed,
+//      @required this.onAlbumClicked});
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return FloatEditButtonState(
+//        onAddPressed, onEditPressed, onAlbumClicked);
+//  }
+//}
+//
+//class FloatEditButtonState extends StatefulWidget {
   VoidCallback onEditPressed;
   VoidCallback onAddPressed;
   VoidCallback onAlbumClicked;
 
-  FloatEditButton(
-      {@required this.onAddPressed,
-      @required this.onEditPressed,
-      @required this.onAlbumClicked});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatEditButtonState(
-        onAddPressed, onEditPressed, onAlbumClicked);
-  }
-}
-
-class FloatEditButtonState extends StatefulWidget {
-  VoidCallback onEditPressed;
-  VoidCallback onAddPressed;
-  VoidCallback onAlbumClicked;
-
-  FloatEditButtonState(
-      this.onAddPressed, this.onEditPressed, this.onAlbumClicked);
+  FloatEditButton({@required this.onAddPressed,
+    @required this.onEditPressed,
+    @required this.onAlbumClicked});
 
   @override
   _FloatEditButtonState createState() => _FloatEditButtonState();
 }
 
-class _FloatEditButtonState extends State<FloatEditButtonState>
+class _FloatEditButtonState extends State<FloatEditButton>
     with SingleTickerProviderStateMixin {
   _FloatEditButtonState();
 

@@ -7,6 +7,8 @@ class MessageInputFieldArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: null,
+      keyboardType: TextInputType.multiline,
         obscureText: false,
         controller: controller,
         decoration: InputDecoration(

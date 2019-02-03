@@ -7,6 +7,7 @@ import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/utils/pray_firebase.dart';
+import 'package:prayer_app/utils/user_pray_http.dart';
 
 class SinglePrayViewHeader extends StatelessWidget {
   Pray pray;
@@ -48,6 +49,7 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
   UserPray userPray;
   String token;
   RateBar rateBar;
+  int _oldRate;
 
   ImageProvider _profileImageProvider;
 
@@ -61,8 +63,17 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
         onStarPressed: (rateInput) {
           userPray.rate = rateInput;
         });
+    _oldRate = userPray.rate;
     uploadFirebasePrayProfileImage();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    if(userPray.rate != _oldRate){
+      UserPrayHttp().putUserPray(userPray, token);
+    }
+    super.dispose();
   }
 
   @override
@@ -75,7 +86,7 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
       height: 220.0,
       decoration: BoxDecoration(
           image:
-              DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.fill)),
       child: Column(
         children: <Widget>[Divider(), _buildDetails(context), _buildRateBar()],
       ),

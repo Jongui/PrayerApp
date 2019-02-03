@@ -36,14 +36,14 @@ class _SingleChurchViewHeaderState extends State<SingleChurchViewHeaderState>{
   @override
   void initState() {
     _profileImageProvider = AssetImage("assets/church_background.jpg");
-    uploadFirebaseChurchProfileImage();
+    downloadFirebaseChurchProfileImage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     if(this.widget.reload){
-      uploadFirebaseChurchProfileImage();
+      downloadFirebaseChurchProfileImage();
     }
     this.widget.reload = !this.widget.reload;
     return Container(
@@ -82,7 +82,7 @@ class _SingleChurchViewHeaderState extends State<SingleChurchViewHeaderState>{
     );
   }
 
-  void uploadFirebaseChurchProfileImage() async {
+  void downloadFirebaseChurchProfileImage() async {
     StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
     if(ref == null){
       return;

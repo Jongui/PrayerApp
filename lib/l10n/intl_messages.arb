@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-01-10T19:27:48.335249",
+  "@@last_modified": "2019-02-03T18:23:22.598476",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -257,5 +257,29 @@
   "@deletingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "confirmChurchMembership": "Confirm membership to church {churchName}",
+  "@confirmChurchMembership": {
+    "type": "text",
+    "placeholders": {
+      "churchName": {}
+    }
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirmPrayMembership": "Confirm membership to pray {description}",
+  "@confirmPrayMembership": {
+    "type": "text",
+    "placeholders": {
+      "description": {}
+    }
   }
 }

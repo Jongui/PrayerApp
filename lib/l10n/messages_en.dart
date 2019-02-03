@@ -22,29 +22,39 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m1(userName) => "Confirm adding user ${userName} to this pray?";
 
-  static m2(createdAt) => "Created at ${createdAt}";
+  static m2(churchName) => "Confirm membership to church ${churchName}";
 
-  static m3(userName) => "Created by ${userName}";
+  static m3(description) => "Confirm membership to pray ${description}";
 
-  static m4(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
+  static m4(createdAt) => "Created at ${createdAt}";
 
-  static m5(rate) => "Rated by user: ${rate}";
+  static m5(userName) => "Created by ${userName}";
 
-  static m6(rate) => "Your rate: ${rate}";
+  static m6(startDate, endDate) => "Pray from ${startDate} to ${endDate}";
+
+  static m7(rate) => "Rated by user: ${rate}";
+
+  static m8(rate) => "Your rate: ${rate}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "add" : MessageLookupByLibrary.simpleMessage("Add"),
     "addNew" : MessageLookupByLibrary.simpleMessage("Add new"),
+    "cancel" : MessageLookupByLibrary.simpleMessage("Cancel"),
     "churchCreated" : MessageLookupByLibrary.simpleMessage("Church created!"),
     "churchName" : MessageLookupByLibrary.simpleMessage("Church name"),
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Church updated!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Churches"),
     "city" : MessageLookupByLibrary.simpleMessage("City"),
+    "confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
     "confirmAddingUserToChurch" : m0,
     "confirmAddingUserToPray" : m1,
-    "createdAt" : m2,
-    "createdBy" : m3,
+    "confirmChurchMembership" : m2,
+    "confirmPrayMembership" : m3,
+    "createdAt" : m4,
+    "createdBy" : m5,
+    "delete" : MessageLookupByLibrary.simpleMessage("Delete"),
+    "deletingPicture" : MessageLookupByLibrary.simpleMessage("Deleting Picture"),
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Edit User"),
     "editYourPray" : MessageLookupByLibrary.simpleMessage("Edit your pray"),
@@ -56,12 +66,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "notInformed" : MessageLookupByLibrary.simpleMessage("Not informed"),
     "pictureTaken" : MessageLookupByLibrary.simpleMessage("Picture taken!"),
     "pictureUploaded" : MessageLookupByLibrary.simpleMessage("Picture uploaded"),
+    "possibleActions" : MessageLookupByLibrary.simpleMessage("Possible Actions"),
     "prayEdited" : MessageLookupByLibrary.simpleMessage("Pray edited"),
-    "prayFromTo" : m4,
+    "prayFromTo" : m6,
     "prays" : MessageLookupByLibrary.simpleMessage("Prays"),
-    "ratedByUser" : m5,
+    "ratedByUser" : m7,
     "rotatingImage" : MessageLookupByLibrary.simpleMessage("Rotating Image..."),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
+    "savingChurch" : MessageLookupByLibrary.simpleMessage("Saving church..."),
     "savingPray" : MessageLookupByLibrary.simpleMessage("Saving Pray"),
     "savingUser" : MessageLookupByLibrary.simpleMessage("Saving user"),
     "searchUser" : MessageLookupByLibrary.simpleMessage("Search User"),
@@ -72,6 +84,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Uploading picture"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Usuário atualizado!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("View church"),
-    "yourRate" : m6
+    "yourRate" : m8
   };
 }

@@ -85,6 +85,9 @@ class _AlbumPictureCardViewState extends State<AlbumPictureCardViewState> {
       ref = await ChurchFirebase().downloadChurchAlbumPicture(
           this.widget.church.idChurch, this.widget.fileName);
     }
+    if(ref == null){
+      return;
+    }
     StorageMetadata metadata = await ref.getMetadata();
     Map customMetadata = metadata.customMetadata;
     setState(() {

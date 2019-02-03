@@ -252,5 +252,29 @@
   "@deletingPicture": {
     "type": "text",
     "placeholders": {}
+  },
+  "confirmChurchMembership": "Confirmar membresia na igreja {churchName}",
+  "@confirmChurchMembership": {
+    "type": "text",
+    "placeholders": {
+      "churchName": {}
+    }
+  },
+  "confirm": "Confirmar",
+  "@confirm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirmPrayMembership": "Confirmar participação na oração {description}",
+  "@confirmPrayMembership": {
+    "type": "text",
+    "placeholders": {
+      "description": {}
+    }
   }
 }

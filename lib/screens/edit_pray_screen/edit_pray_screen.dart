@@ -189,9 +189,10 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    if (_newDescription == '' && _newStartDate == '' && _newDescription == ''
-      && _newFile == null)
-      return;
+    if (_newDescription == '' &&
+        _newStartDate == '' &&
+        _newDescription == '' &&
+        _newFile == null) return;
     var formatterFrom = new DateFormat('dd/MM/yyyy');
     if (_newDescription != '') this.widget.pray.description = _newDescription;
     if (_newStartDate != '')
@@ -201,10 +202,10 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
-          text: AppLocalizations.of(context).savingPray,
-        ));
+              text: AppLocalizations.of(context).savingPray,
+            ));
 
-    if(_newFile != null){
+    if (_newFile != null) {
       await PrayFirebase().uploadPrayProfilePicture(
           this.widget.pray.idPray, _newFile, _profilePictureDescription);
     }
@@ -237,7 +238,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
       padding: EdgeInsets.only(right: 10.0),
       decoration: new BoxDecoration(
           image:
-              DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.fill)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -248,20 +249,18 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
               onPressed: () {
                 Navigator.of(context).push(new MaterialPageRoute(
                     builder: (context) => ImagePickerScreen(
-                      onImagePicked: (filePath) async {
-                        setState(() {
-                          _newFile = File(filePath);
-                          _profileImageProvider = FileImage(_newFile);
-                        });
-                      },
-                      onUploadPressed: (){
-
-                      },
-                      onDescriptionChanged: (newDescription){
-                        _profilePictureDescription = newDescription;
-                      },
-                      fileAddress: _imageUrl,
-                    )));
+                          onImagePicked: (filePath) async {
+                            setState(() {
+                              _newFile = File(filePath);
+                              _profileImageProvider = FileImage(_newFile);
+                            });
+                          },
+                          onUploadPressed: () {},
+                          onDescriptionChanged: (newDescription) {
+                            _profilePictureDescription = newDescription;
+                          },
+                          fileAddress: _imageUrl,
+                        )));
               },
               tooltip: 'Camera',
               child: Icon(Icons.camera_alt),

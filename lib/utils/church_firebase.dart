@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -82,7 +83,7 @@ class ChurchFirebase {
     var downloadUrl = await snapshot.ref.getDownloadURL();
 
     final DatabaseReference databaseReference =
-        _database.child('churchs').child('$idChurch');
+        _database.child('churchs').child('$idChurch').child('album');
     await databaseReference.child(_fileName).set({'fileAddress': downloadUrl});
     _ret['downloadUrl'] = downloadUrl;
 
@@ -93,7 +94,7 @@ class ChurchFirebase {
 
   Future<DatabaseReference> downloadChurchAlbum(int idChurch) async {
     final DatabaseReference databaseReference =
-        _database.child('churchs').child('$idChurch');
+        _database.child('churchs').child('$idChurch').child('album');
     return databaseReference;
   }
 
@@ -117,7 +118,6 @@ class ChurchFirebase {
     _firebaseMsgRef.push().set({
       'senderId': user.idUser,
       'senderName': user.userName,
-      'avatarUrl': user.avatarUrl,
       'text': text,
       'timestamp': DateTime.now().millisecondsSinceEpoch
     });
@@ -126,6 +126,11 @@ class ChurchFirebase {
   DatabaseReference messagesDatabaseReference(int idChurch){
     return _database.child('churchs').child('$idChurch')
         .child('messages');
+  }
+
+  StreamSubscription<Event> subscribeToChurchMessage(int idChurch, void onData(Event event)){
+    DatabaseReference _messageReference = _database.child('churchs').child('$idChurch').child('messages');
+    return _messageReference.onChildAdded.listen(onData);
   }
 
 }

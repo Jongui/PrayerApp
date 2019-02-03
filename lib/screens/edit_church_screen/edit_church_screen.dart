@@ -14,7 +14,6 @@ import 'package:prayer_app/utils/church_firebase.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
 class EditChurchScreen extends StatelessWidget {
-
   Church church;
   User user;
 
@@ -22,26 +21,25 @@ class EditChurchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EditChurchScreenState(church: church,
-                                  user: user,);
+    return EditChurchScreenState(
+      church: church,
+      user: user,
+    );
   }
-
 }
 
 class EditChurchScreenState extends StatefulWidget {
-
   EditChurchScreenState({Key key, this.church, this.user}) : super(key: key);
 
   final Church church;
   final User user;
 
   @override
-  _EditChurchScreenState createState() => new _EditChurchScreenState(church, user);
-
+  _EditChurchScreenState createState() =>
+      new _EditChurchScreenState(church, user);
 }
 
-class _EditChurchScreenState extends State<EditChurchScreenState>{
-
+class _EditChurchScreenState extends State<EditChurchScreenState> {
   _EditChurchScreenState(this.church, this.user);
 
   Church church;
@@ -63,7 +61,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   String _imageUrl;
 
   @override
-  initState(){
+  initState() {
     _profilePictureDescription = '';
     _profileImageProvider = AssetImage("assets/church_background.jpg");
     _churchNameController.addListener(_onChurchNameChanged);
@@ -84,12 +82,11 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       ),
       body: Builder(builder: (context) => _buildInputForm(context)),
     );
-
   }
 
-  Widget _buildInputForm(BuildContext context){
+  Widget _buildInputForm(BuildContext context) {
     EditChurchScreenState state = this.widget;
-    if(_newCountry == '')
+    if (_newCountry == '')
       _currentCountry = church.country;
     else
       _currentCountry = _newCountry;
@@ -101,8 +98,8 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Form(
-              child: new Column(
+            Form(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   _buildChurchProfilePicture(),
@@ -119,17 +116,18 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
     );
   }
 
-  void _onChurchNameChanged(){
+  void _onChurchNameChanged() {
     _newChurchName = _churchNameController.text;
   }
 
-  void _onCityChanged(){
+  void _onCityChanged() {
     _newCity = _cityController.text;
   }
 
-  Widget _buildChurchNameInputField(String name){
+  Widget _buildChurchNameInputField(String name) {
     return Container(
-      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+      padding:
+          EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
         hint: name,
         obscure: false,
@@ -139,19 +137,19 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
     );
   }
 
-  Widget _buildCityInputField(String city){
+  Widget _buildCityInputField(String city) {
     return Container(
-        padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+        padding:
+            EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
         child: InputFieldArea(
           hint: city,
           obscure: false,
           controller: _cityController,
           labelText: _appLocalizations.city,
-        )
-    );
+        ));
   }
 
-  Widget _buildBarButton(BuildContext context){
+  Widget _buildBarButton(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: 24.0, left: 84.0),
         child: Row(
@@ -159,53 +157,48 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
             SaveButton(
               height: 50.0,
               width: _screenSize.width / 2,
-              onPressed: () =>_savedButtonPressed(context),
+              onPressed: () => _savedButtonPressed(context),
             ),
           ],
-        )
-    );
+        ));
   }
 
-  _savedButtonPressed(BuildContext context) async{
-    if(_newChurchName == '' && _newCountry == '' && _newCity == ''
-      && _newFile == null)
-      return;
-    if(_newChurchName != '')
-      church.name = _newChurchName;
-    if(_newCountry != '')
-      church.country = _newCountry;
-    if(_newCity != '')
-      church.city = _newCity;
+  _savedButtonPressed(BuildContext context) async {
+    if (_newChurchName == '' &&
+        _newCountry == '' &&
+        _newCity == '' &&
+        _newFile == null) return;
+    if (_newChurchName != '') church.name = _newChurchName;
+    if (_newCountry != '') church.country = _newCountry;
+    if (_newCity != '') church.city = _newCity;
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
-          text: AppLocalizations.of(context).savingChurch,
-        ));
+              text: AppLocalizations.of(context).savingChurch,
+            ));
 
     church.changedAt = DateTime.now();
     church.changedBy = user.idUser;
 
-    if(_newFile != null){
+    if (_newFile != null) {
       await ChurchFirebase().uploadChurchProfilePicture(
           this.widget.church.idChurch, _newFile, _profilePictureDescription);
     }
 
     int response = await ChurchHttp().putChurch(church, user.token);
-    if(response == 200){
+    if (response == 200) {
       final snackBar = SnackBar(
-        content: Text(_appLocalizations.churchUpdated,
-          style: TextStyle(
-              color: Colors.green
-          ),
+        content: Text(
+          _appLocalizations.churchUpdated,
+          style: TextStyle(color: Colors.green),
         ),
       );
       Scaffold.of(context).showSnackBar(snackBar);
     } else {
       final snackBar = SnackBar(
-        content: Text(_appLocalizations.errorWhileSaving,
-          style: TextStyle(
-              color: Colors.red
-          ),
+        content: Text(
+          _appLocalizations.errorWhileSaving,
+          style: TextStyle(color: Colors.red),
         ),
       );
       Scaffold.of(context).showSnackBar(snackBar);
@@ -213,13 +206,15 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
     Navigator.pop(context);
   }
 
-  Widget _buildCountryDropDownButton(){
+  Widget _buildCountryDropDownButton() {
     return Container(
       height: 120.0,
-      padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
-      child: CountryDropdownButton(_currentCountry,
-          languageLowerCase: _language.toLowerCase(),
-        onChanged: (newCountry){
+      padding:
+          EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
+      child: CountryDropdownButton(
+        _currentCountry,
+        languageLowerCase: _language.toLowerCase(),
+        onChanged: (newCountry) {
           setState(() {
             _newCountry = newCountry.code;
           });
@@ -234,7 +229,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
       padding: EdgeInsets.only(right: 10.0),
       decoration: new BoxDecoration(
           image:
-          DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.fill)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -245,20 +240,18 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
               onPressed: () {
                 Navigator.of(context).push(new MaterialPageRoute(
                     builder: (context) => ImagePickerScreen(
-                      onImagePicked: (filePath) async {
-                        setState(() {
-                          _newFile = File(filePath);
-                          _profileImageProvider = FileImage(_newFile);
-                        });
-                      },
-                      onUploadPressed: (){
-
-                      },
-                      onDescriptionChanged: (newDescription){
-                        _profilePictureDescription = newDescription;
-                      },
-                      fileAddress: _imageUrl,
-                    )));
+                          onImagePicked: (filePath) async {
+                            setState(() {
+                              _newFile = File(filePath);
+                              _profileImageProvider = FileImage(_newFile);
+                            });
+                          },
+                          onUploadPressed: () {},
+                          onDescriptionChanged: (newDescription) {
+                            _profilePictureDescription = newDescription;
+                          },
+                          fileAddress: _imageUrl,
+                        )));
               },
               tooltip: 'Camera',
               child: Icon(Icons.camera_alt),
@@ -271,10 +264,11 @@ class _EditChurchScreenState extends State<EditChurchScreenState>{
   }
 
   void downloadFirebaseChurchProfileImage() async {
-    StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
+    StorageReference ref = await ChurchFirebase()
+        .downloadChurchProfilePicture(this.widget.church.idChurch);
     String _imageUrlLocal = await ref.getDownloadURL();
     setState(() {
-      if(_imageUrlLocal != null){
+      if (_imageUrlLocal != null) {
         _profileImageProvider = NetworkImage(_imageUrlLocal);
         _imageUrl = _imageUrlLocal;
       }
