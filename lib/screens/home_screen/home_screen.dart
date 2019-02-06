@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,13 +12,14 @@ import 'package:prayer_app/screens/edit_user_screen/edit_user_screen.dart';
 import 'package:prayer_app/screens/home_screen/views/home_view.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
+import 'package:prayer_app/utils/firebase_admob_utils.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 import 'package:prayer_app/model/user.dart';
-
+//ca-app-pub-9634352911405361/9366381029
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreenState> {
   String _token;
   FirebaseUser _firebaseUser;
   Widget _view;
+  BannerAd _homeBannerAd;
 
   @override
   void initState() {
@@ -51,6 +54,7 @@ class _HomeScreenState extends State<HomeScreenState> {
         onResume: (Map<String, dynamic> message) {
           _handleOnMessage(message);
         });
+    _homeBannerAd = FirebaseAdmobUtils().homeScreenBanner();
   }
 
   _handleSignIn() async {
@@ -95,6 +99,10 @@ class _HomeScreenState extends State<HomeScreenState> {
     } else if (_church == null) {
       _handleReload();
     }
+
+    _homeBannerAd.load();
+    _homeBannerAd.show(anchorOffset: 60.0,
+      anchorType: AnchorType.bottom);
 
     return Scaffold(
       appBar: AppBar(
