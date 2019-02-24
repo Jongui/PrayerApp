@@ -3,6 +3,7 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
+import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 class ConfirmChurchMembershipDialog extends StatelessWidget{
@@ -24,12 +25,14 @@ class ConfirmChurchMembershipDialog extends StatelessWidget{
             user.church = church.idChurch;
             await UserHttp().putUser(user, token: token);
             FirebaseMessagingUtils().subscribeToChurchTopic(user.church);
+            UserFirebase().deleteChurchInvitation(user.idUser);
             Navigator.pop(context);
           },
         ),
         FlatButton(
           child: Text(AppLocalizations.of(context).cancel),
           onPressed: (){
+            UserFirebase().deleteChurchInvitation(user.idUser);
             Navigator.pop(context);
           },
         )

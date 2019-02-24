@@ -139,7 +139,7 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
           EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
         validator: (value) {
-          if (value.isEmpty && _newFile == null) {
+          if (value.isEmpty && _description == '') {
             return AppLocalizations.of(context).mandatoryField;
           }
         },

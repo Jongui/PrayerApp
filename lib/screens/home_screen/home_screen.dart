@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,14 +50,6 @@ class _HomeScreenState extends State<HomeScreenState> {
 
   @override
   void initState() {
-    FirebaseMessagingUtils().firebaseCloudMessagingListeners(
-        onLaunch: (Map<String, dynamic> message) {
-      _handleOnMessage(message);
-    }, onMessage: (Map<String, dynamic> message) {
-      _handleOnMessage(message);
-    }, onResume: (Map<String, dynamic> message) {
-      _handleOnMessage(message);
-    });
     FirebaseAdmobUtils().initScreenBanner();
     FirebaseAdmobUtils().loadScreenBanner();
   }
@@ -67,6 +60,7 @@ class _HomeScreenState extends State<HomeScreenState> {
     if (_user == null) {
       _user = await UserHttp().createUser(_firebaseUser);
     }
+    _handlePendingInvitation();
     if (_user.avatarUrl != _firebaseUser.photoUrl && _user.avatarUrl == null) {
       _user.avatarUrl = _firebaseUser.photoUrl;
       await UserHttp().putUser(_user);
@@ -105,66 +99,64 @@ class _HomeScreenState extends State<HomeScreenState> {
     }
 
     return Scaffold(
-          appBar: AppBar(
-            title: Text(AppLocalizations.of(context).title),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(FontAwesomeIcons.userEdit),
-                onPressed: () {
-                  Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new EditUserScreen(_user)));
-                },
-              ),
-            ],
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context).title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(FontAwesomeIcons.userEdit),
+            onPressed: () {
+              _disposeScreenBanner();
+              Navigator.of(context)
+                  .push(new MaterialPageRoute(
+                      builder: (context) => new EditUserScreen(_user)))
+                  .whenComplete(onReload);
+            },
           ),
-          body: _view,
-        );
+        ],
+      ),
+      body: _view,
+    );
   }
 
-  void _handleOnMessage(Map<String, dynamic> message) {
-    print(message);
-
-    var _data = message['data'];
-    int _action = 0;
-    try {
-      _action = int.parse(_data['action']);
-    } catch (e) {
-      print(e);
-    }
-    switch (_action) {
-      case FirebaseMessagingUtils.ADD_USER_TO_CHURCH:
-        _handleAddUserToChurch(_data);
-        break;
-      case FirebaseMessagingUtils.ADD_USER_TO_PRAY:
-        _handleAddUserToPray(_data);
-        break;
-      default:
-        print(message);
-        break;
-    }
+  void _handlePendingInvitation() async {
+    DatabaseReference _churchInvitations =
+        await UserFirebase().readPendingChurchInvitations(_user.idUser);
+    _churchInvitations.onChildAdded.listen((event) async {
+      DataSnapshot invitationSnapshot = event.snapshot;
+      if (invitationSnapshot.value == null) {
+        return;
+      }
+      int _idChurch = invitationSnapshot.value;
+      Church _localChurch = await ChurchHttp().fetchChurch(_idChurch, _token);
+      showDialog(
+          context: context,
+          builder: (_) => ConfirmChurchMembershipDialog(
+                church: _localChurch,
+                user: _user,
+                token: _token,
+              ));
+    });
+    DatabaseReference _prayInvitations =
+        await UserFirebase().readPendingPrayInvitations(_user.idUser);
+    _prayInvitations.onChildAdded.listen((event) async {
+      int _idPray = int.parse(event.snapshot.key);
+      Pray _localPray = await PrayHttp().getPrayById(_idPray, _token);
+      await showDialog(
+          context: context,
+          builder: (_) => ConfirmPrayMembershipDialog(
+                pray: _localPray,
+                user: _user,
+                token: _token,
+              ));
+    });
   }
 
-  void _handleAddUserToChurch(dynamic data) async {
-    int idChurch = int.parse(data['idChurch']);
-    Church _localChurch = await ChurchHttp().fetchChurch(idChurch, _token);
-    showDialog(
-        context: context,
-        builder: (_) => ConfirmChurchMembershipDialog(
-              church: _localChurch,
-              user: _user,
-              token: _token,
-            ));
+  onReload() async {
+    FirebaseAdmobUtils().initScreenBanner();
+    await FirebaseAdmobUtils().loadScreenBanner();
   }
 
-  void _handleAddUserToPray(dynamic data) async {
-    int idPray = int.parse(data['idPray']);
-    Pray _localPray = await PrayHttp().getPrayById(idPray, _token);
-    showDialog(
-        context: context,
-        builder: (_) => ConfirmPrayMembershipDialog(
-              pray: _localPray,
-              user: _user,
-              token: _token,
-            ));
+  void _disposeScreenBanner() {
+    FirebaseAdmobUtils().disposeScreenBanner();
   }
 }

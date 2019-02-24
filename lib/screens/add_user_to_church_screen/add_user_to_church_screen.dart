@@ -5,6 +5,7 @@ import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_church_screen/delegates/search_user_delegate.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
+import 'package:prayer_app/utils/user_firebase.dart';
 
 class AddUserToChurchScreen extends StatelessWidget {
   List<User> users;
@@ -64,6 +65,7 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
               User _user = _delegate.selectedUser;
               if (_user != null) {
                 _sendFirebaseMessage(_user);
+                UserFirebase().saveChurchInvitation(_user.idUser, church.idChurch);
                 Navigator.pop(context, true);
               }
             },
@@ -79,6 +81,7 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
                     ),
                     onTap: () async {
                       User _user = users[idx];
+                      UserFirebase().saveChurchInvitation(_user.idUser, church.idChurch);
                       _sendFirebaseMessage(_user);
                       Navigator.pop(context, true);
                     },

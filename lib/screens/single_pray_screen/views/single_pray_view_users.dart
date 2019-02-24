@@ -6,8 +6,7 @@ import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/utils/user_http.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
-class SinglePrayViewUsers extends StatelessWidget{
-
+class SinglePrayViewUsers extends StatelessWidget {
   Pray pray;
   String token;
 
@@ -17,20 +16,18 @@ class SinglePrayViewUsers extends StatelessWidget{
   Widget build(BuildContext context) {
     return SinglePrayViewUsersState(pray, token);
   }
-
 }
 
 class SinglePrayViewUsersState extends StatefulWidget {
-
   Pray pray;
   String token;
   SinglePrayViewUsersState(this.pray, this.token);
 
-  _SinglePrayViewUsersState createState() => _SinglePrayViewUsersState(pray, token);
+  _SinglePrayViewUsersState createState() =>
+      _SinglePrayViewUsersState(pray, token);
 }
 
-class _SinglePrayViewUsersState extends State<SinglePrayViewUsersState>{
-
+class _SinglePrayViewUsersState extends State<SinglePrayViewUsersState> {
   Pray pray;
   String token;
   bool _reload = false;
@@ -56,7 +53,7 @@ class _SinglePrayViewUsersState extends State<SinglePrayViewUsersState>{
 
   @override
   Widget build(BuildContext context) {
-    if(_reload){
+    if (_reload) {
       _handleLoadPraysUsers();
       _reload = false;
     }
@@ -67,35 +64,36 @@ class _SinglePrayViewUsersState extends State<SinglePrayViewUsersState>{
     );
   }
 
-  _handleLoadPraysUsers() async{
-    List<UserPray> list = await UserPrayHttp().getUserPrayByPray(pray.idPray, token);
+  _handleLoadPraysUsers() async {
+    List<UserPray> list =
+        await UserPrayHttp().getUserPrayByPray(pray.idPray, token);
     List<User> userList = [];
-    for(int i = 0; i < list.length; i++) {
+    for (int i = 0; i < list.length; i++) {
       UserPray userPray = list.elementAt(i);
       User user = UserHttp().getOfflineUser(userPray.idUser);
-      if(user == null)
-        user = await UserHttp().getUser(userPray.idUser, token);
+      if (user == null) user = await UserHttp().getUser(userPray.idUser, token);
       userList.add(user);
     }
-    setState(() {
-      _usersList = [];
-      for(int i = 0; i < userList.length; i++){
-        User user = userList.elementAt(i);
-        int rate = 0;
-        for(int j = 0; j < list.length; j++){
-          UserPray userPray = list.elementAt(j);
-          if(userPray.idUser == user.idUser){
-            rate = userPray.rate;
-            break;
+    if (mounted) {
+      setState(() {
+        _usersList = [];
+        for (int i = 0; i < userList.length; i++) {
+          User user = userList.elementAt(i);
+          int rate = 0;
+          for (int j = 0; j < list.length; j++) {
+            UserPray userPray = list.elementAt(j);
+            if (userPray.idUser == user.idUser) {
+              rate = userPray.rate;
+              break;
+            }
           }
+          _usersList.add(UserPrayView(
+            user: user,
+            token: token,
+            rate: rate,
+          ));
         }
-        _usersList.add(UserPrayView(user: user, token: token, rate: rate,));
-      }
-    });
-
+      });
+    }
   }
-
-
-
 }
-

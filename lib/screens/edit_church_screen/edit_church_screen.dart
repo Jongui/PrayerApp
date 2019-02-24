@@ -93,7 +93,6 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
     return SingleChildScrollView(
       child: Container(
         width: _screenSize.width,
-        height: _screenSize.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -5,19 +5,21 @@ import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/add_user_to_pray_screen/delegates/search_user_delegate.dart';
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
+import 'package:prayer_app/utils/user_firebase.dart';
 
 class AddUserToPrayScreen extends StatelessWidget {
 
   List<User> users;
   Pray pray;
   String token;
+  User invitingUser;
 
   AddUserToPrayScreen(
-      {@required this.users, @required this.pray, @required this.token});
+      {@required this.users, @required this.pray, @required this.token, @required this.invitingUser});
 
   @override
   Widget build(BuildContext context) {
-    return AddUserToPrayScreenState(users, pray, token);
+    return AddUserToPrayScreenState(users, pray, token, invitingUser);
   }
 
 }
@@ -26,7 +28,8 @@ class AddUserToPrayScreenState extends StatefulWidget{
   List<User> users;
   Pray pray;
   String token;
-  AddUserToPrayScreenState(this.users, this.pray, this.token);
+  User invitingUser;
+  AddUserToPrayScreenState(this.users, this.pray, this.token, this.invitingUser);
 
   _AddUserToPrayScreenState createState() => _AddUserToPrayScreenState(users, pray, token);
 
@@ -61,6 +64,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
                 delegate: _delegate,
               );
               User _user = _delegate.selectedUser;
+              UserFirebase().savePrayInvitation(_user.idUser, pray.idPray);
               _sendFirebaseMessage(_user);
             },
           ),
@@ -73,6 +77,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
                 title: UserCardView(user: users[idx],),
                 onTap: () async {
                   User _user = users[idx];
+                  UserFirebase().savePrayInvitation(_user.idUser, pray.idPray);
                   _sendFirebaseMessage(_user);
                   Navigator.pop(context, true);
                 },
