@@ -35,9 +35,9 @@ class _PrayRateViewState extends State<PrayRateViewState>{
     Color _color = _calcRateColor(userPray);
     return Container(
       padding: EdgeInsets.only(right: 12.0),
-      width: 96.0,
+      width: 76.0,
       child: Text(AppLocalizations.of(context).ratedByUser(userPray.rate),
-          style: TextStyle(fontSize: 16.0,
+          style: TextStyle(fontSize: 14.0,
             color: _color),
       )
     );

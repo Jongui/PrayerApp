@@ -56,39 +56,46 @@ class _SingleChurchViewMessagesState
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Center(
-            child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        _buildMessageList(),
-        Divider(
-          height: 2.0,
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 20.0, right: 20.0),
-          child: MessageInputFieldArea(
-            controller: _messageTextController,
-            onMessageSend: () {
-              if (_textMessage != '') {
-                ChurchFirebase().sendMessageToChurch(_textMessage,
-                    this.widget.user, this.widget.church.idChurch);
-                _textMessage = _messageTextController.text = '';
-              }
-            },
+    return Container(child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      double _rate = 0.9;
+      if (constraints.maxHeight <= 300) {
+        _rate = 0.75;
+      }
+      double _messageHeight = constraints.maxHeight * _rate;
+      return Center(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _buildMessageList(_messageHeight),
+          Divider(
+            height: 2.0,
           ),
-        ),
-      ],
-    )));
+          Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            child: MessageInputFieldArea(
+              controller: _messageTextController,
+              onMessageSend: () {
+                if (_textMessage != '') {
+                  ChurchFirebase().sendMessageToChurch(_textMessage,
+                      this.widget.user, this.widget.church.idChurch);
+                  _textMessage = _messageTextController.text = '';
+                }
+              },
+            ),
+          ),
+        ],
+      ));
+    }));
   }
 
   void _onMessageTextChanged() {
     _textMessage = _messageTextController.text;
   }
 
-  Widget _buildMessageList() {
+  Widget _buildMessageList(double height) {
     return Container(
-        height: 500.0,
+        height: height,
         child: ListView.builder(
             reverse: true,
             itemCount: _messages.length,

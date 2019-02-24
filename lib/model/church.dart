@@ -36,8 +36,8 @@ class Church{
         'country': country,
         'createdBy': createdBy,
         'createdAt': createdAt.millisecondsSinceEpoch,
-        'changedBy': changedBy,
-        'changedAt': changedAt.millisecondsSinceEpoch
+        'changedBy': changedBy != null ? changedBy : '',
+        'changedAt': changedAt != null ? changedAt.millisecondsSinceEpoch : ''
       };
 
 

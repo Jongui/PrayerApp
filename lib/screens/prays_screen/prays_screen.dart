@@ -48,6 +48,7 @@ class _PraysScreenState extends State<PraysScreenState>{
       body: PrayView(user: user,
         token: user.token,),
       floatingActionButton: FloatAddButton(
+        bottomMargin: 60.0,
         onPressed:  () {
           Navigator.of(context).push(
               new MaterialPageRoute(

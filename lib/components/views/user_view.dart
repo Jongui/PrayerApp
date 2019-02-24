@@ -10,7 +10,7 @@ class UserView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-          width: 300.0,
+          width: 250.0,
           margin: EdgeInsets.only(left: 10.0),
           child: ListTile(
               title: Text(user.userName,

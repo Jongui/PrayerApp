@@ -63,7 +63,7 @@ class _UserPrayViewState extends State<UserPrayViewState>{
                   user.avatarUrl) : null,
             ),
             Container(
-              width: 305.0,
+              width: 250.0,
               margin: EdgeInsets.only(left: 10.0),
               child: ListTile(
                 title: Column(

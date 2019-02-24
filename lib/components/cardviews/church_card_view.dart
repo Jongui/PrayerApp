@@ -6,9 +6,9 @@ import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/single_church_screen/single_church_screen.dart';
 import 'package:prayer_app/utils/church_firebase.dart';
+import 'package:prayer_app/utils/firebase_admob_utils.dart';
 
 class ChurchCardView extends StatelessWidget {
-
   Church church;
   User user;
 
@@ -18,23 +18,19 @@ class ChurchCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChurchCardViewState(church, user);
   }
-
 }
 
-class ChurchCardViewState extends StatefulWidget{
+class ChurchCardViewState extends StatefulWidget {
   Church church;
   User user;
 
   ChurchCardViewState(this.church, this.user);
 
   _ChurchCardViewState createState() => _ChurchCardViewState();
-
 }
 
-class _ChurchCardViewState extends State<ChurchCardViewState>{
-
+class _ChurchCardViewState extends State<ChurchCardViewState> {
   ImageProvider _profileImageProvider;
-
   @override
   void initState() {
     _profileImageProvider = AssetImage("assets/church_background.jpg");
@@ -46,53 +42,52 @@ class _ChurchCardViewState extends State<ChurchCardViewState>{
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).push(
-              new MaterialPageRoute(
-                  builder: (context) => SingleChurchScreen(church: this.widget.church,
-                    user: this.widget.user,)
-              )
-          ).whenComplete(onReload);;
+          _disposeScreenBanner();
+          Navigator.of(context)
+              .push(new MaterialPageRoute(
+                  builder: (context) => SingleChurchScreen(
+                        church: this.widget.church,
+                        user: this.widget.user,
+                      )))
+              .whenComplete(onReload);
         },
         child: Card(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: buildCardComponents(context),
-            )
-        )
-    );
+          mainAxisSize: MainAxisSize.min,
+          children: buildCardComponents(context),
+        )));
   }
 
-  List<Widget> buildCardComponents(BuildContext context){
+  List<Widget> buildCardComponents(BuildContext context) {
     List<Widget> ret = [];
     ret.add(Container(
       height: 192.0,
       decoration: new BoxDecoration(
-          image: DecorationImage(image: _profileImageProvider,
-              fit: BoxFit.cover)
+          image:
+              DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
+    ));
+    ret.add(Container(
+      color: Colors.grey[100],
+      child: ListTile(
+        title: Text(
+          this.widget.church.name,
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
+        ),
+        subtitle: CountyFlagView(
+          country: this.widget.church.country,
+          width: 36.0,
+          height: 36.0,
+        ),
       ),
-    )
-    );
-    ret.add(
-        Container(
-          color: Colors.grey[100],
-          child: ListTile(
-            title: Text(this.widget.church.name,
-              style: TextStyle(color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0),
-            ),
-            subtitle: CountyFlagView(country: this.widget.church.country,
-              width: 36.0,
-              height: 36.0,),
-          ),
-        )
-    );
+    ));
     return ret;
   }
 
   void downloadFirebaseChurchProfileImage() async {
-    StorageReference ref = await ChurchFirebase().downloadChurchProfilePicture(this.widget.church.idChurch);
-    if(ref == null){
+    StorageReference ref = await ChurchFirebase()
+        .downloadChurchProfilePicture(this.widget.church.idChurch);
+    if (ref == null) {
       return;
     }
     try {
@@ -102,13 +97,16 @@ class _ChurchCardViewState extends State<ChurchCardViewState>{
           _profileImageProvider = NetworkImage(_imageUrl);
         }
       });
-    } catch(e){
-
-    }
+    } catch (e) {}
   }
 
-  onReload() {
+  onReload() async {
+    FirebaseAdmobUtils().initScreenBanner();
+    await FirebaseAdmobUtils().loadScreenBanner();
     downloadFirebaseChurchProfileImage();
   }
 
+  void _disposeScreenBanner() {
+    FirebaseAdmobUtils().disposeScreenBanner();
+  }
 }

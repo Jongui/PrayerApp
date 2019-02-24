@@ -87,12 +87,12 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
     if(_church != null){
       return Container(
           width: _screenSize.width,
-          height: _screenSize.height / 3 / 2,
+          height: _screenSize.height / 2 / 2,
           child: Stack(
             //alignment: buttonSwingAnimation.value,
               alignment: Alignment.centerLeft,
               children: <Widget>[
-                new ListView(
+                ListView(
                   padding: const EdgeInsets.all(20.0),
                   children: <Widget>[
                     Text(

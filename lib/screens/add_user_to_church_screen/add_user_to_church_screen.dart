@@ -87,7 +87,7 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
   }
 
   Map<String, dynamic> _buildDataPayload(int action, int idChurch) =>
-      {'action': action, 'idChurch': idChurch};
+      {'click_action': 'FLUTTER_NOTIFICATION_CLICK','action': action, 'idChurch': idChurch};
 
   void _sendFirebaseMessage(User user) {
     String _churchName = church.name;

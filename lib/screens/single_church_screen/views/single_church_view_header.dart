@@ -47,12 +47,14 @@ class _SingleChurchViewHeaderState extends State<SingleChurchViewHeaderState>{
     }
     this.widget.reload = !this.widget.reload;
     return Container(
-      height: 180.0,
+      height: 210.0,
       decoration: new BoxDecoration(
           image: DecorationImage(image: _profileImageProvider,
               fit: BoxFit.cover)
       ),
       child: new Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           _buildDetails(context),
           new Divider()
@@ -65,7 +67,7 @@ class _SingleChurchViewHeaderState extends State<SingleChurchViewHeaderState>{
     var formatterTo = DateFormat('dd-MM-yyyy');
     String _subtitle = AppLocalizations.of(context).createdAt(formatterTo.format(this.widget.church.createdAt));
     return Container(
-      padding: EdgeInsets.only(top: 76.0),
+      //padding: EdgeInsets.only(top: 76.0),
       child: ListTile(
         title: Text(this.widget.church.name,
           style: TextStyle(

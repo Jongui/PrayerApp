@@ -51,7 +51,7 @@ class _PrayCreatorViewState extends State<PrayCreatorViewState>{
       _subtext = AppLocalizations.of(context).createdBy(_creator.userName);
     }
     return Container(
-      width: 200.0,
+      width: 170.0,
       margin: EdgeInsets.only(left: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

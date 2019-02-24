@@ -38,6 +38,7 @@ class _ChurchesScreenState extends State<ChurchesScreenState>{
       ),
       body: ChurchesView(user: this.widget.user),
       floatingActionButton: FloatAddButton(
+        bottomMargin: 60.0,
         onPressed:  () {
           Navigator.of(context).push(
               new MaterialPageRoute(

@@ -1,4 +1,3 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +18,7 @@ import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
 import 'package:prayer_app/model/user.dart';
+
 //ca-app-pub-9634352911405361/9366381029
 class HomeScreen extends StatelessWidget {
   @override
@@ -40,21 +40,25 @@ class _HomeScreenState extends State<HomeScreenState> {
   String _token;
   FirebaseUser _firebaseUser;
   Widget _view;
-  BannerAd _homeBannerAd;
+
+  @override
+  void dispose() {
+    FirebaseAdmobUtils().disposeScreenBanner();
+    super.dispose();
+  }
 
   @override
   void initState() {
     FirebaseMessagingUtils().firebaseCloudMessagingListeners(
         onLaunch: (Map<String, dynamic> message) {
-          _handleOnMessage(message);
-        },
-        onMessage: (Map<String, dynamic> message) {
-          _handleOnMessage(message);
-        },
-        onResume: (Map<String, dynamic> message) {
-          _handleOnMessage(message);
-        });
-    _homeBannerAd = FirebaseAdmobUtils().homeScreenBanner();
+      _handleOnMessage(message);
+    }, onMessage: (Map<String, dynamic> message) {
+      _handleOnMessage(message);
+    }, onResume: (Map<String, dynamic> message) {
+      _handleOnMessage(message);
+    });
+    FirebaseAdmobUtils().initScreenBanner();
+    FirebaseAdmobUtils().loadScreenBanner();
   }
 
   _handleSignIn() async {
@@ -100,28 +104,26 @@ class _HomeScreenState extends State<HomeScreenState> {
       _handleReload();
     }
 
-    _homeBannerAd.load();
-    _homeBannerAd.show(anchorOffset: 60.0,
-      anchorType: AnchorType.bottom);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FontAwesomeIcons.userEdit),
-            onPressed: () {
-              Navigator.of(context).push(new MaterialPageRoute(
-                  builder: (context) => new EditUserScreen(_user)));
-            },
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context).title),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(FontAwesomeIcons.userEdit),
+                onPressed: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => new EditUserScreen(_user)));
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-      body: _view,
-    );
+          body: _view,
+        );
   }
 
   void _handleOnMessage(Map<String, dynamic> message) {
+    print(message);
+
     var _data = message['data'];
     int _action = 0;
     try {
@@ -157,12 +159,12 @@ class _HomeScreenState extends State<HomeScreenState> {
   void _handleAddUserToPray(dynamic data) async {
     int idPray = int.parse(data['idPray']);
     Pray _localPray = await PrayHttp().getPrayById(idPray, _token);
-    showDialog(context: context,
-      builder: (_) => ConfirmPrayMembershipDialog(
-        pray: _localPray,
-        user: _user,
-        token: _token,
-      )
-    );
+    showDialog(
+        context: context,
+        builder: (_) => ConfirmPrayMembershipDialog(
+              pray: _localPray,
+              user: _user,
+              token: _token,
+            ));
   }
 }

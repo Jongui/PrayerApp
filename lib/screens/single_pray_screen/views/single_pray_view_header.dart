@@ -83,12 +83,17 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
     }
     this.widget.reload = !this.widget.reload;
     return Container(
-      height: 220.0,
+      height: 240.0,
       decoration: BoxDecoration(
           image:
               DecorationImage(image: _profileImageProvider, fit: BoxFit.fill)),
       child: Column(
-        children: <Widget>[Divider(), _buildDetails(context), _buildRateBar()],
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Divider(),
+          _buildDetails(context),
+          _buildRateBar()],
       ),
     );
   }
@@ -98,7 +103,6 @@ class _SinglePrayViewHeaderState extends State<SinglePrayViewHeaderState> {
     String _subtitle = AppLocalizations.of(context).prayFromTo(
         formatterTo.format(pray.beginDate), formatterTo.format(pray.endDate));
     return Container(
-      padding: EdgeInsets.only(top: 76.0),
       child: ListTile(
         title: Text(
           pray.description,

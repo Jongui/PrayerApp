@@ -9,8 +9,7 @@ import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_firebase.dart';
 
-class SinglePrayViewMessages extends StatefulWidget{
-
+class SinglePrayViewMessages extends StatefulWidget {
   final User user;
   final Pray pray;
 
@@ -19,8 +18,7 @@ class SinglePrayViewMessages extends StatefulWidget{
   _SinglePrayViewMessagesState createState() => _SinglePrayViewMessagesState();
 }
 
-class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages>{
-
+class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages> {
   TextEditingController _messageTextController = TextEditingController();
   String _textMessage;
   StreamSubscription<Event> _onMessageAddedSubscription;
@@ -44,30 +42,37 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages>{
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                _buildMessageList(),
-                Divider(
-                  height: 2.0,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: MessageInputFieldArea(
-                    controller: _messageTextController,
-                    onMessageSend: () {
-                      if (_textMessage != '') {
-                        PrayFirebase().sendMessageToChurch(_textMessage,
-                            this.widget.user, this.widget.pray.idPray);
-                        _textMessage = _messageTextController.text = '';
-                      }
-                    },
-                  ),
-                ),
-              ],
-            )));
+    return Container(child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      double _rate = 0.9;
+      if (constraints.maxHeight <= 300) {
+        _rate = 0.75;
+      }
+      double _messageHeight = constraints.maxHeight * _rate;
+      return Center(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          _buildMessageList(_messageHeight),
+          Divider(
+            height: 2.0,
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            child: MessageInputFieldArea(
+              controller: _messageTextController,
+              onMessageSend: () {
+                if (_textMessage != '') {
+                  PrayFirebase().sendMessageToChurch(
+                      _textMessage, this.widget.user, this.widget.pray.idPray);
+                  _textMessage = _messageTextController.text = '';
+                }
+              },
+            ),
+          ),
+        ],
+      ));
+    }));
   }
 
   void _onMessageTextChanged() {
@@ -82,9 +87,9 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages>{
     });
   }
 
-  Widget _buildMessageList() {
+  Widget _buildMessageList(double height) {
     return Container(
-        height: 500.0,
+        height: height,
         child: ListView.builder(
             reverse: true,
             itemCount: _messages.length,
@@ -96,5 +101,4 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages>{
               );
             }));
   }
-
 }

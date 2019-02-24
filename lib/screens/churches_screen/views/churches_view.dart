@@ -10,6 +10,9 @@ class ChurchesView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ChurchesListView(user: user,);
+    return Container(
+      margin: EdgeInsets.only(bottom: 50.0),
+      child: ChurchesListView(user: user,),
+    );
   }
 }

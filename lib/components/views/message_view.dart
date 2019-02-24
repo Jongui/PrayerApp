@@ -25,6 +25,7 @@ class _MessageViewState extends State<MessageView> {
 
   @override
   Widget build(BuildContext context) {
+    _checkAvatarChanged();
     return Container(
       margin: EdgeInsets.only(bottom: 10.0, top: 10.0),
         child: Row(
@@ -59,4 +60,14 @@ class _MessageViewState extends State<MessageView> {
       _avatar = _user.avatarUrl;
     });
   }
+
+  _checkAvatarChanged() {
+    if(_user == null){
+      return;
+    }
+    if(_user.idUser != this.widget.message.senderId){
+      _handleLoadUser();
+    }
+  }
+
 }
