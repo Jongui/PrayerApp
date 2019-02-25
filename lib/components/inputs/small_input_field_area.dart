@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SmallInputFieldArea extends StatelessWidget{
+class SmallInputFieldArea extends StatelessWidget {
   final TextEditingController controller;
-  SmallInputFieldArea({this.controller});
+  final FocusNode focusNode;
+  SmallInputFieldArea({this.controller, this.focusNode});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        focusNode: focusNode,
         obscureText: false,
         controller: controller,
         decoration: InputDecoration(
@@ -13,8 +15,6 @@ class SmallInputFieldArea extends StatelessWidget{
             Icons.keyboard,
             color: Colors.blue,
           ),
-
         ));
   }
-
 }

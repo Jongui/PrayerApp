@@ -40,12 +40,21 @@ class ImagePickerScreenState extends StatefulWidget {
 class _ImagePickerScreenState extends State<ImagePickerScreenState> {
   Widget _view;
   String _newFileAddress;
+  FocusNode _focusNode;
+
   TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     _buildImageView();
     _descriptionController.addListener(_onDescriptionChanged);
+    _focusNode = FocusNode();
+    _focusNode.addListener((){
+      setState(() {
+
+      });
+    });
+
     super.initState();
   }
 
@@ -60,7 +69,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context).title)),
         body: _view,
-        floatingActionButton: FloatImagePickerButton(
+        floatingActionButton: _focusNode.hasFocus == false ? FloatImagePickerButton(
           onCameraClicked: () {
             Navigator.of(context).push(new MaterialPageRoute(
                 builder: (context) => TakePictureScreen(
@@ -113,7 +122,8 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
               Navigator.pop(context);
             });
           },
-        ));
+        ): null
+    );
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
@@ -129,19 +139,25 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     } catch (e) {
       _image = AssetImage("assets/pray.jpg");
     }
-    _view = SingleChildScrollView(
-        child: Column(
-        children: <Widget>[
-          Image(image: _image,
-            height: 560.0,),
-          Container(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
-            child: SmallInputFieldArea(
-              controller: _descriptionController,
-            ),
-          ),
-        ],
-    ));
+    _view = LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints){
+        double _height = constraints.maxHeight * 0.9;
+        return SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Image(image: _image,
+                  height: _height,),
+                Container(
+                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  child: SmallInputFieldArea(
+                    controller: _descriptionController,
+                    focusNode: _focusNode,
+                  ),
+                ),
+              ],
+            ));
+      },
+    );
   }
 
   void _onDescriptionChanged() {
