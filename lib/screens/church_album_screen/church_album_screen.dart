@@ -77,6 +77,7 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
                     },
                     onUploadPressed: () {
                       _uploadImage();
+                      Navigator.pop(context);
                     },
                     fileAddress: '',
                   )));

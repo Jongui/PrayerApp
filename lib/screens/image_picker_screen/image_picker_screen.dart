@@ -7,7 +7,6 @@ import 'package:prayer_app/components/buttons/float_image_picker_button.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/inputs/small_input_field_area.dart';
 import 'package:prayer_app/localizations.dart';
-import 'package:prayer_app/screens/take_picture_screen/take_picture_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImagePickerScreen extends StatelessWidget {
@@ -70,18 +69,25 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
         appBar: AppBar(title: Text(AppLocalizations.of(context).title)),
         body: _view,
         floatingActionButton: _focusNode.hasFocus == false ? FloatImagePickerButton(
-          onCameraClicked: () {
-            Navigator.of(context).push(new MaterialPageRoute(
-                builder: (context) => TakePictureScreen(
-                      onTakePicture: (newFileAddress) {
-                        setState(() {
-                          _newFileAddress = newFileAddress;
-                          _buildImageView();
-                          this.widget.onImagePicked(newFileAddress);
-                          Navigator.pop(context);
-                        });
-                      },
-                    )));
+          onCameraClicked: () async {
+            showDialog(
+                context: context,
+                builder: (_) => ProcessDialog(
+                  text: AppLocalizations.of(context).takingPicture,
+                ));
+            File image = await ImagePicker.pickImage(source: ImageSource.camera);
+            if(image != null){
+              im.Image _tmpImage = im.decodeImage(image.readAsBytesSync());
+              im.Image _resizedImg = im.copyResize(_tmpImage, 800);
+              image = File(image.path)
+                ..writeAsBytesSync(im.encodeJpg(_resizedImg));
+              setState((){
+                _newFileAddress = image.path;
+                _buildImageView();
+                this.widget.onImagePicked(image.path);
+              });
+            }
+            Navigator.pop(context);
           },
           onUploadPressed: () {
             this.widget.onUploadPressed();

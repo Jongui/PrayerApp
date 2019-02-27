@@ -78,6 +78,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
                     },
                     onUploadPressed: () {
                       _uploadImage();
+                      Navigator.pop(context);
                     },
                     fileAddress: '',
                   )));

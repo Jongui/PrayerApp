@@ -254,7 +254,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
                       _profilePictureDescription = newDescription;
                     },
                     onUploadPressed: (){
-
+                      Navigator.pop(context);
                     },
                     fileAddress: this.widget.user.avatarUrl,
                   )));

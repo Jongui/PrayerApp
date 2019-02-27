@@ -245,7 +245,9 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
                               _profileImageProvider = FileImage(_newFile);
                             });
                           },
-                          onUploadPressed: () {},
+                          onUploadPressed: () {
+                            Navigator.pop(context);
+                          },
                           onDescriptionChanged: (newDescription) {
                             _profilePictureDescription = newDescription;
                           },
