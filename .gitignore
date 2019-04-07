@@ -7,6 +7,7 @@
 build/
 android/.gradle
 android/app/google-services.json
+android/app/src/main/ressm
 ios/
 test/
 .flutter-plugins
