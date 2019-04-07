@@ -221,6 +221,10 @@ class AppLocalizations {
       Intl.message('Confirm membership to pray $description', name: 'confirmPrayMembership',
           args: [description]);
 
+  String get country{
+    return Intl.message('Country', name: 'country');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

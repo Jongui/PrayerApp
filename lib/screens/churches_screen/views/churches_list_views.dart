@@ -31,6 +31,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
   _ChurchesListViewState(this.user);
   Widget _view;
   List<Widget> _churchList = [];
+  bool _reload = false;
 
   @override
   void initState() {
@@ -40,13 +41,28 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
   }
 
   @override
+  void deactivate() {
+    _reload = true;
+    super.deactivate();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if(_reload)
+      _handleChurchesLoad();
     return _view;
   }
 
   void _handleChurchesLoad() async {
     List<Church> churches = await ChurchHttp().getChurches();
     if (churches.length == 0) {
+      setState(() {
+        _view = ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(20.0),
+          children: _churchList,
+        );
+      });
       return;
     }
     Church _church = await ChurchHttp().getChurch(user.church, user.token);

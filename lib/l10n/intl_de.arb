@@ -256,5 +256,10 @@
     "placeholders": {
       "description": {}
     }
+  },
+  "country": "Land",
+  "@country": {
+    "type": "text",
+    "placeholders": {}
   }
 }

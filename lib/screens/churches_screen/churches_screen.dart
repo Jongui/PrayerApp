@@ -6,7 +6,6 @@ import 'package:prayer_app/screens/add_church_screen/add_church_screen.dart';
 import 'package:prayer_app/screens/churches_screen/views/churches_view.dart';
 
 class ChurchesScreen extends StatelessWidget {
-
   User user;
 
   ChurchesScreen({@required this.user});
@@ -15,21 +14,17 @@ class ChurchesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChurchesScreenState(user);
   }
-
 }
 
 class ChurchesScreenState extends StatefulWidget {
-
   ChurchesScreenState(this.user, {Key key}) : super(key: key);
   User user;
 
   @override
   _ChurchesScreenState createState() => new _ChurchesScreenState();
-
 }
 
-class _ChurchesScreenState extends State<ChurchesScreenState>{
-
+class _ChurchesScreenState extends State<ChurchesScreenState> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +34,19 @@ class _ChurchesScreenState extends State<ChurchesScreenState>{
       body: ChurchesView(user: this.widget.user),
       floatingActionButton: FloatAddButton(
         bottomMargin: 60.0,
-        onPressed:  () {
-          Navigator.of(context).push(
-              new MaterialPageRoute(
-                  builder: (context) => AddChurchScreen(user: this.widget.user,)
-              ));
+        onPressed: () {
+          Navigator.of(context).push(new MaterialPageRoute(
+              builder: (context) => AddChurchScreen(
+                    user: this.widget.user,
+                  ))).whenComplete(onReload);
         },
       ),
     );
   }
+  onReload() async {
+    setState(() {
+
+    });
+  }
+
 }

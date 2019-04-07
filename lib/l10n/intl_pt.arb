@@ -277,4 +277,10 @@
       "description": {}
     }
   }
+  ,
+ "country": "País",
+ "@country": {
+   "type": "text",
+   "placeholders": {}
+ }
 }

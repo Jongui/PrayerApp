@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
 import 'package:prayer_app/model/country.dart';
 import 'package:prayer_app/resources/country_codes.dart';
+import 'package:prayer_app/localizations.dart';
 
 class CountryDropdownButton<T> extends StatelessWidget {
 
@@ -45,7 +46,7 @@ class CountryDropdownButton<T> extends StatelessWidget {
         ),
         child: DropdownButton<Country>(
           value: _selectedCountryName,
-          hint: Text("Select"),
+          hint: Text(AppLocalizations.of(context).country),
           onChanged: onChanged,
           items: _dropDownList,
         )

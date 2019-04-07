@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-02-03T18:23:22.598476",
+  "@@last_modified": "2019-04-07T15:18:25.313042",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -281,5 +281,10 @@
     "placeholders": {
       "description": {}
     }
+  },
+  "country": "Country",
+  "@country": {
+    "type": "text",
+    "placeholders": {}
   }
 }

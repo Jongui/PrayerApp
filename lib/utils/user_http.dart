@@ -29,7 +29,7 @@ class UserHttp {
     final response = await http.post(serverIp + 'user',
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token,
+          "Authorization": "Basic " + token,
         },
         body: json.encode(user),
         encoding: Encoding.getByName("utf-8"));

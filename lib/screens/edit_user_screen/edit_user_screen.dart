@@ -47,7 +47,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   String _currentCountry;
   String _newAvatarUrl = '';
   User _user;
-  List<Church> _churchList = List();
+  List<Church> _churchList;
   String _language;
   String _profilePictureDescription;
 
@@ -79,7 +79,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     _screenSize = MediaQuery.of(context).size;
     Locale locale = Localizations.localeOf(context);
     _language = locale.languageCode;
-    if (_churchList.length > 0)
+    if (_churchList != null)
       return Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).editUser),

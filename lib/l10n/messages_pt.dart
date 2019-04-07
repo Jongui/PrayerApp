@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "confirmAddingUserToPray" : m1,
     "confirmChurchMembership" : m2,
     "confirmPrayMembership" : m3,
+    "country" : MessageLookupByLibrary.simpleMessage("País"),
     "createdAt" : m4,
     "createdBy" : m5,
     "delete" : MessageLookupByLibrary.simpleMessage("Excluir"),

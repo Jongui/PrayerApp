@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prayer_app/model/church.dart';
+import 'package:prayer_app/localizations.dart';
 
 class ChurchDropdownButton extends StatelessWidget {
 
@@ -38,7 +39,7 @@ class ChurchDropdownButton extends StatelessWidget {
         ),
         child: DropdownButton<Church>(
           value: selectedChurch,
-          hint: Text("Select"),
+          hint: Text(AppLocalizations.of(context).churches,),
           onChanged: onChanged,
           items: churches.map<DropdownMenuItem<Church>>((Church church) {
             return DropdownMenuItem<Church>(
