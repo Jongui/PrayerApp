@@ -49,9 +49,15 @@ class _DatePickerState extends State<DatePicker>{
 
   Future _selectDate() async {
     var formatterTo = new DateFormat('dd/MM/yyyy');
+    DateTime _dateTime = DateTime.now();
+    try{
+      _dateTime = formatterTo.parse(this.widget.value);
+    } catch (Exception){
+
+    }
     DateTime picked = await showDatePicker(
         context: context,
-        initialDate: formatterTo.parse(this.widget.value),
+        initialDate: _dateTime,
         firstDate: DateTime(2018),
         lastDate: DateTime(2030)
     );

@@ -12,12 +12,14 @@ class FirebaseAdmobUtils {
   }
 
   FirebaseAdmobUtils._internal() {
-    String _appId = Platform.isAndroid ? androidAppId : '';
+    if(Platform.isIOS) return;
+    String _appId = Platform.isAndroid ? androidAppId : iosId;
     FirebaseAdMob.instance.initialize(appId: _appId);
     _loaded = false;
   }
 
   void initScreenBanner() {
+    if(Platform.isIOS) return;
     MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
       keywords: <String>['PrayingApp', 'ScreenBanner'],
       childDirected: false,
@@ -42,12 +44,14 @@ class FirebaseAdmobUtils {
   }
 
   loadScreenBanner() {
+    if(Platform.isIOS) return;
     if(!_loaded){
       _screenBannerAd.show(anchorOffset: 10.0, anchorType: AnchorType.bottom);
     }
   }
 
   disposeScreenBanner() {
+    if(Platform.isIOS) return;
     if(_loaded){
       _screenBannerAd.dispose();
       _loaded = false;

@@ -100,26 +100,28 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   }
 
   Widget _buildInputForm(BuildContext context) {
-    return Container(
-      width: _screenSize.width,
-      height: _screenSize.height,
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Form(
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildUserAvatarInputField(_user.avatarUrl, context),
-                _buildUserNameInputField(_user.userName),
-                _buildChurchInputField(_churchList),
-                _buildCountryDropDownButton(),
-                _buildBarButton(context),
-              ],
+    return SingleChildScrollView(
+      child: Container(
+        width: _screenSize.width,
+        height: _screenSize.height,
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Form(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _buildUserAvatarInputField(_user.avatarUrl, context),
+                  _buildUserNameInputField(_user.userName),
+                  _buildChurchInputField(_churchList),
+                  _buildCountryDropDownButton(),
+                  _buildBarButton(context),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -178,9 +180,8 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     if (_newCountry != '') _user.country = _newCountry;
     if (_newIdChurch != 0) _user.church = _newIdChurch;
     if (_newAvatarUrl != '') {
-      _user.avatarUrl = await UserFirebase()
-          .uploadUserProfilePicture(_user.idUser, File(_newAvatarUrl),
-          _profilePictureDescription);
+      _user.avatarUrl = await UserFirebase().uploadUserProfilePicture(
+          _user.idUser, File(_newAvatarUrl), _profilePictureDescription);
     }
 
     int response = await UserHttp().putUser(_user);
@@ -250,10 +251,10 @@ class _EditUserScreenState extends State<EditUserScreenState> {
                         _newAvatarUrl = filePath;
                       });
                     },
-                    onDescriptionChanged: (newDescription){
+                    onDescriptionChanged: (newDescription) {
                       _profilePictureDescription = newDescription;
                     },
-                    onUploadPressed: (){
+                    onUploadPressed: () {
                       Navigator.pop(context);
                     },
                     fileAddress: this.widget.user.avatarUrl,
