@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
@@ -210,9 +209,9 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
           this.widget.pray.idPray, _newFile, _profilePictureDescription);
     }
 
-    Response response =
+    int response =
         await PrayHttp().putPray(this.widget.pray, this.widget.token);
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response == 200 || response == 201) {
       final snackBar = SnackBar(
         content: Text(
           AppLocalizations.of(context).prayEdited,

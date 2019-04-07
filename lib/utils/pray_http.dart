@@ -18,7 +18,7 @@ class PrayHttp {
 
   PrayHttp._internal();
 
-  Future<http.Response> postPray(Pray pray, String token) async {
+  Future<Pray> postPray(Pray pray, String token) async {
     final response =
     await http.post(serverIp + 'pray',
       headers: {
@@ -27,10 +27,15 @@ class PrayHttp {
       },
       body: json.encode(pray),
     );
-    return response;
+    Pray ret;
+    if(response.statusCode == 200 || response.statusCode == 201){
+      var jsonVar = json.decode(response.body);
+      ret = Pray.fromJson(jsonVar);
+    }
+    return ret;
   }
 
-  Future<http.Response> putPray(Pray pray, String token) async{
+  Future<int> putPray(Pray pray, String token) async{
     final response =
         await http.put(serverIp + 'pray/' + pray.idPray.toString(),
       headers: {
@@ -39,7 +44,7 @@ class PrayHttp {
       },
       body: json.encode(pray),
     );
-    return response;
+    return response.statusCode;
   }
 
   Future<List<Pray>> getPraysByUser(User user) async {

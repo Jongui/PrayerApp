@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/inputs/date_picker.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
@@ -175,15 +172,16 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
 
     _pray.idUser = this.widget.user.idUser;
 
-    Response response = await PrayHttp().postPray(_pray, this.widget.user.token);
-    if(response.statusCode == 201) {
-      var jsonVar = json.decode(response.body);
-      _pray = Pray.fromJson(jsonVar);
+    _pray = await PrayHttp().postPray(_pray, this.widget.user.token);
+    int response = 0;
+    if(_pray != null) {
+//      var jsonVar = json.decode(response.body);
+//      _pray = Pray.fromJson(jsonVar);
       response =
       await UserPrayHttp().postUserPray(this.widget.user, _pray, _pray.beginDate, _pray.endDate,
           this.widget.user.token);
     }
-    if(response.statusCode == 200 || response.statusCode == 201){
+    if(response == 200 || response == 201){
       final snackBar = SnackBar(
         content: Text(AppLocalizations.of(context).prayCreated,
           style: TextStyle(

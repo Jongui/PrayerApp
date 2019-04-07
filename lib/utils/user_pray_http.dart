@@ -17,7 +17,7 @@ class UserPrayHttp {
 
   UserPrayHttp._internal();
 
-  Future<http.Response> postUserPray(User user, Pray pray, DateTime acceptanceDate, DateTime endDate,
+  Future<int> postUserPray(User user, Pray pray, DateTime acceptanceDate, DateTime endDate,
       String token) async {
     UserPray userPray = UserPray(
       idUser:  user.idUser,
@@ -34,7 +34,7 @@ class UserPrayHttp {
       },
       body: json.encode(userPray),
     );
-    return response;
+    return response.statusCode;
   }
 
   Future<List<UserPray>> getUserPrayByUser(int idUser, String token) async {
