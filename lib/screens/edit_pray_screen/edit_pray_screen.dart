@@ -254,7 +254,10 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
                               _profileImageProvider = FileImage(_newFile);
                             });
                           },
-                          onUploadPressed: () {},
+                          onUploadPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
                           onDescriptionChanged: (newDescription) {
                             _profilePictureDescription = newDescription;
                           },

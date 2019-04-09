@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/float_album_button.dart';
 import 'package:prayer_app/components/cardviews/album_picture_card_view.dart';
-import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
@@ -78,7 +77,6 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
                     },
                     onUploadPressed: () {
                       _uploadImage();
-                      Navigator.pop(context);
                     },
                     fileAddress: '',
                   )));
@@ -89,11 +87,6 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
 
   _uploadImage() async {
     if (_newImage != null) {
-      showDialog(
-          context: context,
-          builder: (_) => ProcessDialog(
-                text: AppLocalizations.of(context).uploadingPicture,
-              ));
       Future fut = PrayFirebase().uploadPrayAlbumPicture(
         this.widget.pray.idPray,
         _newImage,

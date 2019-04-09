@@ -1,3 +1,5 @@
+//const String serverIp = 'http://ec2-18-194-25-229.eu-central-1.compute.amazonaws.com/api/v1/';
+//const String firebaseEnv = 'prd';
 const String serverIp = 'http://192.168.1.6:8080/api/v1/';
 const String firebaseEnv = 'dev';
 const String firebaseServerKey =

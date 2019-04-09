@@ -256,6 +256,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
                     },
                     onUploadPressed: () {
                       Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                     fileAddress: this.widget.user.avatarUrl,
                   )));

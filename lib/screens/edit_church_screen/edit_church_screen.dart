@@ -247,6 +247,7 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
                           },
                           onUploadPressed: () {
                             Navigator.pop(context);
+                            Navigator.pop(context);
                           },
                           onDescriptionChanged: (newDescription) {
                             _profilePictureDescription = newDescription;

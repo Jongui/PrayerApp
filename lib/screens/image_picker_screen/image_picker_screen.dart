@@ -90,12 +90,26 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
             Navigator.pop(context);
           },
           onUploadPressed: () {
+            showDialog(
+                context: context,
+                builder: (_) => ProcessDialog(
+                  text: AppLocalizations.of(context).uploadingPicture,
+                ));
             this.widget.onUploadPressed();
           },
           onFileSystemClicked: () async {
             File image =
                 await ImagePicker.pickImage(source: ImageSource.gallery);
+            final directory = await getApplicationDocumentsDirectory();
+            final path = directory.path;
             if(image != null){
+              final names = image.path.split('/');
+              int lastIndex = names.length - 1;
+              final fileName = names[lastIndex];
+              im.Image _tmpImage = im.decodeImage(image.readAsBytesSync());
+              im.Image _resizedImg = im.copyResize(_tmpImage, 800);
+              image = File('$path/$fileName')
+                ..writeAsBytesSync(im.encodeJpg(_resizedImg));
               setState(() {
                 _newFileAddress = image.path;
                 _buildImageView();
