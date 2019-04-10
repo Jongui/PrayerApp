@@ -100,16 +100,25 @@ class ChurchFirebase {
 
   Future<void> deleteChurchPictureAlbum(
       int idChurch, String fileName) async {
-    final StorageReference storageRef = _storage
-        .child('churchs')
-        .child('$idChurch')
-        .child('album')
-        .child('$fileName');
+    try{
+      final StorageReference storageRef = _storage
+          .child('churchs')
+          .child('$idChurch')
+          .child('album')
+          .child('$fileName');
 
-    await storageRef.delete();
-    final DatabaseReference databaseReference =
-        _database.child('churchs').child('$idChurch').child('$fileName');
-    await databaseReference.remove();
+      await storageRef.delete();
+
+    } catch(e){
+
+    }
+    try{
+      final DatabaseReference databaseReference =
+      _database.child('churchs').child('$idChurch').child('album').child('$fileName');
+      await databaseReference.remove();
+    } catch(e){
+
+    }
   }
 
   Future<void> sendMessageToChurch(String text, User user, int idChurch) async {

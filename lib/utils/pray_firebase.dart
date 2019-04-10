@@ -98,16 +98,27 @@ class PrayFirebase {
   }
 
   deletePrayPictureAlbum(int idPray, String fileName) async {
-    final StorageReference storageRef = _storage
-        .child('prays')
-        .child('$idPray')
-        .child('album')
-        .child('$fileName');
+    try {
+      final StorageReference storageRef = _storage
+          .child('prays')
+          .child('$idPray')
+          .child('album')
+          .child('$fileName');
 
-    await storageRef.delete();
-    final DatabaseReference databaseReference =
-        _database.child('prays').child('$idPray').child('$fileName');
-    await databaseReference.remove();
+      await storageRef.delete();
+    } catch (e) {
+      print(e.toString());
+    }
+    try {
+      final DatabaseReference databaseReference = _database
+          .child('prays')
+          .child('$idPray')
+          .child('album')
+          .child('$fileName');
+      await databaseReference.remove();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   StreamSubscription<Event> subscribeToPrayMessage(int idPray, onData) {
