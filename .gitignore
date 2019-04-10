@@ -13,3 +13,5 @@ test/
 .flutter-plugins
 pubspec.lock
 .idea/
+
+*.jks
