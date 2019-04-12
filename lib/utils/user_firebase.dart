@@ -57,10 +57,16 @@ class UserFirebase {
       currentUser = await _googleSignIn.signIn();
     }
     GoogleSignInAuthentication googleAuth = await currentUser.authentication;
-    FirebaseUser firebaseUser = await _auth.signInWithGoogle(
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+
+    FirebaseUser firebaseUser = await _auth.signInWithCredential(credential);
+//    FirebaseUser firebaseUser = await _auth.signInWithGoogle(
+//      accessToken: googleAuth.accessToken,
+//      idToken: googleAuth.idToken,
+//    );
     print("signed in " + firebaseUser.displayName);
     return firebaseUser;
   }
