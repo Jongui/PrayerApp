@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
@@ -13,33 +14,19 @@ import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart'
 import 'package:prayer_app/utils/church_firebase.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
-class EditChurchScreen extends StatelessWidget {
+class EditChurchScreen extends StatefulWidget {
   Church church;
   User user;
 
   EditChurchScreen({@required this.church, @required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    return EditChurchScreenState(
-      church: church,
-      user: user,
-    );
-  }
-}
-
-class EditChurchScreenState extends StatefulWidget {
-  EditChurchScreenState({Key key, this.church, this.user}) : super(key: key);
-
-  final Church church;
-  final User user;
-
-  @override
   _EditChurchScreenState createState() =>
       new _EditChurchScreenState(church, user);
+
 }
 
-class _EditChurchScreenState extends State<EditChurchScreenState> {
+class _EditChurchScreenState extends State<EditChurchScreen> {
   _EditChurchScreenState(this.church, this.user);
 
   Church church;
@@ -85,7 +72,6 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
   }
 
   Widget _buildInputForm(BuildContext context) {
-    EditChurchScreenState state = this.widget;
     if (_newCountry == '')
       _currentCountry = church.country;
     else
@@ -102,8 +88,8 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   _buildChurchProfilePicture(),
-                  _buildChurchNameInputField(state.church.name),
-                  _buildCityInputField(state.church.city),
+                  _buildChurchNameInputField(this.widget.church.name),
+                  _buildCityInputField(this.widget.church.city),
                   _buildCountryDropDownButton(),
                   _buildBarButton(context),
                 ],
@@ -186,21 +172,23 @@ class _EditChurchScreenState extends State<EditChurchScreenState> {
 
     int response = await ChurchHttp().putChurch(church, user.token);
     if (response == 200) {
-      final snackBar = SnackBar(
-        content: Text(
-          _appLocalizations.churchUpdated,
-          style: TextStyle(color: Colors.green),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).churchUpdated,
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          _appLocalizations.errorWhileSaving,
-          style: TextStyle(color: Colors.red),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).errorWhileSaving,
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
     Navigator.pop(context);
   }

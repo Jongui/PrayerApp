@@ -16,8 +16,8 @@ class DeleteButton extends StatelessWidget {
         width: width,
         margin: EdgeInsets.only(left: 18.0),
         padding: const EdgeInsets.all(0.0),
-        decoration: new BoxDecoration(
-            border: new Border.all(color: Colors.red),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.red),
             borderRadius: BorderRadius.circular(6.25),
             shape: BoxShape.rectangle
         ),

@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/inputs/date_picker.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
@@ -13,28 +14,17 @@ import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart'
 import 'package:prayer_app/utils/pray_firebase.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 
-class EditPrayScreen extends StatelessWidget {
+class EditPrayScreen extends StatefulWidget {
   String token;
   Pray pray;
 
   EditPrayScreen({@required this.token, @required this.pray});
 
-  @override
-  Widget build(BuildContext context) {
-    return EditPrayScreenState(token, pray);
-  }
-}
-
-class EditPrayScreenState extends StatefulWidget {
-  String token;
-  Pray pray;
-
-  EditPrayScreenState(this.token, this.pray);
-
   _EditPrayScreenState createState() => _EditPrayScreenState();
+
 }
 
-class _EditPrayScreenState extends State<EditPrayScreenState> {
+class _EditPrayScreenState extends State<EditPrayScreen> {
   TextEditingController _descriptionController = new TextEditingController();
 
   String _newDescription = '';
@@ -212,21 +202,23 @@ class _EditPrayScreenState extends State<EditPrayScreenState> {
     int response =
         await PrayHttp().putPray(this.widget.pray, this.widget.token);
     if (response == 200 || response == 201) {
-      final snackBar = SnackBar(
-        content: Text(
-          AppLocalizations.of(context).prayEdited,
-          style: TextStyle(color: Colors.green),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).prayEdited,
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          AppLocalizations.of(context).errorWhileSaving,
-          style: TextStyle(color: Colors.red),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).errorWhileSaving,
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
     Navigator.pop(context);
   }

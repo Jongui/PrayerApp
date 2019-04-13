@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/inputs/date_picker.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
@@ -9,32 +10,18 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
-class AddPrayScreen extends StatelessWidget {
+class AddPrayScreen extends StatefulWidget {
 
   final User user;
 
   AddPrayScreen({@required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    return AddPrayScreenState(
-      user: user,);
-  }
-
-}
-
-class AddPrayScreenState extends StatefulWidget {
-
-  AddPrayScreenState({Key key, this.user}) : super(key: key);
-
-  final User user;
-
-  @override
   _AddPrayScreenState createState() => new _AddPrayScreenState();
 
 }
 
-class _AddPrayScreenState extends State<AddPrayScreenState>{
+class _AddPrayScreenState extends State<AddPrayScreen>{
   TextEditingController _descriptionController = new TextEditingController();
 
   String _newDescription = '';
@@ -182,23 +169,23 @@ class _AddPrayScreenState extends State<AddPrayScreenState>{
           this.widget.user.token);
     }
     if(response == 200 || response == 201){
-      final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).prayCreated,
-          style: TextStyle(
-              color: Colors.green
-          ),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).prayCreated,
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
-      final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).errorWhileSaving,
-          style: TextStyle(
-              color: Colors.red
-          ),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).errorWhileSaving,
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 }

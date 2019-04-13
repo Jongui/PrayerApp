@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
 import 'package:prayer_app/components/inputs/input_field_area.dart';
 import 'package:prayer_app/components/buttons/save_button.dart';
@@ -7,36 +8,18 @@ import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
-class AddChurchScreen extends StatelessWidget {
+class AddChurchScreen extends StatefulWidget {
 
   User user;
 
   AddChurchScreen({@required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    return AddChurchScreenState(
-      user: user,);
-  }
+  _AddChurchScreenState createState() => new _AddChurchScreenState();
 
 }
 
-class AddChurchScreenState extends StatefulWidget {
-
-  AddChurchScreenState({Key key, this.user}) : super(key: key);
-
-  final User user;
-
-  @override
-  _AddChurchScreenState createState() => new _AddChurchScreenState(user);
-
-}
-
-class _AddChurchScreenState extends State<AddChurchScreenState>{
-
-  User user;
-
-  _AddChurchScreenState(this.user);
+class _AddChurchScreenState extends State<AddChurchScreen>{
 
   TextEditingController _churchNameController = new TextEditingController();
   TextEditingController _cityController = new TextEditingController();
@@ -154,27 +137,27 @@ class _AddChurchScreenState extends State<AddChurchScreenState>{
     if(_newCity != '')
       _church.city = _newCity;
     _church.region = AppLocalizations.of(context).notInformed;
-    _church.createdBy = user.idUser;
+    _church.createdBy = this.widget.user.idUser;
     _church.createdAt = DateTime.now();
-    int response = await ChurchHttp().postChurch(_church, user.token);
+    int response = await ChurchHttp().postChurch(_church, this.widget.user.token);
     if(response == 201){
-      final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).churchCreated,
-          style: TextStyle(
-              color: Colors.green
-          ),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).churchCreated,
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
-      final snackBar = SnackBar(
-        content: Text(AppLocalizations.of(context).errorWhileSaving,
-          style: TextStyle(
-              color: Colors.red
-          ),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).errorWhileSaving,
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
   }
 

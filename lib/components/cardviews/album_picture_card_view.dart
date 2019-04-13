@@ -117,6 +117,9 @@ class _AlbumPictureCardViewState extends State<AlbumPictureCardViewState> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: EdgeInsets.all(10.0),
           title: Text(AppLocalizations().possibleActions),
           children: <Widget>[
             SimpleDialogOption(

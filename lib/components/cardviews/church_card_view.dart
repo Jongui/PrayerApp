@@ -2,6 +2,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/delete_button.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
 import 'package:prayer_app/localizations.dart';
@@ -101,6 +102,9 @@ class _ChurchCardViewState extends State<ChurchCardView> {
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: EdgeInsets.all(10.0),
           title: Text(AppLocalizations().possibleActions),
           children: <Widget>[
             SimpleDialogOption(
@@ -124,28 +128,34 @@ class _ChurchCardViewState extends State<ChurchCardView> {
 
       case 0:
         int response = await ChurchHttp().deleteChurch(this.widget.church.idChurch, this.widget.token);
+        Navigator.pop(context);
         if(response == 204){
+          Navigator.pop(context);
           this.widget.onItemDeleted(this.widget.church);
-          final snackBar = SnackBar(
-            content: Text(
-              AppLocalizations.of(context).churchDeleted,
-              style: TextStyle(color: Colors.green),
-            ),
+          showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => OkDialog(
+              text: AppLocalizations.of(context).churchDeleted,
+              backgroundColor: Colors.green,
+              icon: Icons.check,
+            )
           );
-
-          Scaffold.of(context).showSnackBar(snackBar);
         } else {
-          final snackBar = SnackBar(
-            content: Text(
-              AppLocalizations.of(context).churchNotDeleted,
-              style: TextStyle(color: Colors.red),
-            ),
+          showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => OkDialog(
+                text: AppLocalizations.of(context).churchNotDeleted,
+                backgroundColor: Colors.red,
+                icon: Icons.error,
+              )
           );
-          Scaffold.of(context).showSnackBar(snackBar);
         }
         break;
+      default:
+        Navigator.pop(context);
+        break;
     }
-    Navigator.pop(context);
+
   }
 
   void downloadFirebaseChurchProfileImage() async {

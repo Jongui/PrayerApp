@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/dropdown/church_dropdown_button.dart';
 import 'package:prayer_app/components/dropdown/country_dropdown_button.dart';
@@ -186,21 +187,23 @@ class _EditUserScreenState extends State<EditUserScreenState> {
 
     int response = await UserHttp().putUser(_user);
     if (response == 200) {
-      final snackBar = SnackBar(
-        content: Text(
-          AppLocalizations.of(context).userUpdated,
-          style: TextStyle(color: Colors.green),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).userUpdated,
+            backgroundColor: Colors.green,
+            icon: Icons.check,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     } else {
-      final snackBar = SnackBar(
-        content: Text(
-          AppLocalizations.of(context).errorWhileSaving,
-          style: TextStyle(color: Colors.red),
-        ),
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => OkDialog(
+            text: AppLocalizations.of(context).errorWhileSaving,
+            backgroundColor: Colors.red,
+            icon: Icons.error,
+          )
       );
-      Scaffold.of(context).showSnackBar(snackBar);
     }
     _newAvatarUrl = '';
     Navigator.pop(context);

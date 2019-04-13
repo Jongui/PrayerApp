@@ -87,7 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "title" : MessageLookupByLibrary.simpleMessage("Gebets App"),
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Bild hochladen"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Benutzer aktualisiert!"),
-    "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde sehen"),
+    "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde ansehen"),
     "viewPray" : MessageLookupByLibrary.simpleMessage("Gebet ansehen"),
     "yourRate" : m8
   };
