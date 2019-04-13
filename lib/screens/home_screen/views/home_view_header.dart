@@ -5,7 +5,7 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
-class HomeViewHeader extends StatelessWidget {
+class HomeViewHeader extends StatefulWidget {
 
   User user;
 
@@ -13,38 +13,23 @@ class HomeViewHeader extends StatelessWidget {
   HomeViewHeader(this.user);
 
   @override
-  Widget build(BuildContext context) {
-    return HomeViewHeaderState(user);
-  }
-}
-
-class HomeViewHeaderState extends StatefulWidget {
-
-  User user;
-
-  HomeViewHeaderState(this.user);
-
-  @override
-  _HomeViewHeaderState createState() => _HomeViewHeaderState(user);
-
+  _HomeViewHeaderState createState() => _HomeViewHeaderState();
 
 }
 
-class _HomeViewHeaderState extends State<HomeViewHeaderState>{
+class _HomeViewHeaderState extends State<HomeViewHeader>{
 
   Size _screenSize;
   Church _church;
 
-  User user;
-
-  _HomeViewHeaderState(this.user);
+  _HomeViewHeaderState();
 
 
   @override
   Widget build(BuildContext context) {
     _screenSize = MediaQuery.of(context).size;
-    if(_church == null || _church.idChurch != user.church){
-      _handleChurchLoad(user.church, this.user.token);
+    if(_church == null || _church.idChurch != this.widget.user.church){
+      _handleChurchLoad(this.widget.user.church, this.widget.user.token);
     }
     return Container(
       decoration: new BoxDecoration(
@@ -75,8 +60,8 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
           CircleAvatar(
             radius: 40.0,
             backgroundColor: Colors.grey,
-            backgroundImage: user.avatarUrl != null ? NetworkImage(
-                user.avatarUrl) : null,
+            backgroundImage: this.widget.user.avatarUrl != null ? NetworkImage(
+                this.widget.user.avatarUrl) : null,
           ),
         ],
       ),
@@ -96,12 +81,12 @@ class _HomeViewHeaderState extends State<HomeViewHeaderState>{
                   padding: const EdgeInsets.all(20.0),
                   children: <Widget>[
                     Text(
-                      user.userName != null ? user.userName : '',
+                      this.widget.user.userName != null ? this.widget.user.userName : '',
                       style: new TextStyle( fontWeight: FontWeight.bold,
                           fontSize: 24.0,
                           color: Colors.white),
                     ),
-                    CountyFlagView(country: user.country,
+                    CountyFlagView(country: this.widget.user.country,
                       width: 36.0,
                       height: 36.0,
                       color: Colors.white,),

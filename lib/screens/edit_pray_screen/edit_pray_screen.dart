@@ -84,7 +84,7 @@ class _EditPrayScreenState extends State<EditPrayScreen> {
         DatePicker(value: _valueEndDate, onPressed: _endDatePicked);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).addYourPray),
+        title: Text(AppLocalizations.of(context).editYourPray),
       ),
       body: Builder(builder: (context) => _buildInputForm(context)),
     );
@@ -201,6 +201,7 @@ class _EditPrayScreenState extends State<EditPrayScreen> {
 
     int response =
         await PrayHttp().putPray(this.widget.pray, this.widget.token);
+    Navigator.pop(context);
     if (response == 200 || response == 201) {
       showDialog<String>(
           context: context,
@@ -220,7 +221,6 @@ class _EditPrayScreenState extends State<EditPrayScreen> {
           )
       );
     }
-    Navigator.pop(context);
   }
 
   Widget _buildPrayProfilePicture() {

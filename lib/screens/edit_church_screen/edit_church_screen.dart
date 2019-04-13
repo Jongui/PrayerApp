@@ -22,15 +22,12 @@ class EditChurchScreen extends StatefulWidget {
 
   @override
   _EditChurchScreenState createState() =>
-      new _EditChurchScreenState(church, user);
+      new _EditChurchScreenState();
 
 }
 
 class _EditChurchScreenState extends State<EditChurchScreen> {
-  _EditChurchScreenState(this.church, this.user);
-
-  Church church;
-  User user;
+  _EditChurchScreenState();
 
   TextEditingController _churchNameController = new TextEditingController();
   TextEditingController _cityController = new TextEditingController();
@@ -73,7 +70,7 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
 
   Widget _buildInputForm(BuildContext context) {
     if (_newCountry == '')
-      _currentCountry = church.country;
+      _currentCountry = this.widget.church.country;
     else
       _currentCountry = _newCountry;
     return SingleChildScrollView(
@@ -153,24 +150,25 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
         _newCountry == '' &&
         _newCity == '' &&
         _newFile == null) return;
-    if (_newChurchName != '') church.name = _newChurchName;
-    if (_newCountry != '') church.country = _newCountry;
-    if (_newCity != '') church.city = _newCity;
+    if (_newChurchName != '') this.widget.church.name = _newChurchName;
+    if (_newCountry != '') this.widget.church.country = _newCountry;
+    if (_newCity != '') this.widget.church.city = _newCity;
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
               text: AppLocalizations.of(context).savingChurch,
             ));
 
-    church.changedAt = DateTime.now();
-    church.changedBy = user.idUser;
+    this.widget.church.changedAt = DateTime.now();
+    this.widget.church.changedBy = this.widget.user.idUser;
 
     if (_newFile != null) {
       await ChurchFirebase().uploadChurchProfilePicture(
           this.widget.church.idChurch, _newFile, _profilePictureDescription);
     }
 
-    int response = await ChurchHttp().putChurch(church, user.token);
+    int response = await ChurchHttp().putChurch(this.widget.church, this.widget.user.token);
+    Navigator.pop(context);
     if (response == 200) {
       showDialog<String>(
           context: context,
@@ -190,7 +188,6 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
           )
       );
     }
-    Navigator.pop(context);
   }
 
   Widget _buildCountryDropDownButton() {

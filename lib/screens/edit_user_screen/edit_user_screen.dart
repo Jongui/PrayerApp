@@ -186,6 +186,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     }
 
     int response = await UserHttp().putUser(_user);
+    Navigator.pop(context);
     if (response == 200) {
       showDialog<String>(
           context: context,
@@ -206,7 +207,6 @@ class _EditUserScreenState extends State<EditUserScreenState> {
       );
     }
     _newAvatarUrl = '';
-    Navigator.pop(context);
   }
 
   Widget _buildCountryDropDownButton() {

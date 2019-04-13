@@ -57,8 +57,33 @@
     "type": "text",
     "placeholders": {}
   },
-  "errorWhileSaving": "Fehler beim Speichern!",
-  "@errorWhileSaving": {
+  "errorWhileSaving": "Error while saving!",
+    "@errorWhileSaving": {
+      "type": "text",
+      "placeholders": {}
+  },
+  "startDate": "Datum von",
+  "@startDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "endDate": "Datum bis",
+  "@endDate": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addYourPray": "Lege Ihren gebet an",
+  "@addYourPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "description": "Beschreibung",
+  "@description": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayCreated": "Gebet angelegt!",
+  "@prayCreated": {
     "type": "text",
     "placeholders": {}
   },
@@ -72,7 +97,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "editYourPray": "Bearbeiten dein Gebet",
+  "editYourPray": "Bearbeite Ihren Gebet",
   "@editYourPray": {
     "type": "text",
     "placeholders": {}
