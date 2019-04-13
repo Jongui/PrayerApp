@@ -21,16 +21,18 @@ class FirebaseAdmobUtils {
   }
 
   void initScreenBanner() {
-    if (Platform.isIOS) return;
+
     MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
       keywords: <String>['PrayingApp', 'ScreenBanner'],
       childDirected: false,
       testDevices: <String>[], // Android emulators are considered test devices
     );
 
+    String _bannerId = Platform.isAndroid ? androidBannerId : iosBannerId;
+
     _screenBannerAd = BannerAd(
       //adUnitId: 'ca-app-pub-3940256099942544/6300978111',
-      adUnitId: androidBannerId,
+      adUnitId: _bannerId,
       size: AdSize.smartBanner,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {

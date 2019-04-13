@@ -57,6 +57,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
     List<Church> churches = await ChurchHttp().getChurches();
     if (churches.length == 0) {
       setState(() {
+        _reload = false;
         _view = ListView(
           shrinkWrap: true,
           padding: const EdgeInsets.all(20.0),
@@ -67,6 +68,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
     }
     Church _church = await ChurchHttp().getChurch(user.church, user.token);
     setState(() {
+      _reload = false;
       _churchList = [];
       if (_church.idChurch != null) {
         _churchList.add(ChurchCardView(
