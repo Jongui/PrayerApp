@@ -7,7 +7,7 @@ import 'package:prayer_app/screens/add_user_to_pray_screen/delegates/search_user
 import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/user_firebase.dart';
 
-class AddUserToPrayScreen extends StatelessWidget {
+class AddUserToPrayScreen extends StatefulWidget {
 
   List<User> users;
   Pray pray;
@@ -17,10 +17,7 @@ class AddUserToPrayScreen extends StatelessWidget {
   AddUserToPrayScreen(
       {@required this.users, @required this.pray, @required this.token, @required this.invitingUser});
 
-  @override
-  Widget build(BuildContext context) {
-    return AddUserToPrayScreenState(users, pray, token, invitingUser);
-  }
+  _AddUserToPrayScreenState createState() => _AddUserToPrayScreenState();
 
 }
 
@@ -31,20 +28,16 @@ class AddUserToPrayScreenState extends StatefulWidget{
   User invitingUser;
   AddUserToPrayScreenState(this.users, this.pray, this.token, this.invitingUser);
 
-  _AddUserToPrayScreenState createState() => _AddUserToPrayScreenState(users, pray, token);
+  _AddUserToPrayScreenState createState() => _AddUserToPrayScreenState();
 
 }
 
-class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
-  List<User> users;
-  Pray pray;
-  String token;
+class _AddUserToPrayScreenState extends State<AddUserToPrayScreen>{
   SearchUserDelegate _delegate;
-  _AddUserToPrayScreenState(this.users, this.pray, this.token);
 
   @override
   void initState() {
-    _delegate = SearchUserDelegate(users: users);
+    _delegate = SearchUserDelegate(users: this.widget.users);
     super.initState();
   }
 
@@ -64,7 +57,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
                 delegate: _delegate,
               );
               User _user = _delegate.selectedUser;
-              UserFirebase().savePrayInvitation(_user.idUser, pray.idPray);
+              UserFirebase().savePrayInvitation(_user.idUser, this.widget.pray.idPray);
               _sendFirebaseMessage(_user);
             },
           ),
@@ -72,12 +65,12 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
       ),
       body: Scrollbar(
           child: ListView.builder(
-              itemCount: users.length,
+              itemCount: this.widget.users.length,
               itemBuilder: (context, idx) => ListTile(
-                title: UserCardView(user: users[idx],),
+                title: UserCardView(user: this.widget.users[idx],),
                 onTap: () async {
-                  User _user = users[idx];
-                  UserFirebase().savePrayInvitation(_user.idUser, pray.idPray);
+                  User _user = this.widget.users[idx];
+                  UserFirebase().savePrayInvitation(_user.idUser, this.widget.pray.idPray);
                   _sendFirebaseMessage(_user);
                   Navigator.pop(context, true);
                 },
@@ -89,7 +82,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
 
   void _sendFirebaseMessage(User user) async{
     if(user != null){
-      String _churchName = pray.description;
+      String _churchName = this.widget.pray.description;
       String _message =
           'You were invited to pray $_churchName. Confirm?';
       FirebaseMessagingUtils().sendToUserTopic(
@@ -97,7 +90,7 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreenState>{
           'Pray membership invitation',
           _message,
           _buildDataPayload(FirebaseMessagingUtils.ADD_USER_TO_PRAY,
-              pray.idPray));
+              this.widget.pray.idPray));
       Navigator.pop(context, true);
     }
   }

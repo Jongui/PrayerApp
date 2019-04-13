@@ -43,7 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addYourPray" : MessageLookupByLibrary.simpleMessage("Crie sua oração"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Cancelar"),
     "churchCreated" : MessageLookupByLibrary.simpleMessage("Igreja criada!"),
+    "churchDeleted" : MessageLookupByLibrary.simpleMessage("Igreja excluída com sucesso"),
     "churchName" : MessageLookupByLibrary.simpleMessage("Nome da igreja"),
+    "churchNotDeleted" : MessageLookupByLibrary.simpleMessage("Não é possível excluir essa igreja"),
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Igreja atualizada!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Igrejas"),
     "city" : MessageLookupByLibrary.simpleMessage("Cidade"),
@@ -56,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "createdAt" : m4,
     "createdBy" : m5,
     "delete" : MessageLookupByLibrary.simpleMessage("Excluir"),
+    "deletingChurch" : MessageLookupByLibrary.simpleMessage("Excluíndo igreja"),
     "deletingPicture" : MessageLookupByLibrary.simpleMessage("Excluindo imagem"),
     "description" : MessageLookupByLibrary.simpleMessage("Descrição"),
     "edit" : MessageLookupByLibrary.simpleMessage("Editar"),
@@ -89,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Salvando imagem"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
+    "viewPray" : MessageLookupByLibrary.simpleMessage("Visualizar oração"),
     "yourRate" : m8
   };
 }

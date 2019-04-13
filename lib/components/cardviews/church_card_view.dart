@@ -1,35 +1,29 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prayer_app/components/buttons/delete_button.dart';
+import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/views/country_flag_view.dart';
+import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/single_church_screen/single_church_screen.dart';
 import 'package:prayer_app/utils/church_firebase.dart';
+import 'package:prayer_app/utils/church_http.dart';
 import 'package:prayer_app/utils/firebase_admob_utils.dart';
 
-class ChurchCardView extends StatelessWidget {
+class ChurchCardView extends StatefulWidget {
   Church church;
   User user;
+  String token;
+  ValueChanged<Church> onItemDeleted;
 
-  ChurchCardView({@required this.church, @required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return ChurchCardViewState(church, user);
-  }
-}
-
-class ChurchCardViewState extends StatefulWidget {
-  Church church;
-  User user;
-
-  ChurchCardViewState(this.church, this.user);
+  ChurchCardView({@required this.church, @required this.user, @required this.token, @required this.onItemDeleted});
 
   _ChurchCardViewState createState() => _ChurchCardViewState();
 }
 
-class _ChurchCardViewState extends State<ChurchCardViewState> {
+class _ChurchCardViewState extends State<ChurchCardView> {
   ImageProvider _profileImageProvider;
   @override
   void initState() {
@@ -52,6 +46,7 @@ class _ChurchCardViewState extends State<ChurchCardViewState> {
               .whenComplete(onReload);
         },
         child: Card(
+            color: Colors.grey[100],
             child: Column(
           mainAxisSize: MainAxisSize.min,
           children: buildCardComponents(context),
@@ -67,7 +62,6 @@ class _ChurchCardViewState extends State<ChurchCardViewState> {
               DecorationImage(image: _profileImageProvider, fit: BoxFit.cover)),
     ));
     ret.add(Container(
-      color: Colors.grey[100],
       child: ListTile(
         title: Text(
           this.widget.church.name,
@@ -81,7 +75,77 @@ class _ChurchCardViewState extends State<ChurchCardViewState> {
         ),
       ),
     ));
+    if(this.widget.user.idUser == this.widget.church.createdBy){
+      ret.add(Container(
+        padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            DeleteButton(
+              height: 28.0,
+              width: 100.0,
+              onPressed: _onDeleteChurchPressed,
+            ),
+          ],
+        )
+
+      ));
+
+    }
     return ret;
+  }
+
+  void _onDeleteChurchPressed() async{
+    int _action = await showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(AppLocalizations().possibleActions),
+          children: <Widget>[
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, 0);
+              },
+              child: Text(AppLocalizations().delete),
+            )
+          ],
+        );
+      },
+    );
+
+    showDialog(
+        context: context,
+        builder: (_) => ProcessDialog(
+          text: AppLocalizations.of(context).deletingChurch,
+        ));
+
+    switch (_action) {
+
+      case 0:
+        int response = await ChurchHttp().deleteChurch(this.widget.church.idChurch, this.widget.token);
+        if(response == 204){
+          this.widget.onItemDeleted(this.widget.church);
+          final snackBar = SnackBar(
+            content: Text(
+              AppLocalizations.of(context).churchDeleted,
+              style: TextStyle(color: Colors.green),
+            ),
+          );
+
+          Scaffold.of(context).showSnackBar(snackBar);
+        } else {
+          final snackBar = SnackBar(
+            content: Text(
+              AppLocalizations.of(context).churchNotDeleted,
+              style: TextStyle(color: Colors.red),
+            ),
+          );
+          Scaffold.of(context).showSnackBar(snackBar);
+        }
+        break;
+    }
+    Navigator.pop(context);
   }
 
   void downloadFirebaseChurchProfileImage() async {

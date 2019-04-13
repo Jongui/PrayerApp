@@ -123,7 +123,7 @@
       "createdAt": {}
     }
   },
-  "viewChurch": "Gemeinde sehen",
+  "viewChurch": "Gemeinde ansehen",
   "@viewChurch": {
     "type": "text",
     "placeholders": {}
@@ -259,6 +259,26 @@
   },
   "country": "Land",
   "@country": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletingChurch": "Gemeinde löschen",
+  "@deletingChurch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchDeleted": "Gemeinde gelöscht",
+  "@churchDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchNotDeleted": "Diese Gemeinde kann nicht gelöscht werden",
+  "@churchNotDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "viewPray": "Gebet ansehen",
+  "@viewPray": {
     "type": "text",
     "placeholders": {}
   }

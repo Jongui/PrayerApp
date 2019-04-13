@@ -276,10 +276,29 @@
     "placeholders": {
       "description": {}
     }
-  }
-  ,
+  },
  "country": "País",
  "@country": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "deletingChurch": "Excluíndo igreja",
+ "@deletingChurch": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "churchDeleted": "Igreja excluída com sucesso",
+ "@churchDeleted": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "churchNotDeleted": "Não é possível excluir essa igreja",
+ "@churchNotDeleted": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "viewPray": "Visualizar oração",
+ "@viewPray": {
    "type": "text",
    "placeholders": {}
  }

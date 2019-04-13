@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-04-07T15:18:25.313042",
+  "@@last_modified": "2019-04-13T10:50:06.908515",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -284,6 +284,26 @@
   },
   "country": "Country",
   "@country": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "deletingChurch": "Deleting church",
+  "@deletingChurch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchDeleted": "Church successfully deleted",
+  "@churchDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchNotDeleted": "It is no possible to delete this church",
+  "@churchNotDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "viewPray": "View pray",
+  "@viewPray": {
     "type": "text",
     "placeholders": {}
   }

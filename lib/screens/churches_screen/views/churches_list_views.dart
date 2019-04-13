@@ -30,7 +30,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
 
   _ChurchesListViewState(this.user);
   Widget _view;
-  List<Widget> _churchList = [];
+  List<ChurchCardView> _churchList = [];
   bool _reload = false;
 
   @override
@@ -48,8 +48,7 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
 
   @override
   Widget build(BuildContext context) {
-    if(_reload)
-      _handleChurchesLoad();
+    if (_reload) _handleChurchesLoad();
     return _view;
   }
 
@@ -74,6 +73,10 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
         _churchList.add(ChurchCardView(
           church: _church,
           user: user,
+          token: user.token,
+          onItemDeleted: (church) {
+            _itemDeleted(church);
+          },
         ));
       }
       for (int i = 0; i < churches.length; i++) {
@@ -82,6 +85,10 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
           _churchList.add(ChurchCardView(
             church: church,
             user: user,
+            token: user.token,
+            onItemDeleted: (church) {
+              _itemDeleted(church);
+            },
           ));
         }
       }
@@ -89,6 +96,28 @@ class _ChurchesListViewState extends State<ChurchesListViewState> {
         shrinkWrap: true,
         padding: const EdgeInsets.all(20.0),
         children: _churchList,
+      );
+    });
+  }
+
+  void _itemDeleted(Church church) {
+    _churchList.removeWhere((view) => view.church.idChurch == church.idChurch);
+    setState(() {
+      List<Widget> _newWidgets = [];
+      _churchList.forEach((widget) async {
+        _newWidgets.add(ChurchCardView(
+          church: church,
+          user: user,
+          token: user.token,
+          onItemDeleted: (church) {
+            _itemDeleted(church);
+          },
+        ));
+      });
+      _view = ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: _newWidgets,
       );
     });
   }

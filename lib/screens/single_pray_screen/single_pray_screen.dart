@@ -11,7 +11,7 @@ import 'package:prayer_app/screens/single_pray_screen/views/single_pray_view.dar
 import 'package:prayer_app/screens/single_pray_screen/views/single_pray_view_messages.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
-class SinglePrayScreen extends StatelessWidget {
+class SinglePrayScreen extends StatefulWidget {
   Pray pray;
   User user;
   UserPray userPray;
@@ -20,24 +20,12 @@ class SinglePrayScreen extends StatelessWidget {
       {@required this.pray, @required this.user, @required this.userPray});
 
   @override
-  Widget build(BuildContext context) {
-    return SinglePrayScreenState(pray, user, userPray);
-  }
-}
-
-class SinglePrayScreenState extends StatefulWidget {
-  SinglePrayScreenState(this.pray, this.user, this.userPray, {Key key})
-      : super(key: key);
-  Pray pray;
-  User user;
-  UserPray userPray;
-
-  @override
   _SinglePrayScreenState createState() =>
       _SinglePrayScreenState(pray, user, userPray);
+
 }
 
-class _SinglePrayScreenState extends State<SinglePrayScreenState>
+class _SinglePrayScreenState extends State<SinglePrayScreen>
     with SingleTickerProviderStateMixin {
   Pray pray;
   User user;
@@ -110,7 +98,7 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).editYourPray),
+        title: Text(AppLocalizations.of(context).viewPray),
         bottom: TabBar(
           tabs: _tabButtons,
           controller: _tabController,
@@ -133,6 +121,7 @@ class _SinglePrayScreenState extends State<SinglePrayScreenState>
                               users: _users,
                               pray: pray,
                               token: user.token,
+                              invitingUser: user,
                             )))
                     .whenComplete(onReload);
               },

@@ -42,7 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "addNew" : MessageLookupByLibrary.simpleMessage("Add neu"),
     "cancel" : MessageLookupByLibrary.simpleMessage("Abbrechen"),
     "churchCreated" : MessageLookupByLibrary.simpleMessage("Gemeinde erzeugt!"),
+    "churchDeleted" : MessageLookupByLibrary.simpleMessage("Gemeinde gelöscht"),
     "churchName" : MessageLookupByLibrary.simpleMessage("Gemeindename"),
+    "churchNotDeleted" : MessageLookupByLibrary.simpleMessage("Diese Gemeinde kann nicht gelöscht werden"),
     "churchUpdated" : MessageLookupByLibrary.simpleMessage("Gemeinde aktualisiert!"),
     "churches" : MessageLookupByLibrary.simpleMessage("Gemeinden"),
     "city" : MessageLookupByLibrary.simpleMessage("Stadt"),
@@ -55,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "createdAt" : m4,
     "createdBy" : m5,
     "delete" : MessageLookupByLibrary.simpleMessage("Löschen"),
+    "deletingChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde löschen"),
     "deletingPicture" : MessageLookupByLibrary.simpleMessage("Bild wird gelöscht"),
     "edit" : MessageLookupByLibrary.simpleMessage("Bearbeiten"),
     "editUser" : MessageLookupByLibrary.simpleMessage("Benutzer bearbeiten"),
@@ -85,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Bild hochladen"),
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Benutzer aktualisiert!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde sehen"),
+    "viewPray" : MessageLookupByLibrary.simpleMessage("Gebet ansehen"),
     "yourRate" : m8
   };
 }

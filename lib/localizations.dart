@@ -225,6 +225,22 @@ class AppLocalizations {
     return Intl.message('Country', name: 'country');
   }
 
+  String get deletingChurch{
+    return Intl.message('Deleting church', name: 'deletingChurch');
+  }
+
+  String get churchDeleted{
+    return Intl.message('Church successfully deleted', name: 'churchDeleted');
+  }
+
+  String get churchNotDeleted{
+    return Intl.message('It is no possible to delete this church', name: 'churchNotDeleted');
+  }
+
+  String get viewPray{
+    return Intl.message('View pray', name:'viewPray');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

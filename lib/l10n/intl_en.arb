@@ -261,5 +261,25 @@
   "@country": {
     "type": "text",
     "placeholders": {}
+  },
+  "deletingChurch": "Deleting church",
+  "@deletingChurch": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchDeleted": "Church successfully deleted",
+  "@churchDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchNotDeleted": "It is no possible to delete this church",
+  "@churchNotDeleted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "viewPray": "View pray",
+  "@viewPray": {
+    "type": "text",
+    "placeholders": {}
   }
 }

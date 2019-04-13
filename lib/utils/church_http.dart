@@ -75,6 +75,16 @@ class ChurchHttp {
     return ret;
   }
 
+  Future<int> deleteChurch(int idChurch, String token) async{
+    final response = await http.delete(serverIp + 'church/' + idChurch.toString(),
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': 'Basic ' + token
+      }
+    );
+    return response.statusCode;
+  }
+
   Future<List<Church>> getChurches() async{
     List<Church> churches = [];
     final response =
