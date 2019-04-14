@@ -8,6 +8,7 @@ import 'package:prayer_app/components/dialogs/process_dialog.dart';
 import 'package:prayer_app/components/inputs/small_input_field_area.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ImagePickerScreen extends StatelessWidget {
   final ValueChanged<String> onImagePicked;
@@ -15,12 +16,16 @@ class ImagePickerScreen extends StatelessWidget {
   final VoidCallback onUploadPressed;
   String fileAddress;
 
-  ImagePickerScreen({@required this.onImagePicked, @required this.fileAddress,
-    @required this.onDescriptionChanged, @required this.onUploadPressed});
+  ImagePickerScreen(
+      {@required this.onImagePicked,
+      @required this.fileAddress,
+      @required this.onDescriptionChanged,
+      @required this.onUploadPressed});
 
   @override
   Widget build(BuildContext context) {
-    return ImagePickerScreenState(onImagePicked, fileAddress, onDescriptionChanged, onUploadPressed);
+    return ImagePickerScreenState(
+        onImagePicked, fileAddress, onDescriptionChanged, onUploadPressed);
   }
 }
 
@@ -48,10 +53,8 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     _buildImageView();
     _descriptionController.addListener(_onDescriptionChanged);
     _focusNode = FocusNode();
-    _focusNode.addListener((){
-      setState(() {
-
-      });
+    _focusNode.addListener(() {
+      setState(() {});
     });
 
     super.initState();
@@ -68,82 +71,89 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context).title)),
         body: _view,
-        floatingActionButton: _focusNode.hasFocus == false ? FloatImagePickerButton(
-          onCameraClicked: () async {
-            showDialog(
-                context: context,
-                builder: (_) => ProcessDialog(
-                  text: AppLocalizations.of(context).takingPicture,
-                ));
-            File image = await ImagePicker.pickImage(source: ImageSource.camera);
-            if(image != null){
-              im.Image _tmpImage = im.decodeImage(image.readAsBytesSync());
-              im.Image _resizedImg = im.copyResize(_tmpImage, 800);
-              image = File(image.path)
-                ..writeAsBytesSync(im.encodeJpg(_resizedImg));
-              setState((){
-                _newFileAddress = image.path;
-                _buildImageView();
-                this.widget.onImagePicked(image.path);
-              });
-            }
-            Navigator.pop(context);
-          },
-          onUploadPressed: () {
-            showDialog(
-                context: context,
-                builder: (_) => ProcessDialog(
-                  text: AppLocalizations.of(context).uploadingPicture,
-                ));
-            this.widget.onUploadPressed();
-          },
-          onFileSystemClicked: () async {
-            File image =
-                await ImagePicker.pickImage(source: ImageSource.gallery);
-            final directory = await getApplicationDocumentsDirectory();
-            final path = directory.path;
-            if(image != null){
-              final names = image.path.split('/');
-              int lastIndex = names.length - 1;
-              final fileName = names[lastIndex];
-              im.Image _tmpImage = im.decodeImage(image.readAsBytesSync());
-              im.Image _resizedImg = im.copyResize(_tmpImage, 800);
-              image = File('$path/$fileName')
-                ..writeAsBytesSync(im.encodeJpg(_resizedImg));
-              setState(() {
-                _newFileAddress = image.path;
-                _buildImageView();
-                this.widget.onImagePicked(image.path);
-              });
-            }
-          },
-          onRotateImageClicked: () async {
-            if (_newFileAddress == null || _newFileAddress == '') return;
-            showDialog(
-                context: context,
-                builder: (_) => ProcessDialog(
-                      text: AppLocalizations.of(context).rotatingImage,
-                    ));
-            File _fileImage = File(_newFileAddress);
-            List<int> _bytes = _fileImage.readAsBytesSync();
-            im.Image tmpImage = im.decodeImage(_bytes);
-            tmpImage = im.copyRotate(tmpImage, -90);
-            final Directory extDir = await getApplicationDocumentsDirectory();
-            final String dirPath = '${extDir.path}/Pictures';
-            await Directory(dirPath).create(recursive: true);
-            final String filePath = '$dirPath/${timestamp()}.jpg';
-            File _newFile =
-                await File(filePath).writeAsBytes(im.encodeJpg(tmpImage));
-            _fileImage.delete();
-            setState(() {
-              _newFileAddress = _newFile.path;
-              _buildImageView();
-              this.widget.onImagePicked(_newFileAddress);
-              Navigator.pop(context);
-            });
-          },
-        ): null
-    );
+        floatingActionButton: _focusNode.hasFocus == false
+            ? FloatImagePickerButton(
+                onCameraClicked: () async {
+                  showDialog(
+                      context: context,
+                      builder: (_) => ProcessDialog(
+                            text: AppLocalizations.of(context).takingPicture,
+                          ));
+                  if (await checkAndRequestCameraPermissions()) {
+                    File image =
+                        await ImagePicker.pickImage(source: ImageSource.camera);
+                    if (image != null) {
+                      im.Image _tmpImage =
+                          im.decodeImage(image.readAsBytesSync());
+                      im.Image _resizedImg = im.copyResize(_tmpImage, 800);
+                      image = File(image.path)
+                        ..writeAsBytesSync(im.encodeJpg(_resizedImg));
+                      setState(() {
+                        _newFileAddress = image.path;
+                        _buildImageView();
+                        this.widget.onImagePicked(image.path);
+                      });
+                    }
+                  }
+                  Navigator.pop(context);
+                },
+                onUploadPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (_) => ProcessDialog(
+                            text: AppLocalizations.of(context).uploadingPicture,
+                          ));
+                  this.widget.onUploadPressed();
+                },
+                onFileSystemClicked: () async {
+                  File image =
+                      await ImagePicker.pickImage(source: ImageSource.gallery);
+                  final directory = await getApplicationDocumentsDirectory();
+                  final path = directory.path;
+                  if (image != null) {
+                    final names = image.path.split('/');
+                    int lastIndex = names.length - 1;
+                    final fileName = names[lastIndex];
+                    im.Image _tmpImage =
+                        im.decodeImage(image.readAsBytesSync());
+                    im.Image _resizedImg = im.copyResize(_tmpImage, 800);
+                    image = File('$path/$fileName')
+                      ..writeAsBytesSync(im.encodeJpg(_resizedImg));
+                    setState(() {
+                      _newFileAddress = image.path;
+                      _buildImageView();
+                      this.widget.onImagePicked(image.path);
+                    });
+                  }
+                },
+                onRotateImageClicked: () async {
+                  if (_newFileAddress == null || _newFileAddress == '') return;
+                  showDialog(
+                      context: context,
+                      builder: (_) => ProcessDialog(
+                            text: AppLocalizations.of(context).rotatingImage,
+                          ));
+                  File _fileImage = File(_newFileAddress);
+                  List<int> _bytes = _fileImage.readAsBytesSync();
+                  im.Image tmpImage = im.decodeImage(_bytes);
+                  tmpImage = im.copyRotate(tmpImage, -90);
+                  final Directory extDir =
+                      await getApplicationDocumentsDirectory();
+                  final String dirPath = '${extDir.path}/Pictures';
+                  await Directory(dirPath).create(recursive: true);
+                  final String filePath = '$dirPath/${timestamp()}.jpg';
+                  File _newFile =
+                      await File(filePath).writeAsBytes(im.encodeJpg(tmpImage));
+                  _fileImage.delete();
+                  setState(() {
+                    _newFileAddress = _newFile.path;
+                    _buildImageView();
+                    this.widget.onImagePicked(_newFileAddress);
+                    Navigator.pop(context);
+                  });
+                },
+              )
+            : null);
   }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
@@ -160,22 +170,24 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
       _image = AssetImage("assets/pray.jpg");
     }
     _view = LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints){
+      builder: (BuildContext context, BoxConstraints constraints) {
         double _height = constraints.maxHeight * 0.9;
         return SingleChildScrollView(
             child: Column(
-              children: <Widget>[
-                Image(image: _image,
-                  height: _height,),
-                Container(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: SmallInputFieldArea(
-                    controller: _descriptionController,
-                    focusNode: _focusNode,
-                  ),
-                ),
-              ],
-            ));
+          children: <Widget>[
+            Image(
+              image: _image,
+              height: _height,
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: SmallInputFieldArea(
+                controller: _descriptionController,
+                focusNode: _focusNode,
+              ),
+            ),
+          ],
+        ));
       },
     );
   }
@@ -184,4 +196,16 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
     this.widget.onDescriptionChanged(_descriptionController.text);
   }
 
+  Future<bool> checkAndRequestCameraPermissions() async {
+    PermissionStatus permission =
+        await PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
+    if (permission != PermissionStatus.granted) {
+      Map<PermissionGroup, PermissionStatus> permissions =
+          await PermissionHandler()
+              .requestPermissions([PermissionGroup.camera]);
+      return permissions[PermissionGroup.camera] == PermissionStatus.granted;
+    } else {
+      return true;
+    }
+  }
 }
