@@ -112,7 +112,7 @@ class _FloatImagePickerButtonState extends State<FloatImagePickerButtonState>
           this.widget.onFileSystemClicked();
         },
         tooltip: 'File System',
-        child: Icon(Icons.insert_drive_file),
+        child: Icon(Icons.add_photo_alternate),
       ),
     );
   }
