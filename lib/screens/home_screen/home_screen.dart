@@ -41,10 +41,12 @@ class _HomeScreenState extends State<HomeScreenState> {
   String _token;
   FirebaseUser _firebaseUser;
   Widget _view;
+  List<Widget> _actions;
 
   @override
   void dispose() {
     FirebaseAdmobUtils().disposeScreenBanner();
+    _actions = [];
     super.dispose();
   }
 
@@ -69,6 +71,7 @@ class _HomeScreenState extends State<HomeScreenState> {
     _church = await ChurchHttp().fetchChurch(_user.church, _user.token);
     _token = await _firebaseUser.getIdToken(refresh: false);
     setState(() {
+      _populateActions();
       _view = HomeView(
         user: _user,
         church: _church,
@@ -82,6 +85,7 @@ class _HomeScreenState extends State<HomeScreenState> {
     _church = await ChurchHttp().fetchChurch(_user.church, _token);
     FirebaseMessagingUtils().subscribeToUserTopic(_user.idUser);
     setState(() {
+      _populateActions();
       _view = HomeView(
         user: _user,
         church: _church,
@@ -93,6 +97,7 @@ class _HomeScreenState extends State<HomeScreenState> {
   Widget build(BuildContext context) {
     if (_user == null) {
       _handleSignIn().catchError((e) => print(e));
+      _actions = [];
       _view = LoadingView();
     } else if (_church == null) {
       _handleReload();
@@ -101,18 +106,7 @@ class _HomeScreenState extends State<HomeScreenState> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(FontAwesomeIcons.userEdit),
-            onPressed: () {
-              _disposeScreenBanner();
-              Navigator.of(context)
-                  .push(new MaterialPageRoute(
-                      builder: (context) => new EditUserScreen(_user)))
-                  .whenComplete(onReload);
-            },
-          ),
-        ],
+        actions: _actions,
       ),
       body: _view,
     );
@@ -158,5 +152,20 @@ class _HomeScreenState extends State<HomeScreenState> {
 
   void _disposeScreenBanner() {
     FirebaseAdmobUtils().disposeScreenBanner();
+  }
+
+  void _populateActions() {
+    _actions = <Widget>[
+      IconButton(
+        icon: Icon(FontAwesomeIcons.userEdit),
+        onPressed: () {
+          _disposeScreenBanner();
+          Navigator.of(context)
+              .push(new MaterialPageRoute(
+              builder: (context) => new EditUserScreen(_user)))
+              .whenComplete(onReload);
+        },
+      ),
+    ];
   }
 }
