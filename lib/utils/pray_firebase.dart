@@ -134,7 +134,10 @@ class PrayFirebase {
       'senderId': user.idUser,
       'senderName': user.userName,
       'text': text,
-      'timestamp': DateTime.now().millisecondsSinceEpoch
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'android': {
+        'collapseKey': 1
+      }
     });
   }
 }

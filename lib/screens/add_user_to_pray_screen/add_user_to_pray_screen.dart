@@ -89,13 +89,8 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreen>{
           user.idUser,
           'Pray membership invitation',
           _message,
-          _buildDataPayload(FirebaseMessagingUtils.ADD_USER_TO_PRAY,
-              this.widget.pray.idPray));
+          FirebaseMessagingUtils.PRAY_NOTIFICATION);
       Navigator.pop(context, true);
     }
   }
-
-  Map<String, dynamic> _buildDataPayload(int action, int idPray) =>
-      {'action': action, 'idPray': idPray};
-
 }

@@ -25,12 +25,10 @@ class UserFirebase {
 
   Future<dynamic> uploadUserProfilePicture(
       int idUser, File file, String description) async {
-    List<String> _files = file.path.split('.');
-    String _extension = _files[_files.length - 1];
     final StorageReference ref = _storage
         .child('users')
         .child(idUser.toString())
-        .child('profile$idUser.$_extension');
+        .child('profile$idUser');
     StorageUploadTask task = ref.putFile(
       file,
       StorageMetadata(

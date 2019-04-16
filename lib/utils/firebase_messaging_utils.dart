@@ -17,6 +17,9 @@ class FirebaseMessagingUtils {
   static final FirebaseMessagingUtils _firebaseMessagingUtils =
       FirebaseMessagingUtils._internal();
 
+  static final String PRAY_NOTIFICATION = 'pray_notification';
+  static final String CHURCH_NOTIFICATION = 'church_notification';
+
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   factory FirebaseMessagingUtils() {
@@ -76,11 +79,10 @@ class FirebaseMessagingUtils {
     });
   }
 
-  void sendToUserTopic(int idUser, String title, String message,
-      Map<String, dynamic> data) async {
+  void sendToUserTopic(int idUser, String title, String message, String notificationChannel) async {
     String topic = _topic + firebaseEnv + _userTopic + idUser.toString();
     Map<String, dynamic> body =
-        _buildNotificationPayload(topic, title, message, data);
+        _buildNotificationPayload(topic, title, message, notificationChannel);
     var send = json.encode(body);
     final response = await http.post("https://fcm.googleapis.com/fcm/send",
         headers: {
@@ -94,11 +96,15 @@ class FirebaseMessagingUtils {
   }
 
   Map<String, dynamic> _buildNotificationPayload(
-          String topic, String title, String body, Map<String, dynamic> data) =>
+          String topic, String title, String body, String notificationChannel) =>
       {
         'to': topic,
-        'notification': {'title': title, 'body': body},
-        'data': data,
+        'notification': {'title': title, 'body': body, 'priority': 'normal'},
+        'android': {
+          'notification': {
+            'android_channel_id': notificationChannel
+          },
+          }
       };
 
   void subscribeToPrayTopic(int idPray) {
