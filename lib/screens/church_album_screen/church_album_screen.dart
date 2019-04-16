@@ -9,6 +9,7 @@ import 'package:prayer_app/model/church.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_firebase.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 
 class ChurchAlbumScreen extends StatelessWidget {
   Church church;
@@ -92,6 +93,7 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
         _newImageDescription,
       );
       fut.then((mapValues) {
+        _sendFirebaseMessage();
         Navigator.pop(context);
         setState(() {
           _widgets = List.from(_widgets)
@@ -176,4 +178,16 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
       );
     });
   }
+
+  void _sendFirebaseMessage( ) {
+    String _name = this.widget.church.name;
+    String _message =
+        'New picture added to church $_name';
+    FirebaseMessagingUtils().sendToChurchTopic(
+        this.widget.church.idChurch,
+        'Church album',
+        _message,
+        FirebaseMessagingUtils.CHURCH_NOTIFICATION);
+  }
+
 }

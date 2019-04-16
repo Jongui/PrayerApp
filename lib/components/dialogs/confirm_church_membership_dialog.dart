@@ -22,6 +22,7 @@ class ConfirmChurchMembershipDialog extends StatelessWidget{
         FlatButton(
           child: Text(AppLocalizations.of(context).confirm),
           onPressed:() async {
+            FirebaseMessagingUtils().unsubscribeFromChurchTopic(user.church);
             user.church = church.idChurch;
             await UserHttp().putUser(user, token: token);
             FirebaseMessagingUtils().subscribeToChurchTopic(user.church);

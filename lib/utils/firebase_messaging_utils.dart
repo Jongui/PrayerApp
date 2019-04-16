@@ -79,7 +79,8 @@ class FirebaseMessagingUtils {
     });
   }
 
-  void sendToUserTopic(int idUser, String title, String message, String notificationChannel) async {
+  void sendToUserTopic(int idUser, String title, String message,
+      String notificationChannel) async {
     String topic = _topic + firebaseEnv + _userTopic + idUser.toString();
     Map<String, dynamic> body =
         _buildNotificationPayload(topic, title, message, notificationChannel);
@@ -95,21 +96,59 @@ class FirebaseMessagingUtils {
     }
   }
 
-  Map<String, dynamic> _buildNotificationPayload(
-          String topic, String title, String body, String notificationChannel) =>
+  void sendToChurchTopic(int idChurch, String title, String message,
+      String notificationChannel) async {
+    String topic = _topic + firebaseEnv + _churchTopic + idChurch.toString();
+    Map<String, dynamic> body =
+        _buildNotificationPayload(topic, title, message, notificationChannel);
+    var send = json.encode(body);
+    final response = await http.post("https://fcm.googleapis.com/fcm/send",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "key=" + firebaseServerKey
+        },
+        body: send);
+    if (response.statusCode == 200) {
+      print("Successfully send");
+    }
+  }
+
+  Map<String, dynamic> _buildNotificationPayload(String topic, String title,
+          String body, String notificationChannel) =>
       {
         'to': topic,
         'notification': {'title': title, 'body': body, 'priority': 'normal'},
         'android': {
-          'notification': {
-            'android_channel_id': notificationChannel
-          },
-          }
+          'notification': {'android_channel_id': notificationChannel},
+        }
       };
 
   void subscribeToPrayTopic(int idPray) {
     if (idPray == null) return;
     String topic = firebaseEnv + _prayTopic + idPray.toString();
     _firebaseMessaging.subscribeToTopic(topic);
+  }
+
+  void unsubscribeFromPrayTopic(int idPray) {
+    if (idPray == null) return;
+    String topic = firebaseEnv + _prayTopic + idPray.toString();
+    _firebaseMessaging.unsubscribeFromTopic(topic);
+  }
+
+  void sendToPrayTopic(int idPray, String title, String message,
+      String notificationChannel) async {
+    String topic = _topic + firebaseEnv + _prayTopic + idPray.toString();
+    Map<String, dynamic> body =
+        _buildNotificationPayload(topic, title, message, notificationChannel);
+    var send = json.encode(body);
+    final response = await http.post("https://fcm.googleapis.com/fcm/send",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "key=" + firebaseServerKey
+        },
+        body: send);
+    if (response.statusCode == 200) {
+      print("Successfully send");
+    }
   }
 }

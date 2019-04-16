@@ -13,6 +13,7 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
@@ -179,7 +180,13 @@ class _EditUserScreenState extends State<EditUserScreenState> {
             ));
     if (_newName != '') _user.userName = _newName;
     if (_newCountry != '') _user.country = _newCountry;
-    if (_newIdChurch != 0) _user.church = _newIdChurch;
+    if (_newIdChurch != 0) {
+      if (_church.idChurch != null) {
+        FirebaseMessagingUtils().unsubscribeFromChurchTopic(_church.idChurch);
+      }
+      _user.church = _newIdChurch;
+      FirebaseMessagingUtils().subscribeToChurchTopic(_church.idChurch);
+    }
     if (_newAvatarUrl != '') {
       _user.avatarUrl = await UserFirebase().uploadUserProfilePicture(
           _user.idUser, File(_newAvatarUrl), _profilePictureDescription);
@@ -191,20 +198,18 @@ class _EditUserScreenState extends State<EditUserScreenState> {
       showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
-            text: AppLocalizations.of(context).userUpdated,
-            backgroundColor: Colors.green,
-            icon: Icons.check,
-          )
-      );
+                text: AppLocalizations.of(context).userUpdated,
+                backgroundColor: Colors.green,
+                icon: Icons.check,
+              ));
     } else {
       showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
-            text: AppLocalizations.of(context).errorWhileSaving,
-            backgroundColor: Colors.red,
-            icon: Icons.error,
-          )
-      );
+                text: AppLocalizations.of(context).errorWhileSaving,
+                backgroundColor: Colors.red,
+                icon: Icons.error,
+              ));
     }
     _newAvatarUrl = '';
   }

@@ -7,6 +7,7 @@ import 'package:prayer_app/components/buttons/save_button.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/model/user.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/pray_http.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
@@ -167,6 +168,7 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
       response =
       await UserPrayHttp().postUserPray(this.widget.user, _pray, _pray.beginDate, _pray.endDate,
           this.widget.user.token);
+      FirebaseMessagingUtils().subscribeToPrayTopic(_pray.idPray);
     }
     if(response == 200 || response == 201){
       showDialog<String>(

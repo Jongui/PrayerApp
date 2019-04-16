@@ -9,6 +9,7 @@ import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
+import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/pray_firebase.dart';
 
 class PrayAlbumScreen extends StatelessWidget {
@@ -94,6 +95,7 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
       );
       fut.then((mapValues) {
         Navigator.pop(context);
+        _sendFirebaseMessage();
         setState(() {
           _widgets = List.from(_widgets)
             ..add(AlbumPictureCardView(
@@ -178,4 +180,17 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
       );
     });
   }
+
+
+  void _sendFirebaseMessage( ) {
+    String _name = this.widget.pray.description;
+    String _message =
+        'New picture added to pray $_name';
+    FirebaseMessagingUtils().sendToPrayTopic(
+        this.widget.pray.idPray,
+        'Pray album',
+        _message,
+        FirebaseMessagingUtils.PRAY_NOTIFICATION);
+  }
+
 }
