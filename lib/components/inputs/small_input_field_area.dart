@@ -8,6 +8,8 @@ class SmallInputFieldArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         focusNode: focusNode,
+        maxLines: null,
+        keyboardType: TextInputType.multiline,
         obscureText: false,
         controller: controller,
         decoration: InputDecoration(

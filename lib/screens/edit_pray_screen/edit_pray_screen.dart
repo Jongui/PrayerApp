@@ -40,7 +40,6 @@ class _EditPrayScreenState extends State<EditPrayScreen> {
   String _imageUrl;
   File _newFile;
   String _profilePictureDescription;
-
   final _formKey = GlobalKey<FormState>();
 
   _EditPrayScreenState();
@@ -130,6 +129,9 @@ class _EditPrayScreenState extends State<EditPrayScreen> {
         validator: (value) {
           if (value.isEmpty && _description == '') {
             return AppLocalizations.of(context).mandatoryField;
+          }
+          if (value.length > 45) {
+            return AppLocalizations().only45Characters;
           }
         },
         hint: _description,

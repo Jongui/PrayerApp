@@ -34,6 +34,7 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
   String _valueEndDate;
   DatePicker _startDatePicker;
   DatePicker _endDatePicker;
+  final _formKey = GlobalKey<FormState>();
 
   _AddPrayScreenState();
 
@@ -79,6 +80,7 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Form(
+              key: _formKey,
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -101,7 +103,10 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
       child: InputFieldArea(
         validator: (value){
           if (value.isEmpty) {
-            return 'Please enter some text';
+            return AppLocalizations().enterSomeText;
+          }
+          if (value.length > 45) {
+            return AppLocalizations().only45Characters;
           }
         },
         hint: AppLocalizations.of(context).description,
@@ -150,6 +155,9 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
   _savedButtonPressed(BuildContext context) async{
     if(_newDescription == '' || _newStartDate == '' || _newDescription == '')
       return;
+    if(!_formKey.currentState.validate()){
+      return;
+    }
     var formatterFrom = new DateFormat('dd/MM/yyyy');
     if(_newDescription != '')
       _pray.description = _newDescription;

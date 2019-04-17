@@ -43,6 +43,7 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
   File _newFile;
   String _profilePictureDescription;
   String _imageUrl;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -81,6 +82,7 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Form(
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -111,6 +113,11 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
       padding:
           EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
+        validator: (value){
+          if(value.length > 45){
+            return AppLocalizations().only45Characters;
+          }
+        },
         hint: name,
         obscure: false,
         controller: _churchNameController,
@@ -124,6 +131,11 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
         padding:
             EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
         child: InputFieldArea(
+          validator: (value){
+            if(value.length > 45){
+              return AppLocalizations().only45Characters;
+            }
+          },
           hint: city,
           obscure: false,
           controller: _cityController,
@@ -150,6 +162,9 @@ class _EditChurchScreenState extends State<EditChurchScreen> {
         _newCountry == '' &&
         _newCity == '' &&
         _newFile == null) return;
+    if(!_formKey.currentState.validate()){
+      return;
+    }
     if (_newChurchName != '') this.widget.church.name = _newChurchName;
     if (_newCountry != '') this.widget.church.country = _newCountry;
     if (_newCity != '') this.widget.church.city = _newCity;

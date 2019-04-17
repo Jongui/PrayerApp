@@ -241,6 +241,14 @@ class AppLocalizations {
     return Intl.message('View pray', name:'viewPray');
   }
 
+  String get enterSomeText{
+    return Intl.message('Please enter some text');
+  }
+
+  String get only45Characters{
+    return Intl.message('Max. 45 characters');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

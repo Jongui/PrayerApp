@@ -17,27 +17,16 @@ import 'package:prayer_app/utils/firebase_messaging_utils.dart';
 import 'package:prayer_app/utils/user_firebase.dart';
 import 'package:prayer_app/utils/user_http.dart';
 
-class EditUserScreen extends StatelessWidget {
+class EditUserScreen extends StatefulWidget {
   final User user;
 
   EditUserScreen(this.user);
 
   @override
-  Widget build(BuildContext context) {
-    return EditUserScreenState(user: user);
-  }
-}
-
-class EditUserScreenState extends StatefulWidget {
-  EditUserScreenState({Key key, this.user}) : super(key: key);
-
-  final User user;
-
-  @override
   _EditUserScreenState createState() => new _EditUserScreenState();
 }
 
-class _EditUserScreenState extends State<EditUserScreenState> {
+class _EditUserScreenState extends State<EditUserScreen> {
   TextEditingController _userNameController = new TextEditingController();
   TextEditingController _countryController = new TextEditingController();
 
@@ -52,6 +41,7 @@ class _EditUserScreenState extends State<EditUserScreenState> {
   List<Church> _churchList;
   String _language;
   String _profilePictureDescription;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -110,7 +100,8 @@ class _EditUserScreenState extends State<EditUserScreenState> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            new Form(
+            Form(
+              key: _formKey,
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
@@ -133,6 +124,11 @@ class _EditUserScreenState extends State<EditUserScreenState> {
       padding:
           EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
       child: InputFieldArea(
+        validator: (value) {
+          if (value.length > 45) {
+            return AppLocalizations().only45Characters;
+          }
+        },
         hint: userName,
         obscure: false,
         controller: _userNameController,
@@ -173,6 +169,9 @@ class _EditUserScreenState extends State<EditUserScreenState> {
         _newCountry == '' &&
         _newIdChurch == 0 &&
         _newAvatarUrl == '') return;
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
     showDialog(
         context: context,
         builder: (_) => ProcessDialog(
@@ -181,11 +180,9 @@ class _EditUserScreenState extends State<EditUserScreenState> {
     if (_newName != '') _user.userName = _newName;
     if (_newCountry != '') _user.country = _newCountry;
     if (_newIdChurch != 0) {
-      if (_church.idChurch != null) {
-        FirebaseMessagingUtils().unsubscribeFromChurchTopic(_church.idChurch);
-      }
+      FirebaseMessagingUtils().unsubscribeFromChurchTopic(_user.church);
       _user.church = _newIdChurch;
-      FirebaseMessagingUtils().subscribeToChurchTopic(_church.idChurch);
+      FirebaseMessagingUtils().subscribeToChurchTopic(_user.church);
     }
     if (_newAvatarUrl != '') {
       _user.avatarUrl = await UserFirebase().uploadUserProfilePicture(

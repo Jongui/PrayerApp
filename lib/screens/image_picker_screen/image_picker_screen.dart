@@ -34,7 +34,6 @@ class ImagePickerScreenState extends StatefulWidget {
   String fileAddress;
   ValueChanged<String> onDescriptionChanged;
   VoidCallback onUploadPressed;
-
   ImagePickerScreenState(this.onImagePicked, this.fileAddress,
       this.onDescriptionChanged, this.onUploadPressed);
 
@@ -68,10 +67,12 @@ class _ImagePickerScreenState extends State<ImagePickerScreenState> {
 
   @override
   Widget build(BuildContext context) {
+    var _bottom = MediaQuery.of(context).viewInsets.bottom;
+
     return Scaffold(
         appBar: AppBar(title: Text(AppLocalizations.of(context).title)),
         body: _view,
-        floatingActionButton: _focusNode.hasFocus == false
+        floatingActionButton: _bottom == 0.0
             ? FloatImagePickerButton(
                 onCameraClicked: () async {
                   showDialog(
