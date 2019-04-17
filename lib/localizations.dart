@@ -242,11 +242,11 @@ class AppLocalizations {
   }
 
   String get enterSomeText{
-    return Intl.message('Please enter some text');
+    return Intl.message('Please enter some text', name:'enterSomeText');
   }
 
   String get only45Characters{
-    return Intl.message('Max. 45 characters');
+    return Intl.message('Max. 45 characters', name:'only45Characters');
   }
 
 }

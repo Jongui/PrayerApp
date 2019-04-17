@@ -301,5 +301,15 @@
  "@viewPray": {
    "type": "text",
    "placeholders": {}
+ },
+ "enterSomeText": "Informe um texto",
+ "@enterSomeText": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "only45Characters": "Max. 45 caracteres",
+ "@only45Characters": {
+   "type": "text",
+   "placeholders": {}
  }
 }

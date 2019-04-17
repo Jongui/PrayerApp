@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-04-13T10:50:06.908515",
+  "@@last_modified": "2019-04-17T21:45:32.172561",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -304,6 +304,16 @@
   },
   "viewPray": "View pray",
   "@viewPray": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "enterSomeText": "Please enter some text",
+  "@enterSomeText": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "only45Characters": "Max. 45 characters",
+  "@only45Characters": {
     "type": "text",
     "placeholders": {}
   }
