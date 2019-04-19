@@ -127,7 +127,7 @@ class PrayFirebase {
     return _messageReference.onChildAdded.listen(onData);
   }
 
-  void sendMessageToChurch(String text, User user, int idPray) {
+  void sendMessageToPray(String text, User user, int idPray) {
     DatabaseReference _firebaseMsgRef =
         _database.child('prays').child('$idPray').child('messages');
     _firebaseMsgRef.push().set({

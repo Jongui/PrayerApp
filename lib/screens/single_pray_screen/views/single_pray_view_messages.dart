@@ -49,8 +49,9 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages> {
         _rate = 0.75;
       }
       double _messageHeight = constraints.maxHeight * _rate;
-      return Center(
-          child: Column(
+      return SingleChildScrollView(
+          child: Center(
+              child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           _buildMessageList(_messageHeight),
@@ -63,7 +64,7 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages> {
               controller: _messageTextController,
               onMessageSend: () {
                 if (_textMessage != '') {
-                  PrayFirebase().sendMessageToChurch(
+                  PrayFirebase().sendMessageToPray(
                       _textMessage, this.widget.user, this.widget.pray.idPray);
                   _textMessage = _messageTextController.text = '';
                 }
@@ -71,7 +72,7 @@ class _SinglePrayViewMessagesState extends State<SinglePrayViewMessages> {
             ),
           ),
         ],
-      ));
+      )));
     }));
   }
 
