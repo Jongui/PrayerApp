@@ -82,13 +82,11 @@ class _AddUserToPrayScreenState extends State<AddUserToPrayScreen>{
 
   void _sendFirebaseMessage(User user) async{
     if(user != null){
-      String _churchName = this.widget.pray.description;
-      String _message =
-          'You were invited to pray $_churchName. Confirm?';
+      String _description = this.widget.pray.description;
       FirebaseMessagingUtils().sendToUserTopic(
           user.idUser,
-          'Pray membership invitation',
-          _message,
+          AppLocalizations.of(context).prayMembershipInvitation,
+          AppLocalizations.of(context).prayInvitationMessage(_description),
           FirebaseMessagingUtils.PRAY_NOTIFICATION);
       Navigator.pop(context, true);
     }

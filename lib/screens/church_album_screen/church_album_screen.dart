@@ -189,12 +189,10 @@ class _ChurchAlbumScreenState extends State<ChurchAlbumScreenState> {
 
   void _sendFirebaseMessage( ) {
     String _name = this.widget.church.name;
-    String _message =
-        'New picture added to church $_name';
     FirebaseMessagingUtils().sendToChurchTopic(
         this.widget.church.idChurch,
-        'Church album',
-        _message,
+        AppLocalizations.of(context).churchAlbum,
+        AppLocalizations.of(context).churchNewPicture(_name),
         FirebaseMessagingUtils.CHURCH_NOTIFICATION);
   }
 

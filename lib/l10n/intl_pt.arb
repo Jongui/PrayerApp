@@ -336,5 +336,53 @@
  "@no": {
    "type": "text",
    "placeholders": {}
+ },
+ "churchMembershipInvitation": "Church membership invitation",
+ "@churchMembershipInvitation": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "churchInvitationMessage": "You were invited to church {churchName}. Confirm?",
+ "@churchInvitationMessage": {
+   "type": "text",
+   "placeholders": {
+     "churchName": {}
+   }
+ },
+ "prayMembershipInvitation": "Pray membership invitation",
+ "@prayMembershipInvitation": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "prayInvitationMessage": "You were invited to pray {descr}. Confirm?",
+ "@prayInvitationMessage": {
+   "type": "text",
+   "placeholders": {
+     "descr": {}
+   }
+ },
+ "churchNewPicture": "New picture added to church {churchName}",
+ "@churchNewPicture": {
+   "type": "text",
+   "placeholders": {
+     "churchName": {}
+   }
+ },
+ "churchAlbum": "Church Album",
+ "@churchAlbum": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "prayNewPicture": "New picture added to pray {descr}",
+ "@prayNewPicture": {
+   "type": "text",
+   "placeholders": {
+     "descr": {}
+   }
+ },
+ "prayAlbum": "Pray Album",
+ "@prayAlbum": {
+   "type": "text",
+   "placeholders": {}
  }
 }

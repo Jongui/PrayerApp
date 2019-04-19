@@ -91,12 +91,10 @@ class _AddUserToChurchScreenState extends State<AddUserToChurchScreenState> {
 
   void _sendFirebaseMessage(User user) {
     String _churchName = church.name;
-    String _message =
-        'You were invited to church $_churchName. Confirm?';
     FirebaseMessagingUtils().sendToUserTopic(
         user.idUser,
-        'Church membership invitation',
-        _message,
+        AppLocalizations.of(context).churchMembershipInvitation,
+        AppLocalizations.of(context).churchInvitationMessage(_churchName),
         FirebaseMessagingUtils.CHURCH_NOTIFICATION);
   }
 }

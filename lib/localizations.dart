@@ -277,6 +277,38 @@ class AppLocalizations {
     return Intl.message('No', name: 'no');
   }
 
+  String get churchMembershipInvitation{
+    return Intl.message('Church membership invitation', name: 'churchMembershipInvitation');
+  }
+
+  churchInvitationMessage(churchName) =>
+      Intl.message('You were invited to church $churchName. Confirm?',
+          name: 'churchInvitationMessage', args: [churchName]);
+
+
+  String get prayMembershipInvitation{
+    return Intl.message('Pray membership invitation', name: 'prayMembershipInvitation');
+  }
+
+  prayInvitationMessage(descr) =>
+      Intl.message('You were invited to pray $descr. Confirm?',
+          name: 'prayInvitationMessage', args: [descr]);
+
+  churchNewPicture(churchName) =>
+      Intl.message('New picture added to church $churchName',
+        name: 'churchNewPicture', args: [churchName]);
+
+  String get churchAlbum{
+    Intl.message('Church Album', name: 'churchAlbum');
+  }
+
+  prayNewPicture(descr) =>
+      Intl.message('New picture added to pray $descr',
+          name: 'prayNewPicture', args: [descr]);
+
+  String get prayAlbum{
+    Intl.message('Pray Album', name: 'prayAlbum');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

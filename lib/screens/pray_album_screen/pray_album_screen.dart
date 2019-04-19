@@ -192,12 +192,10 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
 
   void _sendFirebaseMessage( ) {
     String _name = this.widget.pray.description;
-    String _message =
-        'New picture added to pray $_name';
     FirebaseMessagingUtils().sendToPrayTopic(
         this.widget.pray.idPray,
-        'Pray album',
-        _message,
+        AppLocalizations.of(context).prayAlbum,
+        AppLocalizations.of(context).prayNewPicture(_name),
         FirebaseMessagingUtils.PRAY_NOTIFICATION);
   }
 

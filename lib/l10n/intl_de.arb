@@ -331,5 +331,53 @@
   "@no": {
     "type": "text",
     "placeholders": {}
+  },
+  "churchMembershipInvitation": "Gemeindeglied Einladung",
+  "@churchMembershipInvitation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "churchInvitationMessage": "Sie wurde für Gemeinde {churchName} eingeladen. Bestätigen?",
+  "@churchInvitationMessage": {
+    "type": "text",
+    "placeholders": {
+      "churchName": {}
+    }
+  },
+  "prayMembershipInvitation": "Gebetseinladung",
+  "@prayMembershipInvitation": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayInvitationMessage": "Sie wurden für Gebetsgruppe {descr}. Bestätigen?",
+  "@prayInvitationMessage": {
+    "type": "text",
+    "placeholders": {
+      "descr": {}
+    }
+  },
+  "churchNewPicture": "Neues Bild auf Gemeindealbum {churchName} eingefügt",
+  "@churchNewPicture": {
+    "type": "text",
+    "placeholders": {
+      "churchName": {}
+    }
+  },
+  "churchAlbum": "Gemeindealbum",
+  "@churchAlbum": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "prayNewPicture": "Neues Bild auf Gebet {descr}",
+  "@prayNewPicture": {
+    "type": "text",
+    "placeholders": {
+      "descr": {}
+    }
+  },
+  "prayAlbum": "Gebetsalbum",
+  "@prayAlbum": {
+    "type": "text",
+    "placeholders": {}
   }
 }
