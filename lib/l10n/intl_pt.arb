@@ -301,5 +301,15 @@
  "@viewPray": {
    "type": "text",
    "placeholders": {}
+ },
+ "continueWithoutSave": "Continuar sem salvar?",
+ "@continueWithoutSave": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "changesMade": "Informações foram alteradas. Sair sem salvar?",
+ "@changesMade": {
+   "type": "text",
+   "placeholders": {}
  }
 }

@@ -306,5 +306,15 @@
   "@viewPray": {
     "type": "text",
     "placeholders": {}
+  },
+  "continueWithoutSave": "Weiter ohne speichern?",
+  "@continueWithoutSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changesMade": "Daten wurden geändert. Weiter ohne speichern?",
+  "@changesMade": {
+    "type": "text",
+    "placeholders": {}
   }
 }

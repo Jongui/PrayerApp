@@ -252,11 +252,11 @@ class AppLocalizations {
   }
 
   String get only45Characters {
-    return Intl.message('Max. 45 characters', name: 'enterSomeText');
+    return Intl.message('Max. 45 characters', name: 'only45Characters');
   }
 
   String get continueWithoutSave {
-    return Intl.message('Continue without saving?', name: 'enterSomeText');
+    return Intl.message('Continue without saving?', name: 'continueWithoutSave');
   }
 
   String get changesMade {

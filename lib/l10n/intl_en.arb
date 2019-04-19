@@ -281,5 +281,15 @@
   "@viewPray": {
     "type": "text",
     "placeholders": {}
+  },
+  "continueWithoutSave": "Continue without saving?",
+  "@continueWithoutSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changesMade": "Changes were made to the data. Leave without saving it?",
+  "@changesMade": {
+    "type": "text",
+    "placeholders": {}
   }
 }
