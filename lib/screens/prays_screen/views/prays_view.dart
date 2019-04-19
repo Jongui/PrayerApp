@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/prays_screen/views/prays_list_view.dart';
 
-class PrayView extends StatelessWidget{
-
+class PrayView extends StatelessWidget {
   User user;
   String token;
 
@@ -12,22 +11,14 @@ class PrayView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    if(user == null)
-      user = User();
+    if (user == null) user = User();
 
-    return SingleChildScrollView(
-        child: SingleChildScrollView(
-          child: Container(
-            decoration: new BoxDecoration(
-              color: Colors.white30
-            ),
-            child: new Column(
-              children: <Widget>[
-                PrayListView(user: user, token: token,),
-              ],
-            ),
-          )
-        )
+    return Container(
+      decoration: new BoxDecoration(color: Colors.white30),
+      child: PrayListView(
+        user: user,
+        token: token,
+      ),
     );
   }
 }

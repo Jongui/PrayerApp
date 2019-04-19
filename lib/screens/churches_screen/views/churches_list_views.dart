@@ -5,27 +5,16 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/screens/loading_screen/loading_view.dart';
 import 'package:prayer_app/utils/church_http.dart';
 
-class ChurchesListView extends StatelessWidget {
+class ChurchesListView extends StatefulWidget {
   User user;
 
   ChurchesListView({@required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    return ChurchesListViewState(user);
-  }
-}
-
-class ChurchesListViewState extends StatefulWidget {
-  User user;
-
-  ChurchesListViewState(this.user);
-
-  @override
   _ChurchesListViewState createState() => _ChurchesListViewState(user);
 }
 
-class _ChurchesListViewState extends State<ChurchesListViewState> {
+class _ChurchesListViewState extends State<ChurchesListView> {
   User user;
 
   _ChurchesListViewState(this.user);

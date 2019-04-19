@@ -179,7 +179,8 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
       FirebaseMessagingUtils().subscribeToPrayTopic(_pray.idPray);
     }
     if(response == 200 || response == 201){
-      showDialog<String>(
+      _pray = Pray();
+      await showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
             text: AppLocalizations.of(context).prayCreated,
@@ -188,7 +189,7 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
           )
       );
     } else {
-      showDialog<String>(
+      await showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
             text: AppLocalizations.of(context).errorWhileSaving,
@@ -197,5 +198,8 @@ class _AddPrayScreenState extends State<AddPrayScreen>{
           )
       );
     }
+    setState(() {
+
+    });
   }
 }

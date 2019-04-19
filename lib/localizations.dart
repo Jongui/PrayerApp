@@ -252,11 +252,11 @@ class AppLocalizations {
   }
 
   String get only45Characters {
-    return Intl.message('Max. 45 characters', name: 'enterSomeText');
+    return Intl.message('Max. 45 characters', name: 'only45Characters');
   }
 
   String get continueWithoutSave {
-    return Intl.message('Continue without saving?', name: 'enterSomeText');
+    return Intl.message('Continue without saving?', name: 'continueWithoutSave');
   }
 
   String get changesMade {
@@ -264,6 +264,11 @@ class AppLocalizations {
         'Changes were made to the data. Leave without saving it?',
         name: 'changesMade');
   }
+
+  String get imageUploaded{
+    return Intl.message('Image uploaded', name: 'imageUploaded');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

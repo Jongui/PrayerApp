@@ -307,13 +307,18 @@
     "type": "text",
     "placeholders": {}
   },
-  "enterSomeText": "Bitte geben Sie ein Text ein",
-  "@enterSomeText": {
+  "continueWithoutSave": "Weiter ohne speichern?",
+  "@continueWithoutSave": {
     "type": "text",
     "placeholders": {}
   },
-  "only45Characters": "Max. 45 characters",
-  "@only45Characters": {
+  "changesMade": "Daten wurden geändert. Weiter ohne speichern?",
+  "@changesMade": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imageUploaded": "Bild hochgeladen",
+  "@imageUploaded": {
     "type": "text",
     "placeholders": {}
   }

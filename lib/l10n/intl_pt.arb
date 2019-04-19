@@ -311,5 +311,20 @@
  "@only45Characters": {
    "type": "text",
    "placeholders": {}
+ },
+ "continueWithoutSave": "Continuar sem salvar?",
+ "@continueWithoutSave": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "changesMade": "Informações foram alteradas. Sair sem salvar?",
+ "@changesMade": {
+   "type": "text",
+   "placeholders": {}
+ },
+ "imageUploaded": "Imagem enviada",
+ "@imageUploaded": {
+   "type": "text",
+   "placeholders": {}
  }
 }

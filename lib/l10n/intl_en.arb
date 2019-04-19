@@ -282,6 +282,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "continueWithoutSave": "Continue without saving?",
+  "@continueWithoutSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changesMade": "Changes were made to the data. Leave without saving it?",
+  "@changesMade": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imageUploaded": "Image uploaded",
+  "@imageUploaded": {
+    "type": "text",
+    "placeholders": {}
+  },
   "enterSomeText": "Please enter some text",
   "@enterSomeText": {
     "type": "text",

@@ -148,6 +148,7 @@ class _AddChurchScreenState extends State<AddChurchScreen> {
     int response =
         await ChurchHttp().postChurch(_church, this.widget.user.token);
     if (response == 201) {
+      _church = Church();
       showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
@@ -164,6 +165,9 @@ class _AddChurchScreenState extends State<AddChurchScreen> {
                 icon: Icons.error,
               ));
     }
+    setState((){
+
+    });
   }
 
   Widget _buildCountryDropDownButton() {

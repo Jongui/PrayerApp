@@ -4,40 +4,21 @@ import 'package:prayer_app/model/user.dart';
 import 'package:prayer_app/model/user_pray.dart';
 import 'package:prayer_app/utils/user_pray_http.dart';
 
-class PrayListView extends StatelessWidget {
-
+class PrayListView extends StatefulWidget {
   User user;
   String token;
 
   PrayListView({@required this.user, @required this.token});
 
   @override
-  Widget build(BuildContext context) {
-    return PrayListViewState(user, token);
-  }
-
+  _PrayListViewState createState() => new _PrayListViewState();
 }
 
-class PrayListViewState extends StatefulWidget {
-
-  User user;
-  String token;
-
-  PrayListViewState(this.user, this.token);
-
-  @override
-  _PrayListViewState createState() => new _PrayListViewState(user, token);
-
-}
-
-class _PrayListViewState extends State<PrayListViewState>{
-
-  User user;
-  String token;
+class _PrayListViewState extends State<PrayListView> {
   List<Widget> _views = [];
   bool _reload = false;
 
-  _PrayListViewState(this.user, this.token);
+  _PrayListViewState();
 
   @override
   void deactivate() {
@@ -47,13 +28,12 @@ class _PrayListViewState extends State<PrayListViewState>{
 
   @override
   void initState() {
-    _handleLoadPray(user);
+    _handleLoadPray();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_reload)
-      _handleLoadPray(user);
+    if (_reload) _handleLoadPray();
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(20.0),
@@ -66,18 +46,20 @@ class _PrayListViewState extends State<PrayListViewState>{
     super.dispose();
   }
 
-  _handleLoadPray(User user) async {
-    List<UserPray> userPrays = await UserPrayHttp().getUserPrayByUser(user.idUser, user.token);
+  _handleLoadPray() async {
+    List<UserPray> userPrays =
+        await UserPrayHttp().getUserPrayByUser(this.widget.user.idUser, this.widget.user.token);
     setState(() {
       _reload = false;
       _views = [];
-        for(int j = 0; j < userPrays.length; j++){
-          UserPray userPray = userPrays.elementAt(j);
-          _views.add(PrayCardView(  userPray: userPray,
-            user: user,
-            token: token,));
-        }
+      for (int j = 0; j < userPrays.length; j++) {
+        UserPray userPray = userPrays.elementAt(j);
+        _views.add(PrayCardView(
+          userPray: userPray,
+          user: this.widget.user,
+          token: this.widget.token,
+        ));
+      }
     });
   }
-
 }

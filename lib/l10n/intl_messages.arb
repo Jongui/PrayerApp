@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-04-17T21:45:32.172561",
+  "@@last_modified": "2019-04-19T22:48:29.318804",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -314,6 +314,21 @@
   },
   "only45Characters": "Max. 45 characters",
   "@only45Characters": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "continueWithoutSave": "Continue without saving?",
+  "@continueWithoutSave": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "changesMade": "Changes were made to the data. Leave without saving it?",
+  "@changesMade": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "imageUploaded": "Image uploaded",
+  "@imageUploaded": {
     "type": "text",
     "placeholders": {}
   }
