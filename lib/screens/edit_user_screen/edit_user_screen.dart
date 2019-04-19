@@ -42,10 +42,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
   String _language;
   String _profilePictureDescription;
   final _formKey = GlobalKey<FormState>();
+  bool _dataChanged;
 
   @override
   initState() {
     super.initState();
+    _dataChanged = false;
     _userNameController.addListener(_onUserNameChanged);
     _countryController.addListener(_onCountryChanged);
   }
@@ -85,37 +87,44 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
   void _onUserNameChanged() {
     _newName = _userNameController.text;
+    _dataChanged = true;
   }
 
   void _onCountryChanged() {
     _newCountry = _countryController.text;
+    _dataChanged = true;
   }
 
   Widget _buildInputForm(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        width: _screenSize.width,
-        height: _screenSize.height,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Form(
-              key: _formKey,
-              child: new Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  _buildUserAvatarInputField(_user.avatarUrl, context),
-                  _buildUserNameInputField(_user.userName),
-                  _buildChurchInputField(_churchList),
-                  _buildCountryDropDownButton(),
-                  _buildBarButton(context),
-                ],
+    return WillPopScope(
+      child: SingleChildScrollView(
+        child: Container(
+          width: _screenSize.width,
+          height: _screenSize.height,
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    _buildUserAvatarInputField(_user.avatarUrl, context),
+                    _buildUserNameInputField(_user.userName),
+                    _buildChurchInputField(_churchList),
+                    _buildCountryDropDownButton(),
+                    _buildBarButton(context),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+      onWillPop: () {
+        return _checkDataChanged(); // if true allow back else block it
+      },
     );
   }
 
@@ -192,6 +201,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     int response = await UserHttp().putUser(_user);
     Navigator.pop(context);
     if (response == 200) {
+      _dataChanged = false;
       showDialog<String>(
           context: context,
           builder: (BuildContext context) => OkDialog(
@@ -220,6 +230,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
         _currentCountry,
         languageLowerCase: _language.toLowerCase(),
         onChanged: (newCountry) {
+          _dataChanged = true;
           setState(() {
             _newCountry = newCountry.code;
           });
@@ -235,6 +246,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
             EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
         child: ChurchDropdownButton(_church, churches: _churchList,
             onChanged: (newChurch) {
+          _dataChanged = true;
           setState(() {
             _church = newChurch;
             _newIdChurch = newChurch.idChurch;
@@ -252,6 +264,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
           Navigator.of(context).push(new MaterialPageRoute(
               builder: (context) => ImagePickerScreen(
                     onImagePicked: (filePath) {
+                      _dataChanged = true;
                       setState(() {
                         _newAvatarUrl = filePath;
                       });
@@ -260,6 +273,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                       _profilePictureDescription = newDescription;
                     },
                     onUploadPressed: () {
+                      _dataChanged = true;
                       Navigator.pop(context);
                       Navigator.pop(context);
                     },
@@ -289,5 +303,42 @@ class _EditUserScreenState extends State<EditUserScreen> {
             ),
           ],
         ));
+  }
+
+  Future<bool> _checkDataChanged() async {
+    bool ret = !_dataChanged;
+    if (_dataChanged) {
+      ret = await _checkLeaveWithoutSave();
+    }
+    return ret;
+  }
+
+  Future<bool> _checkLeaveWithoutSave() async {
+    bool ret = false;
+    await showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context).continueWithoutSave),
+            content: Text(AppLocalizations.of(context).changesMade),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(AppLocalizations.of(context).confirm),
+                onPressed: () async {
+                  ret = true;
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text(AppLocalizations.of(context).cancel),
+                onPressed: () {
+                  ret = false;
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+    return ret;
   }
 }

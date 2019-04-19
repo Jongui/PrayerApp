@@ -8,7 +8,7 @@ import 'l10n/messages_all.dart';
 class AppLocalizations {
   static Future<AppLocalizations> load(Locale locale) {
     final String name =
-    locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+        locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((bool _) {
@@ -27,19 +27,18 @@ class AppLocalizations {
   }
 
   String get edit {
-    return Intl.message('Edit',
-        name: 'edit', desc: 'Edit');
+    return Intl.message('Edit', name: 'edit', desc: 'Edit');
   }
 
   String get add {
     return Intl.message('Add', name: 'add');
   }
 
-  String get addNew{
+  String get addNew {
     return Intl.message('Add new', name: 'addNew');
   }
 
-  String get save{
+  String get save {
     return Intl.message('Save', name: 'save');
   }
 
@@ -48,7 +47,7 @@ class AppLocalizations {
   }
 
   String get name {
-    return Intl.message('Name', name: 'name' );
+    return Intl.message('Name', name: 'name');
   }
 
   String get churchName {
@@ -83,172 +82,188 @@ class AppLocalizations {
     return Intl.message('Add your pray', name: 'addYourPray');
   }
 
-  String get description{
+  String get description {
     return Intl.message('Description', name: 'description');
   }
 
-  String get prayCreated{
+  String get prayCreated {
     return Intl.message('Pray created!', name: 'prayCreated');
   }
 
-  String get churches{
+  String get churches {
     return Intl.message('Churches', name: 'churches');
   }
 
-  String get churchUpdated{
+  String get churchUpdated {
     return Intl.message('Church updated!', name: 'churchUpdated');
   }
 
-  String get editYourPray{
+  String get editYourPray {
     return Intl.message('Edit your pray', name: 'editYourPray');
   }
 
-  String get editUser{
+  String get editUser {
     return Intl.message('Edit User', name: 'editUser');
   }
 
-  String get userUpdated{
+  String get userUpdated {
     return Intl.message('User updated!', name: 'userUpdated');
   }
 
-  prayFromTo(startDate, endDate) => Intl.message('Pray from $startDate to $endDate',
-      name: 'prayFromTo', args: [startDate, endDate]);
+  prayFromTo(startDate, endDate) =>
+      Intl.message('Pray from $startDate to $endDate',
+          name: 'prayFromTo', args: [startDate, endDate]);
 
-  yourRate(rate) => Intl.message('Your rate: $rate', name: 'yourRate', args: [rate]);
+  yourRate(rate) =>
+      Intl.message('Your rate: $rate', name: 'yourRate', args: [rate]);
 
-  createdBy(userName) => Intl.message('Created by $userName', name: 'createdBy', args: [userName]);
+  createdBy(userName) =>
+      Intl.message('Created by $userName', name: 'createdBy', args: [userName]);
 
-  ratedByUser(rate) => Intl.message('Rated by user: $rate', name: 'ratedByUser', args: [rate]);
+  ratedByUser(rate) =>
+      Intl.message('Rated by user: $rate', name: 'ratedByUser', args: [rate]);
 
   createdAt(createdAt) => Intl.message('Created at $createdAt',
       name: 'createdAt', args: [createdAt]);
 
-  String get viewChurch{
+  String get viewChurch {
     return Intl.message('View church', name: 'viewChurch');
   }
 
-  confirmAddingUserToChurch(userName, churchName) => Intl.message('Confirm adding user $userName to church $churchName?',
-      name: 'confirmAddingUserToChurch', args: [userName, churchName]);
+  confirmAddingUserToChurch(userName, churchName) =>
+      Intl.message('Confirm adding user $userName to church $churchName?',
+          name: 'confirmAddingUserToChurch', args: [userName, churchName]);
 
-  confirmAddingUserToPray(userName) => Intl.message('Confirm adding user $userName to this pray?',
-      name: 'confirmAddingUserToPray', args: [userName]);
+  confirmAddingUserToPray(userName) =>
+      Intl.message('Confirm adding user $userName to this pray?',
+          name: 'confirmAddingUserToPray', args: [userName]);
 
-  String get takeAPicture{
+  String get takeAPicture {
     return Intl.message('Take a picture', name: 'takeAPicture');
   }
 
-  String get tapACamera{
+  String get tapACamera {
     return Intl.message('Tap a camera', name: 'tapACamera');
   }
 
-  String get pictureTaken{
+  String get pictureTaken {
     return Intl.message('Picture taken!', name: 'pictureTaken');
   }
 
-  String get savingUser{
+  String get savingUser {
     return Intl.message('Saving user', name: 'savingUser');
   }
 
-  String get takingPicture{
+  String get takingPicture {
     return Intl.message('Taking picture', name: 'takingPicture');
   }
 
-  String get prayEdited{
+  String get prayEdited {
     return Intl.message('Pray edited', name: 'prayEdited');
   }
 
-  String get mandatoryField{
+  String get mandatoryField {
     return Intl.message('Inform a value', name: 'mandatoryField');
   }
 
-  String get savingPray{
+  String get savingPray {
     return Intl.message('Saving Pray', name: 'savingPray');
   }
 
-  String get rotatingImage{
+  String get rotatingImage {
     return Intl.message('Rotating Image...', name: 'rotatingImage');
   }
 
-  String get searchUser{
+  String get searchUser {
     return Intl.message('Search User', name: 'searchUser');
   }
 
-  String get prays{
+  String get prays {
     return Intl.message('Prays', name: 'prays');
   }
 
-  String get uploadingPicture{
+  String get uploadingPicture {
     return Intl.message('Uploading picture', name: 'uploadingPicture');
   }
 
-  String get noPicturesFound{
+  String get noPicturesFound {
     return Intl.message('No pictures found', name: 'noPicturesFound');
   }
 
-  String get pictureUploaded{
+  String get pictureUploaded {
     return Intl.message('Picture uploaded', name: 'pictureUploaded');
   }
 
-  String get savingChurch{
+  String get savingChurch {
     return Intl.message('Saving church...', name: 'savingChurch');
   }
 
-  String get possibleActions{
+  String get possibleActions {
     return Intl.message('Possible Actions', name: 'possibleActions');
   }
 
-  String get delete{
+  String get delete {
     return Intl.message('Delete', name: 'delete');
   }
 
-  String get deletingPicture{
+  String get deletingPicture {
     return Intl.message('Deleting Picture', name: 'deletingPicture');
   }
 
   confirmChurchMembership(String churchName) =>
-    Intl.message('Confirm membership to church $churchName', name: 'confirmChurchMembership',
-      args: [churchName]);
+      Intl.message('Confirm membership to church $churchName',
+          name: 'confirmChurchMembership', args: [churchName]);
 
-  String get confirm{
+  String get confirm {
     return Intl.message('Confirm', name: 'confirm');
   }
 
-  String get cancel{
+  String get cancel {
     return Intl.message('Cancel', name: 'cancel');
   }
 
   confirmPrayMembership(String description) =>
-      Intl.message('Confirm membership to pray $description', name: 'confirmPrayMembership',
-          args: [description]);
+      Intl.message('Confirm membership to pray $description',
+          name: 'confirmPrayMembership', args: [description]);
 
-  String get country{
+  String get country {
     return Intl.message('Country', name: 'country');
   }
 
-  String get deletingChurch{
+  String get deletingChurch {
     return Intl.message('Deleting church', name: 'deletingChurch');
   }
 
-  String get churchDeleted{
+  String get churchDeleted {
     return Intl.message('Church successfully deleted', name: 'churchDeleted');
   }
 
-  String get churchNotDeleted{
-    return Intl.message('It is no possible to delete this church', name: 'churchNotDeleted');
+  String get churchNotDeleted {
+    return Intl.message('It is no possible to delete this church',
+        name: 'churchNotDeleted');
   }
 
-  String get viewPray{
-    return Intl.message('View pray', name:'viewPray');
+  String get viewPray {
+    return Intl.message('View pray', name: 'viewPray');
   }
 
-  String get enterSomeText{
-    return Intl.message('Please enter some text');
+  String get enterSomeText {
+    return Intl.message('Please enter some text', name: 'enterSomeText');
   }
 
-  String get only45Characters{
-    return Intl.message('Max. 45 characters');
+  String get only45Characters {
+    return Intl.message('Max. 45 characters', name: 'enterSomeText');
   }
 
+  String get continueWithoutSave {
+    return Intl.message('Continue without saving?', name: 'enterSomeText');
+  }
+
+  String get changesMade {
+    return Intl.message(
+        'Changes were made to the data. Leave without saving it?',
+        name: 'changesMade');
+  }
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
