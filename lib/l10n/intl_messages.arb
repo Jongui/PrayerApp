@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-04-19T22:48:29.318804",
+  "@@last_modified": "2019-04-19T23:52:03.276856",
   "title": "Praying App",
   "@title": {
     "description": "The application title",
@@ -329,6 +329,16 @@
   },
   "imageUploaded": "Image uploaded",
   "@imageUploaded": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yes": "Yes",
+  "@yes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "No",
+  "@no": {
     "type": "text",
     "placeholders": {}
   }

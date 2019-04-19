@@ -323,14 +323,14 @@ class _EditUserScreenState extends State<EditUserScreen> {
             content: Text(AppLocalizations.of(context).changesMade),
             actions: <Widget>[
               FlatButton(
-                child: Text(AppLocalizations.of(context).confirm),
+                child: Text(AppLocalizations.of(context).yes),
                 onPressed: () async {
                   ret = true;
                   Navigator.pop(context);
                 },
               ),
               FlatButton(
-                child: Text(AppLocalizations.of(context).cancel),
+                child: Text(AppLocalizations.of(context).no),
                 onPressed: () {
                   ret = false;
                   Navigator.pop(context);

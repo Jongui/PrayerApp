@@ -321,5 +321,15 @@
   "@imageUploaded": {
     "type": "text",
     "placeholders": {}
+  },
+  "yes": "Ja",
+  "@yes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "Nein",
+  "@no": {
+    "type": "text",
+    "placeholders": {}
   }
 }

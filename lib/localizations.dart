@@ -269,6 +269,14 @@ class AppLocalizations {
     return Intl.message('Image uploaded', name: 'imageUploaded');
   }
 
+  String get yes{
+    return Intl.message('Yes', name: 'yes');
+  }
+
+  String get no{
+    return Intl.message('No', name: 'no');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

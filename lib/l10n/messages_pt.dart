@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "imageUploaded" : MessageLookupByLibrary.simpleMessage("Imagem enviada"),
     "mandatoryField" : MessageLookupByLibrary.simpleMessage("Informar valor"),
     "name" : MessageLookupByLibrary.simpleMessage("Nome"),
+    "no" : MessageLookupByLibrary.simpleMessage("Não"),
     "noPicturesFound" : MessageLookupByLibrary.simpleMessage("Nenhuma foto encontrada"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Não informado"),
     "only45Characters" : MessageLookupByLibrary.simpleMessage("Max. 45 caracteres"),
@@ -98,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Salvando imagem"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
     "viewPray" : MessageLookupByLibrary.simpleMessage("Visualizar oração"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Sim"),
     "yourRate" : m8
   };
 }

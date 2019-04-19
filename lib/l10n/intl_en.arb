@@ -306,5 +306,15 @@
   "@only45Characters": {
     "type": "text",
     "placeholders": {}
+  },
+  "yes": "Yes",
+  "@yes": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "no": "No",
+  "@no": {
+    "type": "text",
+    "placeholders": {}
   }
 }

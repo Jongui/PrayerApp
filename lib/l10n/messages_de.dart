@@ -67,15 +67,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "editUser" : MessageLookupByLibrary.simpleMessage("Benutzer bearbeiten"),
     "editYourPray" : MessageLookupByLibrary.simpleMessage("Bearbeite Ihren Gebet"),
     "endDate" : MessageLookupByLibrary.simpleMessage("Datum bis"),
-    "enterSomeText" : MessageLookupByLibrary.simpleMessage("Bitte geben Sie ein Text ein"),
     "errorWhileSaving" : MessageLookupByLibrary.simpleMessage("Error while saving!"),
     "hello" : MessageLookupByLibrary.simpleMessage("Hallo"),
     "imageUploaded" : MessageLookupByLibrary.simpleMessage("Bild hochgeladen"),
     "mandatoryField" : MessageLookupByLibrary.simpleMessage("Wert eingeben"),
     "name" : MessageLookupByLibrary.simpleMessage("Name"),
+    "no" : MessageLookupByLibrary.simpleMessage("Nein"),
     "noPicturesFound" : MessageLookupByLibrary.simpleMessage("Keine Bilder gefunden"),
     "notInformed" : MessageLookupByLibrary.simpleMessage("Nicht informierd"),
-    "only45Characters" : MessageLookupByLibrary.simpleMessage("Max. 45 characters"),
     "pictureTaken" : MessageLookupByLibrary.simpleMessage("Bild gemacht!"),
     "pictureUploaded" : MessageLookupByLibrary.simpleMessage("Bild hochgeladen"),
     "possibleActions" : MessageLookupByLibrary.simpleMessage("Aktionen"),
@@ -99,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "userUpdated" : MessageLookupByLibrary.simpleMessage("Benutzer aktualisiert!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Gemeinde ansehen"),
     "viewPray" : MessageLookupByLibrary.simpleMessage("Gebet ansehen"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Ja"),
     "yourRate" : m8
   };
 }
