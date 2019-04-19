@@ -316,5 +316,10 @@
   "@changesMade": {
     "type": "text",
     "placeholders": {}
+  },
+  "imageUploaded": "Bild hochgeladen",
+  "@imageUploaded": {
+    "type": "text",
+    "placeholders": {}
   }
 }

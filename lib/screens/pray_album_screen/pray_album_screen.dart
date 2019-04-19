@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:prayer_app/components/buttons/float_album_button.dart';
 import 'package:prayer_app/components/cardviews/album_picture_card_view.dart';
+import 'package:prayer_app/components/dialogs/ok_dialog.dart';
 import 'package:prayer_app/localizations.dart';
 import 'package:prayer_app/model/pray.dart';
 import 'package:prayer_app/screens/image_picker_screen/image_picker_screen.dart';
@@ -96,6 +97,13 @@ class _PrayAlbumScreenState extends State<PrayAlbumScreenState> {
       fut.then((mapValues) {
         Navigator.pop(context);
         _sendFirebaseMessage();
+        showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => OkDialog(
+              text: AppLocalizations.of(context).imageUploaded,
+              backgroundColor: Colors.green,
+              icon: Icons.check,
+            ));
         setState(() {
           _widgets = List.from(_widgets)
             ..add(AlbumPictureCardView(

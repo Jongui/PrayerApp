@@ -311,5 +311,10 @@
  "@changesMade": {
    "type": "text",
    "placeholders": {}
+ },
+ "imageUploaded": "Imagem enviada",
+ "@imageUploaded": {
+   "type": "text",
+   "placeholders": {}
  }
 }

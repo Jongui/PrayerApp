@@ -264,6 +264,11 @@ class AppLocalizations {
         'Changes were made to the data. Leave without saving it?',
         name: 'changesMade');
   }
+
+  String get imageUploaded{
+    return Intl.message('Image uploaded', name: 'imageUploaded');
+  }
+
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

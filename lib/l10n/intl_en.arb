@@ -291,5 +291,10 @@
   "@changesMade": {
     "type": "text",
     "placeholders": {}
+  },
+  "imageUploaded": "Image uploaded",
+  "@imageUploaded": {
+    "type": "text",
+    "placeholders": {}
   }
 }

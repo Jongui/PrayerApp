@@ -10,11 +10,11 @@ import 'package:prayer_app/localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ImagePickerScreen extends StatelessWidget {
+class ImagePickerScreen extends StatefulWidget {
   final ValueChanged<String> onImagePicked;
   final ValueChanged<String> onDescriptionChanged;
   final VoidCallback onUploadPressed;
-  String fileAddress;
+  final String fileAddress;
 
   ImagePickerScreen(
       {@required this.onImagePicked,
@@ -22,25 +22,11 @@ class ImagePickerScreen extends StatelessWidget {
       @required this.onDescriptionChanged,
       @required this.onUploadPressed});
 
-  @override
-  Widget build(BuildContext context) {
-    return ImagePickerScreenState(
-        onImagePicked, fileAddress, onDescriptionChanged, onUploadPressed);
-  }
-}
-
-class ImagePickerScreenState extends StatefulWidget {
-  final ValueChanged<String> onImagePicked;
-  String fileAddress;
-  ValueChanged<String> onDescriptionChanged;
-  VoidCallback onUploadPressed;
-  ImagePickerScreenState(this.onImagePicked, this.fileAddress,
-      this.onDescriptionChanged, this.onUploadPressed);
-
   _ImagePickerScreenState createState() => _ImagePickerScreenState();
+
 }
 
-class _ImagePickerScreenState extends State<ImagePickerScreenState> {
+class _ImagePickerScreenState extends State<ImagePickerScreen> {
   Widget _view;
   String _newFileAddress;
   FocusNode _focusNode;
