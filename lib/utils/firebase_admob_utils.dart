@@ -8,6 +8,7 @@ class FirebaseAdmobUtils {
   BannerAd _screenBannerAd;
   bool _loaded;
   bool _initialLoadingFinished;
+  bool _closed;
   factory FirebaseAdmobUtils() {
     return _firebaseAdmob;
   }
@@ -18,6 +19,7 @@ class FirebaseAdmobUtils {
     FirebaseAdMob.instance.initialize(appId: _appId);
     _loaded = false;
     _initialLoadingFinished = false;
+    _closed = false;
   }
 
   void initScreenBanner() {
@@ -37,9 +39,12 @@ class FirebaseAdmobUtils {
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
         print("BannerAd event is $event");
-        if (event == MobileAdEvent.loaded) {
+        if (event == MobileAdEvent.loaded || event == MobileAdEvent.failedToLoad) {
           _loaded = true;
           _initialLoadingFinished = true;
+        }
+        if(event == MobileAdEvent.closed){
+         _closed = true;
         }
       },
     );
@@ -47,14 +52,14 @@ class FirebaseAdmobUtils {
   }
 
   loadScreenBanner() {
-    if (Platform.isIOS) return;
+    if (Platform.isIOS || _closed) return;
     if (!_loaded) {
       _screenBannerAd.show(anchorOffset: 10.0, anchorType: AnchorType.bottom);
     }
   }
 
   disposeScreenBanner() {
-    if (Platform.isIOS) return;
+    if (Platform.isIOS || _closed) return;
     if (_loaded) {
       _screenBannerAd.dispose();
       _loaded = false;

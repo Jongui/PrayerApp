@@ -113,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "tapACamera" : MessageLookupByLibrary.simpleMessage("Escolha uma câmera"),
     "title" : MessageLookupByLibrary.simpleMessage("Aplicativo de Orações"),
     "uploadingPicture" : MessageLookupByLibrary.simpleMessage("Salvando imagem"),
+    "userUpdated" : MessageLookupByLibrary.simpleMessage("Usuário atualizado!"),
     "viewChurch" : MessageLookupByLibrary.simpleMessage("Visualizar Igreja"),
     "viewPray" : MessageLookupByLibrary.simpleMessage("Visualizar oração"),
     "yes" : MessageLookupByLibrary.simpleMessage("Sim"),

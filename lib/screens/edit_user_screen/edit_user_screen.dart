@@ -230,9 +230,11 @@ class _EditUserScreenState extends State<EditUserScreen> {
         _currentCountry,
         languageLowerCase: _language.toLowerCase(),
         onChanged: (newCountry) {
-          _dataChanged = true;
           setState(() {
-            _newCountry = newCountry.code;
+            if (this.widget.user.country != newCountry.code) {
+              _dataChanged = true;
+              _newCountry = newCountry.code;
+            }
           });
         },
       ),
@@ -246,11 +248,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
             EdgeInsets.only(left: 24.0, right: 24.0, top: 12.0, bottom: 10.0),
         child: ChurchDropdownButton(_church, churches: _churchList,
             onChanged: (newChurch) {
-          _dataChanged = true;
-          setState(() {
+          if (_church.idChurch != newChurch.idChurch) {
             _church = newChurch;
             _newIdChurch = newChurch.idChurch;
-          });
+            _dataChanged = true;
+          }
+          setState(() {});
         }));
   }
 
